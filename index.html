@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="E-Products Europe - Uw partner voor hoogwaardige producten en oplossingen">
+    <meta name="description" content="E-Products Europe - Uw specialist in houten producten en maatwerk oplossingen">
     <title>E-Products Europe - Home</title>
     <style>
         :root {
             --primary-color: #2C3E50;
-            --accent-color: #16A085;
+            --accent-color: #8B4513;
             --text-color: #333;
             --light-bg: #f8f9fa;
+            --wood-color: #DEB887;
             --transition: all 0.3s ease;
         }
 
@@ -36,23 +37,24 @@
         }
 
         .nav {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0 2rem;
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--accent-color);
             text-decoration: none;
         }
 
         .market-links {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .market-link {
@@ -61,46 +63,122 @@
             padding: 0.5rem 1rem;
             border-radius: 4px;
             transition: var(--transition);
+            font-weight: 500;
         }
 
         .market-link:hover {
-            background: var(--light-bg);
+            background: var(--wood-color);
+            color: white;
         }
 
         .hero {
-            min-height: 100vh;
+            min-height: 80vh;
             display: grid;
             place-items: center;
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(139, 69, 19, 0.8)),
+                        url('/api/placeholder/1920/1080') center/cover;
             color: white;
             padding: 2rem;
-            position: relative;
-            overflow: hidden;
+            margin-top: 60px;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--wood-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .about {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-content {
+            padding-right: 2rem;
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
         .stats-section {
-            padding: 4rem 2rem;
             background: var(--light-bg);
+            padding: 4rem 2rem;
         }
 
         .stats-grid {
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            text-align: center;
         }
 
         .stat-item {
-            padding: 2rem;
             background: white;
+            padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 700;
             color: var(--accent-color);
             margin-bottom: 0.5rem;
@@ -109,51 +187,97 @@
         .stat-label {
             font-size: 1.1rem;
             color: var(--text-color);
-        }
-
-        /* Rest van de bestaande stijlen... */
-        
-        .section {
-            padding: 5rem 2rem;
-        }
-
-        .about {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            font-weight: 500;
         }
 
         .contact {
-            background: var(--light-bg);
+            background: white;
+            padding: 5rem 2rem;
+        }
+
+        .contact-container {
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .contact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .contact-info {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .contact-info h2 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.8rem;
         }
 
         .footer {
             background: var(--primary-color);
             color: white;
-            padding: 3rem 2rem;
+            padding: 4rem 2rem;
         }
 
         .footer-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer h3 {
+            color: var(--wood-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            padding-left: 5px;
+        }
+
+        @media (max-width: 1024px) {
+            .about {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-content {
+                padding-right: 0;
+            }
         }
 
         @media (max-width: 768px) {
             .market-links {
                 display: none;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: 60vh;
             }
         }
     </style>
@@ -173,29 +297,87 @@
 
     <section class="hero">
         <div class="hero-content">
-            <h1>Innovatieve Oplossingen voor de Toekomst</h1>
-            <p>Ontdek de kracht van E-Products Europe - Uw partner voor hoogwaardige producten en diensten</p>
+            <h1>Specialist in Houten Producten</h1>
+            <p>Ontdek ons uitgebreide assortiment aan hoogwaardige houten producten en maatwerk oplossingen voor uw specifieke behoeften.</p>
+            <a href="#contact" class="cta-button">Contacteer Ons</a>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="about">
+            <div class="about-content">
+                <h2>Over E-Products Europe</h2>
+                <p>Als toonaangevende leverancier van houten producten combineren we vakmanschap met innovatie om de beste oplossingen te bieden voor onze klanten in heel Europa.</p>
+                <p>Met een focus op kwaliteit en duurzaamheid, leveren we producten die voldoen aan de hoogste standaarden in de industrie.</p>
+            </div>
+            <div class="about-image">
+                <img src="/api/placeholder/800/600" alt="E-Products Europe kantoor" loading="lazy">
+            </div>
         </div>
     </section>
 
     <section class="stats-section">
         <div class="stats-grid">
             <div class="stat-item">
-                <div class="stat-number" data-target="95">0</div>
-                <div class="stat-label">Klanttevredenheid</div>
+                <div class="stat-number" data-target="15">0</div>
+                <div class="stat-label">Jaren Ervaring</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="4">0</div>
+                <div class="stat-label">Europese Markten</div>
             </div>
             <div class="stat-item">
                 <div class="stat-number" data-target="1000">0</div>
-                <div class="stat-label">Projecten Voltooid</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" data-target="15">0</div>
-                <div class="stat-label">Jaren Ervaring</div>
+                <div class="stat-label">Tevreden Klanten</div>
             </div>
         </div>
     </section>
 
-    <!-- Rest van de bestaande secties... -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Contactgegevens</h2>
+                    <p><strong>BV E-Products Europe</strong></p>
+                    <p>Patijntjestraat 107</p>
+                    <p>9000 Gent</p>
+                    <p>BTW: BE 0500.621.156</p>
+                    <p>Email: support@e-woodproducts.com</p>
+                </div>
+                <div class="contact-info">
+                    <h2>Bankgegevens</h2>
+                    <p><strong>BIC:</strong> GEBA BE BB</p>
+                    <p><strong>IBAN:</strong> BE 61 0016 8384 4117</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h3>E-Products Europe</h3>
+                <p>Uw specialist in houten producten</p>
+            </div>
+            <div class="footer-links">
+                <h3>Markten</h3>
+                <a href="https://www.e-woodproducts.be">België</a>
+                <a href="https://www.e-woodproducts.com">Nederland</a>
+                <a href="https://www.e-woodproducts.com/de-de">Duitsland</a>
+                <a href="https://www.e-woodproducts.com/fr-fr">Frankrijk</a>
+            </div>
+            <div class="footer-links">
+                <h3>Links</h3>
+                <a href="/privacy">Privacybeleid</a>
+                <a href="/terms">Algemene voorwaarden</a>
+            </div>
+            <div>
+                <h3>Contact</h3>
+                <p>support@e-woodproducts.com</p>
+                <p>Patijntjestraat 107, 9000 Gent</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
         // Animatie voor de statistieken
