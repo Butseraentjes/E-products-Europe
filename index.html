@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="E-Products Europe - Uw partner voor hoogwaardige producten en oplossingen">
+    <title>E-Products Europe - Home</title>
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --accent-color: #16A085;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .header {
+            position: fixed;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: url('/api/placeholder/1920/1080') center/cover;
+            opacity: 0.1;
+            animation: rotate 60s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 2rem;
+            transition: var(--transition);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .about {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact {
+            background: var(--light-bg);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 3rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer a:hover {
+            opacity: 1;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 3rem 1rem;
+            }
+            
+            .hero-content {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="/" class="logo">E-Products Europe</a>
+            <div class="nav-links">
+                <!-- Navigatie links hier -->
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Innovatieve Oplossingen voor de Toekomst</h1>
+            <p>Ontdek de kracht van E-Products Europe - Uw partner voor hoogwaardige producten en diensten</p>
+            <a href="#contact" class="cta-button">Neem Contact Op</a>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="about">
+            <div class="about-content">
+                <h2>Over Ons</h2>
+                <p>E-Products Europe is uw betrouwbare partner voor innovatieve oplossingen. Met jarenlange ervaring en toewijding aan kwaliteit, streven wij ernaar om aan al uw behoeften te voldoen.</p>
+                <p>Onze kernwaarden zijn kwaliteit, innovatie en klanttevredenheid.</p>
+            </div>
+            <div class="about-image">
+                <img src="/api/placeholder/600/400" alt="E-Products Europe werkplaats" style="width: 100%; height: auto; border-radius: 10px;">
+            </div>
+        </div>
+    </section>
+
+    <section class="section contact" id="contact">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h2>Contact</h2>
+                <p><strong>BV E-Products Europe</strong></p>
+                <p>Patijntjestraat 107</p>
+                <p>9000 Gent</p>
+                <p>BTW: BE 0500.621.156</p>
+                <p>Email: support@e-woodproducts.com</p>
+            </div>
+            <div class="contact-info">
+                <h2>Bankgegevens</h2>
+                <p><strong>BIC:</strong> GEBA BE BB</p>
+                <p><strong>IBAN:</strong> BE 61 0016 8384 4117</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h3>E-Products Europe</h3>
+                <p>Uw partner voor innovatieve oplossingen</p>
+                <div class="social-icons">
+                    <!-- Social media icons hier -->
+                </div>
+            </div>
+            <div>
+                <h3>Links</h3>
+                <p><a href="/privacy">Privacybeleid</a></p>
+                <p><a href="/terms">Algemene voorwaarden</a></p>
+            </div>
+            <div>
+                <h3>Contact</h3>
+                <p>support@e-woodproducts.com</p>
+                <p>Patijntjestraat 107, 9000 Gent</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
