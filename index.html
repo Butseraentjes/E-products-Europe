@@ -5,12 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Products Europe | European Wholesale Partner for Quality Wooden Furniture</title>
     <meta name="description" content="E-Products Europe BV — your wholesale partner for KING® picnic tables, ROYAL KING® tables, Dordogne teak benches, KING® beer tables and KING® garden benches across 16 European markets.">
-    <meta name="keywords" content="wholesale wooden furniture Europe, KING picnic tables B2B, teak garden bench wholesale, beer tables bulk, garden bench reseller, E-Products Europe">
-    <meta property="og:title" content="E-Products Europe | Wholesale Wooden Furniture for Resellers">
-    <meta property="og:description" content="Become a reseller of premium KING® outdoor furniture. Wholesale pricing across 16 European markets.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.e-productseurope.com">
-    <link rel="canonical" href="https://www.e-productseurope.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -116,14 +110,13 @@
         .about__fact strong{display:block;font-family:var(--font-h);font-size:1.5rem;color:var(--pine);margin-bottom:4px}
         .about__fact span{font-size:.85rem;color:var(--textMid)}
 
-        /* MARKETS MAP */
+        /* MARKETS */
         .markets__header{text-align:center;max-width:660px;margin:0 auto 52px}
         .markets__header h2{margin-bottom:14px}
-        .markets__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;max-width:900px;margin:0 auto 40px}
+        .markets__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;max-width:900px;margin:0 auto 40px}
         .market-tag{display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--border);border-radius:var(--r-s);padding:14px 18px;font-weight:500;font-size:.9rem;transition:var(--ease)}
         .market-tag:hover{border-color:var(--oakLight);box-shadow:var(--sh-s);transform:translateY(-2px)}
         .market-tag .flag{font-size:1.3rem}
-        .markets__cta{text-align:center;margin-top:36px}
 
         /* B2B PRODUCTS */
         .b2b__header{text-align:center;max-width:700px;margin:0 auto 20px}
@@ -168,8 +161,6 @@
 
         /* ADVANTAGES */
         .adv__g{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
-        .adv__content h2{margin-bottom:18px}
-        .adv__content>p{color:var(--textMid);margin-bottom:40px;font-size:1.02rem}
         .adv-item{display:flex;gap:18px;margin-bottom:28px}
         .adv-item__ic{width:44px;height:44px;background:var(--pinePale);border-radius:var(--r-s);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
         .adv-item h4{font-size:1.05rem;color:var(--charcoal);margin-bottom:4px}
@@ -260,14 +251,17 @@
         .footer__bot-links{display:flex;gap:22px}
         .footer__bot-links a:hover{color:#fff}
 
+        /* Extra interior section */
+        .int-box{background:var(--white);border:1px solid var(--border);border-radius:var(--r-l);padding:36px;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start;max-width:880px;margin:44px auto 0}
+        .int-cats{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+        .int-cat{padding:6px 14px;background:var(--cream);border-radius:100px;font-size:.82rem;font-weight:500;color:var(--textMid)}
+
         /* ANIMATIONS */
         .fu{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
         .fu.vis{opacity:1;transform:translateY(0)}
 
-        /* RESPONSIVE */
         @media(max-width:1024px){
             .hero__g,.about__g,.adv__g,.contact__g{grid-template-columns:1fr}
-            .hero__vis,.about__img-wrap{max-width:540px}
             .formulas__grid{grid-template-columns:1fr;max-width:460px;margin-left:auto;margin-right:auto}
             .footer__g{grid-template-columns:1fr 1fr}
             .steps__g{grid-template-columns:1fr 1fr;gap:36px}
@@ -287,7 +281,7 @@
             .chk-group__opts{grid-template-columns:1fr}
             .steps__g{grid-template-columns:1fr;gap:28px}
             .b2b__grid{grid-template-columns:1fr}
-            .markets__grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+            .int-box{grid-template-columns:1fr}
             .contact__fw{padding:22px}
             .cta__acts{flex-direction:column;align-items:center}
             .footer__g{grid-template-columns:1fr;gap:28px}
@@ -300,10 +294,7 @@
 <!-- NAV -->
 <nav class="nav" id="nav">
     <div class="nav__in ctn-w">
-        <a href="#" class="nav__logo">
-            <div class="nav__logo-i">EP</div>
-            E-Products Europe
-        </a>
+        <a href="#" class="nav__logo"><div class="nav__logo-i">EP</div>E-Products Europe</a>
         <ul class="nav__links" id="navLinks">
             <li><a href="#about">About Us</a></li>
             <li><a href="#markets">Markets</a></li>
@@ -323,8 +314,8 @@
         <div class="hero__g">
             <div>
                 <div class="hero__sub">European B2B Partner</div>
-                <h1>Wholesale Partner for Premium <em>Outdoor</em> Wooden Furniture</h1>
-                <p class="hero__desc">Become a reseller of our KING® picnic tables, ROYAL KING® tables, Dordogne teak benches, beer tables and garden benches. Professional pricing across 16 European markets.</p>
+                <h1>Wholesale Partner for Premium <em>Wooden</em> Furniture</h1>
+                <p class="hero__desc">Become a reseller of our KING® picnic tables, ROYAL KING® tables, Dordogne teak benches, beer table sets and garden benches. Professional pricing across 16 European markets.</p>
                 <div class="hero__acts">
                     <a href="#contact" class="btn btn--pine">Request a Quote <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"/></svg></a>
                     <a href="#products" class="btn btn--outline">Explore Products</a>
@@ -332,7 +323,7 @@
                 <div class="hero__stats">
                     <div><div class="hero__sv">16</div><div class="hero__sl">European Markets</div></div>
                     <div><div class="hero__sv">Since 2011</div><div class="hero__sl">Trusted Experience</div></div>
-                    <div><div class="hero__sv">4.8★</div><div class="hero__sl">582+ Reviews</div></div>
+                    <div><div class="hero__sv">4.8★</div><div class="hero__sl">Average Customer Rating</div></div>
                 </div>
             </div>
             <div class="hero__vis">
@@ -341,7 +332,7 @@
                 </div>
                 <div class="hero__fl">
                     <div class="hero__fl-i">🚛</div>
-                    <div><strong>Full & half truck delivery</strong><span>Across all of Europe</span></div>
+                    <div><strong>Full &amp; half truck delivery</strong><span>Across all of Europe</span></div>
                 </div>
             </div>
         </div>
@@ -365,21 +356,21 @@
 <section class="sec about" id="about">
     <div class="ctn">
         <div class="about__g">
-            <div class="about__img-wrap fu">
+            <div class="fu">
                 <div class="about__img">
-                    <img src="https://www.e-woodproducts.be/cdn/shop/files/office-contact_1000x383.jpg?v=1692955107" alt="E-Products Europe office" loading="lazy">
+                    <img src="https://www.e-woodproducts.be/cdn/shop/files/office-contact_1000x383.jpg?v=1692955107" alt="E-Products Europe office and warehouse" loading="lazy">
                 </div>
             </div>
             <div class="fu">
                 <span class="badge badge--sand">Our Story</span>
                 <h2>Born from Passion, Built for Europe</h2>
                 <p class="about__txt">E-Products Europe BV was founded in 2011 by Mark and Peter in Ghent, Belgium. What started as a small selection of picnic tables sold from a converted classroom has grown into a leading European distributor of quality wooden furniture — both indoor and outdoor.</p>
-                <p class="about__txt">Today, we serve 16 European markets from our 1,500 m² warehouse, supported by a dedicated team and our own delivery fleet. In late 2023, we unified all our webshops into one central platform: <a href="https://www.e-woodproducts.com" target="_blank" rel="noopener" style="color:var(--pine);font-weight:600;">e-woodproducts.com</a>.</p>
+                <p class="about__txt">Today, we serve 16 European markets from our 1,500 m² warehouse, supported by a dedicated team and our own delivery fleet. Our unified platform: <a href="https://www.e-woodproducts.com" target="_blank" rel="noopener" style="color:var(--pine);font-weight:600;">e-woodproducts.com</a>.</p>
                 <div class="about__facts">
                     <div class="about__fact"><strong>2011</strong><span>Founded in Ghent</span></div>
                     <div class="about__fact"><strong>1,500 m²</strong><span>Warehouse space</span></div>
                     <div class="about__fact"><strong>16</strong><span>European markets</span></div>
-                    <div class="about__fact"><strong>582+</strong><span>Customer reviews (4.8★)</span></div>
+                    <div class="about__fact"><strong>4.8★</strong><span>Average customer rating</span></div>
                 </div>
             </div>
         </div>
@@ -392,27 +383,25 @@
         <div class="markets__header fu">
             <span class="badge badge--sand">Where We Operate</span>
             <h2>Active in 16 European Markets</h2>
-            <p class="lead" style="margin:14px auto 0;">We deliver across Europe with localised webshops, local language support, and adapted logistics for every region.</p>
+            <p class="lead" style="margin:14px auto 0;">We deliver across Europe with localised webshops, local language support, and adapted logistics for every region. Click a country to visit its webshop.</p>
         </div>
         <div class="markets__grid fu">
-            <div class="market-tag"><span class="flag">🇳🇱</span>Netherlands</div>
-            <div class="market-tag"><span class="flag">🇧🇪</span>Belgium</div>
-            <div class="market-tag"><span class="flag">🇩🇪</span>Germany</div>
-            <div class="market-tag"><span class="flag">🇫🇷</span>France</div>
-            <div class="market-tag"><span class="flag">🇱🇺</span>Luxembourg</div>
-            <div class="market-tag"><span class="flag">🇦🇹</span>Austria</div>
-            <div class="market-tag"><span class="flag">🇬🇧</span>United Kingdom</div>
-            <div class="market-tag"><span class="flag">🇮🇹</span>Italy</div>
-            <div class="market-tag"><span class="flag">🇪🇸</span>Spain</div>
-            <div class="market-tag"><span class="flag">🇩🇰</span>Denmark</div>
-            <div class="market-tag"><span class="flag">🇸🇪</span>Sweden</div>
-            <div class="market-tag"><span class="flag">🇫🇮</span>Finland</div>
-            <div class="market-tag"><span class="flag">🇲🇨</span>Monaco</div>
-            <div class="market-tag"><span class="flag">🇸🇲</span>San Marino</div>
-            <div class="market-tag"><span class="flag">🇻🇦</span>Vatican City</div>
-        </div>
-        <div class="markets__cta fu">
-            <a href="https://www.e-woodproducts.com" target="_blank" rel="noopener" class="btn btn--pine">Visit our Consumer Webshop <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>
+            <a href="https://www.e-woodproducts.com" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇳🇱</span>Netherlands</a>
+            <a href="https://www.e-woodproducts.com/nl-be" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇧🇪</span>Belgium (NL)</a>
+            <a href="https://www.e-woodproducts.com/fr-be" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇧🇪</span>Belgium (FR)</a>
+            <a href="https://www.e-woodproducts.com/de-de" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇩🇪</span>Germany</a>
+            <a href="https://www.e-woodproducts.com/fr-fr" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇫🇷</span>France</a>
+            <a href="https://www.e-woodproducts.com/fr-lu" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇱🇺</span>Luxembourg</a>
+            <a href="https://www.e-woodproducts.com/de-at" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇦🇹</span>Austria</a>
+            <a href="https://www.e-woodproducts.com/en-gb" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇬🇧</span>United Kingdom</a>
+            <a href="https://www.e-woodproducts.com/it-it" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇮🇹</span>Italy</a>
+            <a href="https://www.e-woodproducts.com/es-es" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇪🇸</span>Spain</a>
+            <a href="https://www.e-woodproducts.com/en-dk" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇩🇰</span>Denmark</a>
+            <a href="https://www.e-woodproducts.com/en-se" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇸🇪</span>Sweden</a>
+            <a href="https://www.e-woodproducts.com/en-fi" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇫🇮</span>Finland</a>
+            <a href="https://www.e-woodproducts.com/fr-mc" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇲🇨</span>Monaco</a>
+            <a href="https://www.e-woodproducts.com/it-sm" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇸🇲</span>San Marino</a>
+            <a href="https://www.e-woodproducts.com/it-va" target="_blank" rel="noopener" class="market-tag"><span class="flag">🇻🇦</span>Vatican City</a>
         </div>
     </div>
 </section>
@@ -423,42 +412,79 @@
         <div class="b2b__header fu">
             <span class="badge badge--sand">B2B Product Lines</span>
             <h2>Premium Product Lines for Resellers</h2>
-            <p class="lead" style="margin:14px auto 0;">Four flagship product lines available at wholesale pricing. Mix and match across all lines in a single order.</p>
+            <p class="lead" style="margin:14px auto 0;">Five flagship outdoor product lines available at wholesale pricing. Mix and match across all lines in a single order.</p>
         </div>
         <div class="b2b__tabs fu">
             <button class="b2b__tab active" data-tab="all">All Products</button>
             <button class="b2b__tab" data-tab="king">KING® Picnic Tables</button>
             <button class="b2b__tab" data-tab="royal">ROYAL KING® Tables</button>
             <button class="b2b__tab" data-tab="teak">Dordogne Teak Benches</button>
-            <button class="b2b__tab" data-tab="beer">KING® Beer Tables</button>
+            <button class="b2b__tab" data-tab="beer">KING® Beer Table Sets</button>
             <button class="b2b__tab" data-tab="bench">KING® Garden Benches</button>
         </div>
         <div class="b2b__grid" id="prodGrid">
-            <!-- KING Picnic Tables -->
+
+            <!-- === KING® Picnic Tables === -->
             <div class="pcard fu" data-cat="king"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.K140front2.jpg" alt="KING Picnic Table 140cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--king">KING®</span><h4 class="pcard__name">Picnic Table 140 cm</h4><p class="pcard__spec">40 mm plank thickness · Parasol hole · Foldable seats · Rounded corners</p></div></div>
             <div class="pcard fu" data-cat="king"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.K180basic.jpg" alt="KING Picnic Table 180cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--king">KING®</span><h4 class="pcard__name">Picnic Table 180 cm</h4><p class="pcard__spec">40 mm plank thickness · Best-seller · Parasol hole · Foldable seats</p></div></div>
             <div class="pcard fu" data-cat="king"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.K240front.jpg" alt="KING Picnic Table 240cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--king">KING®</span><h4 class="pcard__name">Picnic Table 240 cm</h4><p class="pcard__spec">40 mm plank thickness · Large format · Parasol hole · Foldable seats</p></div></div>
             <div class="pcard fu" data-cat="king"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.K300front.jpg" alt="KING Picnic Table 300cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--king">KING®</span><h4 class="pcard__name">Picnic Table 300 cm</h4><p class="pcard__spec">40 mm plank thickness · XL format · Parasol hole · Foldable seats</p></div></div>
             <div class="pcard fu" data-cat="king"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.KVK_front.jpg" alt="KING Square Picnic Table" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--king">KING®</span><h4 class="pcard__name">Square Picnic Table 115×115 cm</h4><p class="pcard__spec">40 mm plank thickness · Unique square design · Parasol hole</p></div></div>
             <div class="pcard fu" data-cat="king"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/K180-RUGL-1000-1.jpg" alt="KING 180cm with backrests" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--king">KING®</span><h4 class="pcard__name">Picnic Table 180 cm with Backrests</h4><p class="pcard__spec">40 mm · Superior comfort · Integrated backrests · Foldable seats</p></div></div>
-            <!-- ROYAL KING -->
+
+            <!-- === ROYAL KING® Picnic Tables === -->
             <div class="pcard fu" data-cat="royal"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.K180basic.jpg" alt="ROYAL KING 200cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--royal">ROYAL KING®</span><h4 class="pcard__name">Picnic Table 200 cm</h4><p class="pcard__spec">45 mm plank thickness · Premium · Parasol hole · Foldable seats</p></div></div>
             <div class="pcard fu" data-cat="royal"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/royal-king-rond-1000.jpg" alt="ROYAL KING XXL Round" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--royal">ROYAL KING®</span><h4 class="pcard__name">XXL Round Table 219×219 cm</h4><p class="pcard__spec">45 mm · Exceptional round design · Unique eye-catcher</p></div></div>
             <div class="pcard fu" data-cat="royal"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.K240front.jpg" alt="ROYAL KING 240cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--royal">ROYAL KING®</span><h4 class="pcard__name">Picnic Table 240 cm</h4><p class="pcard__spec">45 mm plank thickness · Premium large · Parasol hole</p></div></div>
             <div class="pcard fu" data-cat="royal"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.K300front.jpg" alt="ROYAL KING 300cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--royal">ROYAL KING®</span><h4 class="pcard__name">Picnic Table 300 cm</h4><p class="pcard__spec">45 mm plank thickness · Premium XL · Parasol hole</p></div></div>
-            <!-- Dordogne Teak Benches -->
-            <div class="pcard fu" data-cat="teak"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/Teak-tuinbank-120-x-91-cm-dordogne-5-cm-pootdikte-quinto-quinto.jpg?v=1721133637&width=800" alt="Dordogne Teak Bench 120cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--teak">Dordogne Teak</span><h4 class="pcard__name">Teak Garden Bench 120 cm</h4><p class="pcard__spec">5 cm leg thickness · V-legal certified teak · Ergonomic curved backrest</p></div></div>
-            <div class="pcard fu" data-cat="teak"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/Teak-tuinbank-150-x-91-cm-dordogne-5-cm-pootdikte-quinto-quinto.jpg?v=1721133520&width=800" alt="Dordogne Teak Bench 150cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--teak">Dordogne Teak</span><h4 class="pcard__name">Teak Garden Bench 150 cm</h4><p class="pcard__spec">5 cm leg thickness · V-legal certified teak · Best-seller</p></div></div>
-            <div class="pcard fu" data-cat="teak"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/Teak-tuinbank-180-x-91-cm-dordogne-5-cm-pootdikte-quinto-quinto.jpg?v=1721133466&width=800" alt="Dordogne Teak Bench 180cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--teak">Dordogne Teak</span><h4 class="pcard__name">Teak Garden Bench 180 cm</h4><p class="pcard__spec">5 cm leg thickness · V-legal certified teak · Spacious seating</p></div></div>
-            <div class="pcard fu" data-cat="teak"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/Teak-tuinbank-210-x-91-cm-dordogne-5-cm-pootdikte-quinto-quinto.jpg?v=1721133295&width=800" alt="Dordogne Teak Bench 210cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--teak">Dordogne Teak</span><h4 class="pcard__name">Teak Garden Bench 210 cm</h4><p class="pcard__spec">5 cm leg thickness · 3 legs · V-legal certified · Extra long</p></div></div>
-            <!-- Beer Tables -->
-            <div class="pcard fu" data-cat="beer"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/biertafel-220cm-king-quinto.jpg?v=1721133900&width=800" alt="KING Beer Table 220cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--beer">KING® Beer Table</span><h4 class="pcard__name">Beer Table Set 220×70 cm</h4><p class="pcard__spec">Table + 2 benches · Pressure impregnated · Foldable legs · Event-ready</p></div></div>
-            <div class="pcard fu" data-cat="beer"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/biertafel-220x80-king-quinto.jpg?v=1721133850&width=800" alt="KING Beer Table 220x80cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--beer">KING® Beer Table</span><h4 class="pcard__name">Beer Table Set 220×80 cm</h4><p class="pcard__spec">Extra wide · Table + 2 benches · Pressure impregnated · Foldable</p></div></div>
-            <!-- KING Garden Benches -->
-            <div class="pcard fu" data-cat="bench"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/King-Charles-Tuinbank-140cm-quinto.jpg?v=1721134100&width=800" alt="KING Charles Garden Bench 140cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--bench">KING® Bench</span><h4 class="pcard__name">Charles Garden Bench 140 cm</h4><p class="pcard__spec">40 mm plank · 80 mm leg thickness · Pressure impregnated · 2-seater</p></div></div>
-            <div class="pcard fu" data-cat="bench"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/King-Charles-Tuinbank-200cm-quinto.jpg?v=1721134050&width=800" alt="KING Charles Garden Bench 200cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--bench">KING® Bench</span><h4 class="pcard__name">Charles Garden Bench 200 cm</h4><p class="pcard__spec">40 mm plank · 80 mm leg thickness · Pressure impregnated · 3-seater</p></div></div>
+
+            <!-- === Dordogne Teak Benches === -->
+            <div class="pcard fu" data-cat="teak"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/DORD-120-1000-1.jpg" alt="Dordogne Teak Bench 120cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--teak">Dordogne Teak</span><h4 class="pcard__name">Teak Garden Bench 120 cm</h4><p class="pcard__spec">5 cm leg thickness · V-legal certified teak · Ergonomic curved backrest</p></div></div>
+            <div class="pcard fu" data-cat="teak"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/dord-1000-1.jpg" alt="Dordogne Teak Bench 150cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--teak">Dordogne Teak</span><h4 class="pcard__name">Teak Garden Bench 150 cm</h4><p class="pcard__spec">5 cm leg thickness · V-legal certified teak · Best-seller</p></div></div>
+            <div class="pcard fu" data-cat="teak"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/DORD-180-1000-1.jpg" alt="Dordogne Teak Bench 180cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--teak">Dordogne Teak</span><h4 class="pcard__name">Teak Garden Bench 180 cm</h4><p class="pcard__spec">5 cm leg thickness · V-legal certified teak · Spacious seating</p></div></div>
+            <div class="pcard fu" data-cat="teak"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/DORD-210-1000-1.jpg" alt="Dordogne Teak Bench 210cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--teak">Dordogne Teak</span><h4 class="pcard__name">Teak Garden Bench 210 cm</h4><p class="pcard__spec">5 cm leg thickness · 3 legs · V-legal certified · Extra long</p></div></div>
+
+            <!-- === KING® Beer Table Sets === -->
+            <div class="pcard fu" data-cat="beer"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/biertafelset-220x60-1000-1.jpg" alt="KING Beer Table Set 220x60cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--beer">KING® Beer Table</span><h4 class="pcard__name">Beer Table Set 220×60 cm</h4><p class="pcard__spec">Table + 2 benches · Foldable · Varnished finish · Compact width</p></div></div>
+            <div class="pcard fu" data-cat="beer"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/KING-biertafelset-220x70-1000-10.jpg" alt="KING Beer Table Set 220x70cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--beer">KING® Beer Table</span><h4 class="pcard__name">Beer Table Set 220×70 cm</h4><p class="pcard__spec">Table + 2 benches · Foldable · Varnished finish · Standard width</p></div></div>
+            <div class="pcard fu" data-cat="beer"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/KING-biertafelset-220x70-1000-10.jpg" alt="KING Beer Table Set 220x80cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--beer">KING® Beer Table</span><h4 class="pcard__name">Beer Table Set 220×80 cm</h4><p class="pcard__spec">Table + 2 benches · Foldable · Varnished finish · Extra wide</p></div></div>
+            <div class="pcard fu" data-cat="beer"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/biertafelset-220x60-1000-1.jpg" alt="KING Beer Table Set 160x70cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--beer">KING® Beer Table</span><h4 class="pcard__name">Beer Table Set 160×70 cm</h4><p class="pcard__spec">Compact set · Table + 2 benches · Foldable · For small groups</p></div></div>
+            <div class="pcard fu" data-cat="beer"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/biertafelset-220x60-1000-1.jpg" alt="KING Beer Table Set 110x60cm with backrests" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--beer">KING® Beer Table</span><h4 class="pcard__name">Beer Table Set 110×60 cm + Backrests</h4><p class="pcard__spec">Compact with backrests · Table + 2 benches · Foldable</p></div></div>
+
+            <!-- === KING® Garden Benches (complete range) === -->
+            <div class="pcard fu" data-cat="bench"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/Tuinbank_Charles.jpg?v=1767083677&width=720" alt="KING Charles Garden Bench" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--bench">KING® Bench</span><h4 class="pcard__name">Charles Garden Bench 140 cm</h4><p class="pcard__spec">40 mm plank · 80 mm legs · Pressure impregnated · 2-seater</p></div></div>
+            <div class="pcard fu" data-cat="bench"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/TB-charles-1000-1.jpg" alt="KING Charles Garden Bench 200cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--bench">KING® Bench</span><h4 class="pcard__name">Charles Garden Bench 200 cm</h4><p class="pcard__spec">40 mm plank · 80 mm legs · Pressure impregnated · 3-seater</p></div></div>
+            <div class="pcard fu" data-cat="bench"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/tb-george-4.jpg?v=1768375890&width=720" alt="KING George Garden Bench 140cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--bench">KING® Bench</span><h4 class="pcard__name">George Garden Bench 140 cm</h4><p class="pcard__spec">Rounded seat · Pressure impregnated · Ergonomic comfort</p></div></div>
+            <div class="pcard fu" data-cat="bench"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/King-tuinbank-200cm-luxe-1000.jpg" alt="KING George Luxe Garden Bench 200cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--bench">KING® Bench</span><h4 class="pcard__name">George Luxe Garden Bench 200 cm</h4><p class="pcard__spec">Luxury wide model · Rounded seat · 3-seater · Premium comfort</p></div></div>
+            <div class="pcard fu" data-cat="bench"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/henry-tuinbank-3.png?v=1768376889&width=720" alt="KING Henry Garden Bench" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--bench">KING® Bench</span><h4 class="pcard__name">Henry Garden Bench 168 cm</h4><p class="pcard__spec">Classic design · Natural wood · Curved backrest</p></div></div>
+            <div class="pcard fu" data-cat="bench"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/hugo-tuinbank_1.jpg?v=1768377911&width=720" alt="KING Hugo Garden Bench" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--bench">KING® Bench</span><h4 class="pcard__name">Hugo Garden Bench</h4><p class="pcard__spec">Modern design · Pressure impregnated · Sturdy build</p></div></div>
+            <div class="pcard fu" data-cat="bench"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/tuinbank-lux-1.jpg?v=1768376138&width=720" alt="KING Lux Garden Bench" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--bench">KING® Bench</span><h4 class="pcard__name">Lux Garden Bench</h4><p class="pcard__spec">Wide seat · Pressure impregnated · Premium design</p></div></div>
+            <div class="pcard fu" data-cat="bench"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/krukbank-zandsteen-tegels-patio.png?v=1768376557&width=720" alt="KING Kruk Bench" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--bench">KING® Bench</span><h4 class="pcard__name">Kruk Bench (Side Bench)</h4><p class="pcard__spec">Compact seating · Versatile · Extra seating solution</p></div></div>
+            <div class="pcard fu" data-cat="bench"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/lattenbank-in-tuin.png?v=1768377289&width=720" alt="KING Slatted Garden Bench" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--bench">KING® Bench</span><h4 class="pcard__name">Slatted Garden Bench</h4><p class="pcard__spec">Open slat design · Natural look · Classic style</p></div></div>
         </div>
+
         <p style="text-align:center;margin-top:36px;font-size:.93rem;color:var(--textMid)" class="fu">All B2B prices are provided upon request and vary by volume and product mix. <a href="#contact" style="color:var(--pine);font-weight:600">Request your personalised quote →</a></p>
+
+        <!-- Interior / Other Products callout -->
+        <div class="int-box fu">
+            <div style="font-size:2.4rem;line-height:1">🏠</div>
+            <div>
+                <h3 style="color:var(--charcoal);margin-bottom:6px">Looking for Interior or Other Products?</h3>
+                <p style="color:var(--textMid);line-height:1.7;font-size:.95rem">Beyond our outdoor B2B product lines, E-Products Europe offers a broad range of <strong>interior wooden furniture</strong> and additional outdoor products. Interested in wholesale quantities? Just mention it in your quote request and we'll provide a custom offer.</p>
+                <div class="int-cats">
+                    <span class="int-cat">Beds &amp; Bedroom</span>
+                    <span class="int-cat">Dining Tables</span>
+                    <span class="int-cat">TV Furniture</span>
+                    <span class="int-cat">Sideboards</span>
+                    <span class="int-cat">Bookcases</span>
+                    <span class="int-cat">Bathroom Furniture</span>
+                    <span class="int-cat">Garden Cabinets</span>
+                    <span class="int-cat">Vegetable Gardens</span>
+                    <span class="int-cat">Flower Boxes</span>
+                    <span class="int-cat">And much more...</span>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -475,7 +501,7 @@
                 <div class="fcard__icon">📦</div>
                 <h3>Starter Pack</h3>
                 <div class="fcard__vol">From 20 units</div>
-                <p class="fcard__desc">The ideal entry point to test our range and evaluate demand in your market. Choose freely across all product lines.</p>
+                <p class="fcard__desc">The ideal entry point to test our range and evaluate demand. Choose freely across all product lines.</p>
                 <ul class="fcard__feats">
                     <li>Minimum 20 units (any mix)</li>
                     <li>Mix all product lines</li>
@@ -489,7 +515,7 @@
                 <div class="fcard__icon">🚛</div>
                 <h3>Half Truck</h3>
                 <div class="fcard__vol">Significant volume</div>
-                <p class="fcard__desc">The ideal choice for regular resellers. Higher volume at substantially reduced pricing. Quantities vary by product mix.</p>
+                <p class="fcard__desc">Higher volume at substantially reduced pricing. Quantities vary by product mix.</p>
                 <ul class="fcard__feats">
                     <li>Approx. half a full truck</li>
                     <li>Major volume discount</li>
@@ -503,7 +529,7 @@
                 <div class="fcard__icon">🏭</div>
                 <h3>Full Truck</h3>
                 <div class="fcard__vol">Best unit price</div>
-                <p class="fcard__desc">The best per-unit price. Ideal for high-volume distributors. For reference: a full truck fits ~378 KING® 180 cm tables — varies by model mix.</p>
+                <p class="fcard__desc">Best per-unit price. For reference: ~378 KING® 180 cm tables per truck — varies by model mix.</p>
                 <ul class="fcard__feats">
                     <li>Best professional pricing</li>
                     <li>Priority delivery</li>
@@ -524,17 +550,17 @@
             <div class="fu">
                 <span class="badge badge--sand">Why Choose Us</span>
                 <h2>A Winning Partnership for Your Business</h2>
-                <p>Since 2011 we've been supplying premium wooden furniture across Europe. Here's what sets us apart.</p>
-                <div class="adv-item"><div class="adv-item__ic">💰</div><div><h4>Unbeatable Wholesale Pricing</h4><p>The more you order, the lower the per-unit price. Volume discounts significantly below consumer retail pricing.</p></div></div>
+                <p style="color:var(--textMid);margin-bottom:40px;font-size:1.02rem">Since 2011 we've been supplying premium wooden furniture across Europe. Here's what sets us apart.</p>
+                <div class="adv-item"><div class="adv-item__ic">💰</div><div><h4>Unbeatable Wholesale Pricing</h4><p>Volume discounts significantly below consumer retail pricing. The more you order, the lower the per-unit price.</p></div></div>
                 <div class="adv-item"><div class="adv-item__ic">🪵</div><div><h4>Premium Quality Guaranteed</h4><p>Norway spruce (Picea abies) pressure impregnated Autoclave Class 4. V-legal certified teak for the Dordogne line. 2-year warranty on all products.</p></div></div>
-                <div class="adv-item"><div class="adv-item__ic">🚚</div><div><h4>Controlled Logistics</h4><p>We deliver with our own fleet and trusted logistics partners across all of Europe. Safe and careful transport that parcel services cannot offer.</p></div></div>
-                <div class="adv-item"><div class="adv-item__ic">📅</div><div><h4>Seasonal Planning Advice</h4><p>Order in autumn/winter (Sept–Feb) for delivery before high season (March–July). Production includes careful crafting, pressure impregnation and thorough drying — a process that takes time.</p></div></div>
-                <div class="adv-item"><div class="adv-item__ic">🔀</div><div><h4>Custom Truck Composition</h4><p>Freely mix KING® picnic tables, ROYAL KING® tables, Dordogne teak benches, beer tables and garden benches in a single order. We optimise the loading for you.</p></div></div>
-                <div class="adv-item"><div class="adv-item__ic">🤝</div><div><h4>Dedicated Support</h4><p>A single point of contact for your orders, advice on best-selling models, and personalised delivery tracking. Support in English, Dutch, French and German.</p></div></div>
+                <div class="adv-item"><div class="adv-item__ic">🚚</div><div><h4>Controlled Logistics</h4><p>Own fleet and trusted logistics partners across Europe. Safe transport that parcel services cannot offer.</p></div></div>
+                <div class="adv-item"><div class="adv-item__ic">📅</div><div><h4>Seasonal Planning Advice</h4><p>Order in autumn/winter (Sept–Feb) for delivery before high season (March–July). Production takes time: crafting, impregnation and thorough drying.</p></div></div>
+                <div class="adv-item"><div class="adv-item__ic">🔀</div><div><h4>Custom Truck Composition</h4><p>Freely mix all product lines in a single order. We optimise the loading for you.</p></div></div>
+                <div class="adv-item"><div class="adv-item__ic">🤝</div><div><h4>Dedicated Multilingual Support</h4><p>Single point of contact. Support in English, Dutch, French and German.</p></div></div>
             </div>
             <div class="fu">
                 <div class="adv__vis">
-                    <img src="https://www.e-woodproducts.com/cdn/shop/files/Teak-tuinbank-150-x-91-cm-dordogne-5-cm-pootdikte-quinto-quinto.jpg?v=1721133520&width=800" alt="Dordogne Teak Garden Bench in a beautiful garden setting" loading="lazy">
+                    <img src="https://www.kingpicknicktafels.be/foto/DORD-180-1000-1.jpg" alt="Dordogne Teak Garden Bench" loading="lazy">
                 </div>
             </div>
         </div>
@@ -547,13 +573,12 @@
         <div class="steps__header fu">
             <span class="badge badge--sand">Simple &amp; Fast</span>
             <h2>How to Become a Reseller</h2>
-            <p class="lead" style="margin:14px auto 0">Four simple steps to start offering our products to your customers.</p>
         </div>
         <div class="steps__g">
-            <div class="step fu"><div class="step__n">1</div><h4>Request a Quote</h4><p>Fill in our form with your preferred formula and products of interest. It's free and non-binding.</p></div>
-            <div class="step fu"><div class="step__n">2</div><h4>Receive Your Offer</h4><p>We'll send you a personalised quote within 48 hours with professional pricing tailored to your volume and product mix.</p></div>
-            <div class="step fu"><div class="step__n">3</div><h4>Plan Ahead</h4><p>Order ideally in autumn/winter for delivery before the season. Products are crafted, impregnated and dried with care.</p></div>
-            <div class="step fu"><div class="step__n">4</div><h4>Receive &amp; Resell</h4><p>We deliver to your depot with our own trucks or logistics partners. You're ready to sell!</p></div>
+            <div class="step fu"><div class="step__n">1</div><h4>Request a Quote</h4><p>Fill in our form with your preferred formula and products. Free and non-binding.</p></div>
+            <div class="step fu"><div class="step__n">2</div><h4>Receive Your Offer</h4><p>Personalised quote within 48 hours with professional pricing for your volume.</p></div>
+            <div class="step fu"><div class="step__n">3</div><h4>Plan Ahead</h4><p>Order in autumn/winter for delivery before peak season. Quality production takes time.</p></div>
+            <div class="step fu"><div class="step__n">4</div><h4>Receive &amp; Resell</h4><p>We deliver to your depot. You're ready to sell!</p></div>
         </div>
     </div>
 </section>
@@ -565,8 +590,8 @@
             <div style="font-size:2.4rem;line-height:1">📅</div>
             <div>
                 <h3 style="color:var(--charcoal);margin-bottom:10px;font-size:1.3rem">Important: Plan Your Orders Ahead</h3>
-                <p style="color:var(--text);line-height:1.8;margin-bottom:14px">Peak selling season for outdoor furniture runs from <strong>March to July</strong>. To have your stock ready, we recommend placing your order between <strong>September and October</strong>, with delivery between November and February.</p>
-                <p style="color:var(--text);line-height:1.8;margin-bottom:14px">Our products are <strong>carefully crafted, pressure-impregnated and thoroughly dried</strong> — a quality process that takes time. During peak season, production lead times can reach <strong>up to 3 months</strong>.</p>
+                <p style="color:var(--text);line-height:1.8;margin-bottom:14px">Peak selling season runs from <strong>March to July</strong>. We recommend ordering between <strong>September and October</strong>, with delivery between November and February.</p>
+                <p style="color:var(--text);line-height:1.8;margin-bottom:14px">Our products are <strong>carefully crafted, pressure-impregnated and thoroughly dried</strong> — a quality process that takes time. During peak season, lead times can reach <strong>up to 3 months</strong>.</p>
                 <p style="color:var(--textMid);line-height:1.8;font-size:.93rem">Starter Packs (20+ units) are easier to arrange in-season, but for half and full trucks, early ordering is essential.</p>
             </div>
         </div>
@@ -578,17 +603,17 @@
     <div class="ctn">
         <div class="faq__header fu"><span class="badge badge--sand">FAQ</span><h2>Everything You Need to Know</h2></div>
         <div class="faq__list fu">
-            <div class="faq-i"><button class="faq-q">Which product lines are available for wholesale?<span class="faq-ic">+</span></button><div class="faq-a"><p>We offer five B2B product lines: <strong>KING® Picnic Tables</strong> (40 mm, 140–300 cm + square + backrest versions), <strong>ROYAL KING® Picnic Tables</strong> (45 mm, 200–300 cm + XXL round), <strong>Dordogne Teak Garden Benches</strong> (120–210 cm, V-legal certified teak), <strong>KING® Beer Table Sets</strong> (220 cm, two widths), and <strong>KING® Charles Garden Benches</strong> (140 cm and 200 cm). You can freely mix all lines in a single order.</p></div></div>
-            <div class="faq-i"><button class="faq-q">What is the minimum order?<span class="faq-ic">+</span></button><div class="faq-a"><p>Our <strong>Starter Pack</strong> begins at 20 units minimum. You can compose your selection freely across all product lines. For higher volumes, we offer half-truck and full-truck formulas at even better pricing.</p></div></div>
-            <div class="faq-i"><button class="faq-q">Can I mix different products in one order?<span class="faq-ic">+</span></button><div class="faq-a"><p>Absolutely! All formulas allow a free mix of all product lines. For example: a truck with KING® picnic tables, Dordogne teak benches and beer table sets. We'll advise you on the best-selling models to optimise your assortment.</p></div></div>
-            <div class="faq-i"><button class="faq-q">How many units fit on a truck?<span class="faq-ic">+</span></button><div class="faq-a"><p>This depends entirely on the models chosen. For reference: a full truck can hold approximately <strong>378 KING® 180 cm picnic tables</strong>. Larger models (240, 300 cm), square or round tables, teak benches and beer tables all have different dimensions, so the count varies. With a mixed truck, we calculate the optimal loading for you. <strong>Request a quote</strong> specifying your desired models and we'll provide exact quantities.</p></div></div>
-            <div class="faq-i"><button class="faq-q">Which countries do you deliver to?<span class="faq-ic">+</span></button><div class="faq-a"><p>We deliver across <strong>16 European countries</strong>: Netherlands, Belgium, Germany, France, Luxembourg, Austria, United Kingdom, Italy, Spain, Denmark, Sweden, Finland, Monaco, San Marino and Vatican City. We use our own fleet combined with specialised logistics partners to ensure safe delivery of large furniture items.</p></div></div>
-            <div class="faq-i"><button class="faq-q">What are the delivery lead times?<span class="faq-ic">+</span></button><div class="faq-a"><p>Lead times depend on the order period and volume. <strong>Our advice: order in autumn/winter</strong> (September–February) for delivery well before peak season (March–July). During peak season, production lead times can reach approximately <strong>3 months</strong>. Our products are carefully crafted, impregnated under pressure and thoroughly dried — a quality process that cannot be rushed. Starter Packs are quicker and easier to arrange, but even for those we recommend ordering ahead. For half and full trucks, early ordering is strongly advised.</p></div></div>
-            <div class="faq-i"><button class="faq-q">What type of wood is used?<span class="faq-ic">+</span></button><div class="faq-a"><p>Our KING® and ROYAL KING® products are made from <strong>premium Norway spruce (Picea abies)</strong>, pressure-impregnated Autoclave Class 4, protecting against moisture, mould and insects. The Dordogne bench line uses <strong>V-legal certified teak wood</strong>, known for its exceptional weather resistance and rich natural colour. Teak is kiln-dried to a 16% moisture content.</p></div></div>
-            <div class="faq-i"><button class="faq-q">What warranty is provided?<span class="faq-ic">+</span></button><div class="faq-a"><p>All products come with a <strong>2-year warranty</strong> covering manufacturing defects. Wood is a natural product, so characteristics like knots, colour variations and minor cracks are considered normal and are not covered.</p></div></div>
-            <div class="faq-i"><button class="faq-q">What's the difference between KING® and ROYAL KING®?<span class="faq-ic">+</span></button><div class="faq-a"><p>The main difference is <strong>plank thickness</strong>: 40 mm for KING® and 45 mm for ROYAL KING®. ROYAL KING® tables are heavier, more robust, and often 10 mm thicker than competitors' offerings. Both lines share the same quality: Autoclave Class 4 impregnation, rounded corners and 2-year warranty.</p></div></div>
-            <div class="faq-i"><button class="faq-q">Are prices shown on the website?<span class="faq-ic">+</span></button><div class="faq-a"><p>B2B wholesale prices are provided exclusively <strong>upon request</strong>. The price depends on the formula chosen (Starter Pack, half or full truck), product mix and total volume. Request your free quote and receive a personalised offer within 48 hours.</p></div></div>
-            <div class="faq-i"><button class="faq-q">When should I place my order to be ready for the season?<span class="faq-ic">+</span></button><div class="faq-a"><p>We strongly recommend <strong>ordering in September or October</strong> for delivery between November and February. This way, you'll have full stock before peak season (March–July). Ordering during peak season is possible but expect lead times of approximately <strong>3 months</strong>. Starter Packs are more flexible, but for half and full trucks, planning ahead is essential.</p></div></div>
+            <div class="faq-i"><button class="faq-q">Which product lines are available for wholesale?<span class="faq-ic">+</span></button><div class="faq-a"><p>Our core B2B outdoor lines are: <strong>KING® Picnic Tables</strong> (140–300 cm + square + backrest versions), <strong>ROYAL KING® Picnic Tables</strong> (200–300 cm + XXL round), <strong>Dordogne Teak Garden Benches</strong> (120–210 cm), <strong>KING® Beer Table Sets</strong> (110–220 cm, multiple widths), and <strong>KING® Garden Benches</strong> (Charles, George, George Luxe, Henry, Hugo, Lux, Krukbank and Slatted). You can also enquire about our interior and other outdoor product ranges — just let us know in your request.</p></div></div>
+            <div class="faq-i"><button class="faq-q">What is the minimum order?<span class="faq-ic">+</span></button><div class="faq-a"><p>The <strong>Starter Pack</strong> begins at 20 units minimum, freely composed across all product lines. For higher volumes, we offer half-truck and full-truck formulas at even better pricing.</p></div></div>
+            <div class="faq-i"><button class="faq-q">Can I mix different products in one order?<span class="faq-ic">+</span></button><div class="faq-a"><p>Absolutely. All formulas allow a free mix. For example: a truck with KING® picnic tables, Dordogne teak benches and beer table sets. We advise on the best-selling models and optimise the loading for you.</p></div></div>
+            <div class="faq-i"><button class="faq-q">How many units fit on a truck?<span class="faq-ic">+</span></button><div class="faq-a"><p>This depends on the models chosen. For reference: a full truck fits approximately <strong>378 KING® 180 cm picnic tables</strong>. Larger models (240, 300 cm), square or round tables, teak benches and beer tables all have different dimensions, so the count varies. With a mixed truck, we calculate the optimal loading. <strong>Request a quote</strong> specifying your desired models and we'll provide exact quantities.</p></div></div>
+            <div class="faq-i"><button class="faq-q">Which countries do you deliver to?<span class="faq-ic">+</span></button><div class="faq-a"><p>We deliver across <strong>16 European countries</strong>: Netherlands, Belgium, Germany, France, Luxembourg, Austria, United Kingdom, Italy, Spain, Denmark, Sweden, Finland, Monaco, San Marino and Vatican City.</p></div></div>
+            <div class="faq-i"><button class="faq-q">What are the delivery lead times?<span class="faq-ic">+</span></button><div class="faq-a"><p>Our advice: <strong>order in autumn/winter</strong> (September–February) for delivery before peak season (March–July). During peak season, production lead times can reach approximately <strong>3 months</strong>. Starter Packs are quicker to arrange; for half and full trucks, early ordering is strongly advised.</p></div></div>
+            <div class="faq-i"><button class="faq-q">What type of wood is used?<span class="faq-ic">+</span></button><div class="faq-a"><p>KING® and ROYAL KING® products: <strong>premium Norway spruce (Picea abies)</strong>, pressure-impregnated Autoclave Class 4. Dordogne line: <strong>V-legal certified teak</strong>, kiln-dried to 16% moisture content.</p></div></div>
+            <div class="faq-i"><button class="faq-q">What warranty is provided?<span class="faq-ic">+</span></button><div class="faq-a"><p>All products come with a <strong>2-year warranty</strong> covering manufacturing defects. Natural wood characteristics like knots, colour variations and minor cracks are not covered.</p></div></div>
+            <div class="faq-i"><button class="faq-q">What's the difference between KING® and ROYAL KING®?<span class="faq-ic">+</span></button><div class="faq-a"><p>The main difference is <strong>plank thickness</strong>: 40 mm for KING® and 45 mm for ROYAL KING®. ROYAL KING® tables are heavier, more robust. Both lines share the same quality: Autoclave Class 4 impregnation, rounded corners and 2-year warranty.</p></div></div>
+            <div class="faq-i"><button class="faq-q">Are prices shown on the website?<span class="faq-ic">+</span></button><div class="faq-a"><p>B2B wholesale prices are provided exclusively <strong>upon request</strong>. Pricing depends on formula, product mix and total volume. Request a free quote and receive a personalised offer within 48 hours.</p></div></div>
+            <div class="faq-i"><button class="faq-q">Can I also order interior or other products in bulk?<span class="faq-ic">+</span></button><div class="faq-a"><p>Yes! Beyond our core outdoor B2B lines, we can provide wholesale quotes for our entire product range, including <strong>beds, dining tables, TV furniture, sideboards, garden cabinets, vegetable gardens</strong> and much more. Simply specify your interest in the quote request form.</p></div></div>
             <div class="faq-i"><button class="faq-q">In which languages can I communicate with you?<span class="faq-ic">+</span></button><div class="faq-a"><p>Our team provides support in <strong>English, Dutch, French and German</strong>. All quotes and documentation can be provided in your preferred language.</p></div></div>
         </div>
     </div>
@@ -615,7 +640,7 @@
                 <div id="formContent">
                     <h3 class="contact__ft">Quote Request Form</h3>
                     <p class="contact__fs">Fields marked with * are required.</p>
-                    <form id="quoteForm" data-email="support@e-woodproducts.com">
+                    <form id="quoteForm">
                         <input type="text" name="_gotcha" style="display:none">
                         <div class="frow">
                             <div class="fgrp"><label for="company">Company <span class="req">*</span></label><input type="text" id="company" name="company" placeholder="Your company name" required></div>
@@ -647,14 +672,14 @@
                             <div class="chk-group__t">Product lines of interest:</div>
                             <div class="chk-group__opts">
                                 <label class="chk-label"><input type="checkbox" name="products[]" value="KING Picnic Tables">KING® Picnic Tables</label>
-                                <label class="chk-label"><input type="checkbox" name="products[]" value="ROYAL KING Picnic Tables">ROYAL KING® Tables</label>
+                                <label class="chk-label"><input type="checkbox" name="products[]" value="ROYAL KING Tables">ROYAL KING® Tables</label>
                                 <label class="chk-label"><input type="checkbox" name="products[]" value="Dordogne Teak Benches">Dordogne Teak Benches</label>
-                                <label class="chk-label"><input type="checkbox" name="products[]" value="KING Beer Tables">KING® Beer Tables</label>
+                                <label class="chk-label"><input type="checkbox" name="products[]" value="KING Beer Table Sets">KING® Beer Table Sets</label>
                                 <label class="chk-label"><input type="checkbox" name="products[]" value="KING Garden Benches">KING® Garden Benches</label>
-                                <label class="chk-label"><input type="checkbox" name="products[]" value="All product lines">All product lines</label>
+                                <label class="chk-label"><input type="checkbox" name="products[]" value="Interior / Other products">Interior / Other Products</label>
                             </div>
                         </div>
-                        <div class="fgrp fgrp--full"><label for="message">Message / Details</label><textarea id="message" name="message" placeholder="Specify your needs: quantities per product, preferred delivery date, questions..."></textarea></div>
+                        <div class="fgrp fgrp--full"><label for="message">Message / Details</label><textarea id="message" name="message" placeholder="Specify your needs: quantities, models, preferred delivery date, questions..."></textarea></div>
                         <div class="form-sub"><button type="submit" class="btn btn--pine" id="submitBtn">Send Quote Request <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg></button></div>
                         <p class="form-note">Free and non-binding. Response within 48 business hours.</p>
                     </form>
@@ -707,8 +732,9 @@
                     <li><a href="#products">KING® Picnic Tables</a></li>
                     <li><a href="#products">ROYAL KING® Tables</a></li>
                     <li><a href="#products">Dordogne Teak Benches</a></li>
-                    <li><a href="#products">KING® Beer Tables</a></li>
+                    <li><a href="#products">KING® Beer Table Sets</a></li>
                     <li><a href="#products">KING® Garden Benches</a></li>
+                    <li><a href="#products">Interior &amp; Other</a></li>
                 </ul>
             </div>
             <div>
@@ -732,15 +758,11 @@
 </footer>
 
 <script>
-// Mobile nav
 const navT=document.getElementById('navToggle'),navL=document.getElementById('navLinks');
 navT.addEventListener('click',()=>navL.classList.toggle('open'));
 navL.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navL.classList.remove('open')));
-
-// Nav scroll
 window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('nav--s',scrollY>50));
 
-// Product tabs
 document.querySelectorAll('.b2b__tab').forEach(tab=>{
     tab.addEventListener('click',()=>{
         document.querySelectorAll('.b2b__tab').forEach(t=>t.classList.remove('active'));
@@ -752,7 +774,6 @@ document.querySelectorAll('.b2b__tab').forEach(tab=>{
     });
 });
 
-// FAQ
 document.querySelectorAll('.faq-q').forEach(b=>{
     b.addEventListener('click',()=>{
         const i=b.parentElement,a=i.classList.contains('active');
@@ -761,27 +782,23 @@ document.querySelectorAll('.faq-q').forEach(b=>{
     });
 });
 
-// Form
 const form=document.getElementById('quoteForm'),fc=document.getElementById('formContent'),fs=document.getElementById('formSuccess');
 form.addEventListener('submit',e=>{
     e.preventDefault();
     const d=new FormData(form),products=d.getAll('products[]').join(', ');
-    const email='support@e-woodproducts.com';
     const subj=encodeURIComponent('B2B Quote Request — '+(d.get('company')||'Company'));
     const body=encodeURIComponent(
         `=== B2B QUOTE REQUEST ===\n\nCompany: ${d.get('company')||'-'}\nVAT: ${d.get('vat')||'-'}\nName: ${d.get('name')||'-'}\nEmail: ${d.get('email')||'-'}\nPhone: ${d.get('phone')||'-'}\nCountry: ${d.get('country')||'-'}\n\nFormula: ${d.get('formula')||'-'}\nProducts: ${products||'None selected'}\n\nMessage:\n${d.get('message')||'No message'}\n\n---\nSent from e-productseurope.com`
     );
-    window.location.href=`mailto:${email}?subject=${subj}&body=${body}`;
+    window.location.href=`mailto:support@e-woodproducts.com?subject=${subj}&body=${body}`;
     setTimeout(()=>{fc.style.display='none';fs.style.display='block'},500);
 });
 
-// Scroll animations
 const obs=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
 },{threshold:.1,rootMargin:'0px 0px -50px 0px'});
 document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
 
-// Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click',function(e){
         e.preventDefault();
