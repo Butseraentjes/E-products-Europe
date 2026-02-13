@@ -1,422 +1,794 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="E-Products Europe - Uw specialist in houten producten en maatwerk oplossingen">
-    <title>E-Products Europe - Home</title>
+    <title>E-Products Europe | European Wholesale Partner for Quality Wooden Furniture</title>
+    <meta name="description" content="E-Products Europe BV — your wholesale partner for KING® picnic tables, ROYAL KING® tables, Dordogne teak benches, KING® beer tables and KING® garden benches across 16 European markets.">
+    <meta name="keywords" content="wholesale wooden furniture Europe, KING picnic tables B2B, teak garden bench wholesale, beer tables bulk, garden bench reseller, E-Products Europe">
+    <meta property="og:title" content="E-Products Europe | Wholesale Wooden Furniture for Resellers">
+    <meta property="og:description" content="Become a reseller of premium KING® outdoor furniture. Wholesale pricing across 16 European markets.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.e-productseurope.com">
+    <link rel="canonical" href="https://www.e-productseurope.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #2C3E50;
-            --accent-color: #8B4513;
-            --text-color: #333;
-            --light-bg: #f8f9fa;
-            --wood-color: #DEB887;
-            --transition: all 0.3s ease;
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{
+            --cream:#F7F4EE;--warm:#FDFCFA;--sand:#EBE4D6;--sandDark:#D4CBBB;
+            --oak:#7A6340;--oakDark:#5C4A2E;--oakLight:#9B8460;
+            --pine:#1B3A2D;--pineLight:#2A5840;--pinePale:#E4EDE6;
+            --charcoal:#1E1E1C;--text:#333330;--textMid:#6A6A66;--textLight:#8E8E88;
+            --gold:#C49532;--goldLight:#D4AC50;
+            --white:#FFFFFF;--border:#DDD7CC;
+            --font-h:'Fraunces',Georgia,serif;
+            --font-b:'Outfit',-apple-system,sans-serif;
+            --sh-s:0 1px 3px rgba(30,30,28,.05);
+            --sh-m:0 4px 20px rgba(30,30,28,.08);
+            --sh-l:0 8px 40px rgba(30,30,28,.12);
+            --sh-xl:0 20px 60px rgba(30,30,28,.15);
+            --r-s:8px;--r-m:14px;--r-l:24px;
+            --ease:0.35s cubic-bezier(.4,0,.2,1);
         }
+        html{scroll-behavior:smooth}
+        body{font-family:var(--font-b);color:var(--text);background:var(--warm);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+        img{max-width:100%;height:auto;display:block}
+        a{color:inherit;text-decoration:none}
+        h1,h2,h3,h4{font-family:var(--font-h);font-weight:500;line-height:1.2}
+        h1{font-size:clamp(2.4rem,5vw,3.8rem)}
+        h2{font-size:clamp(1.9rem,3.5vw,2.8rem)}
+        h3{font-size:clamp(1.2rem,2vw,1.6rem)}
+        .ctn{max-width:1200px;margin:0 auto;padding:0 24px}
+        .ctn-w{max-width:1400px;margin:0 auto;padding:0 24px}
+        .sec{padding:100px 0}
+        .sec--cream{background:var(--cream)}
+        .sec--pine{background:var(--pine);color:var(--white)}
+        .sec--charcoal{background:var(--charcoal);color:var(--white)}
+        .badge{display:inline-block;font-family:var(--font-b);font-weight:600;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:18px}
+        .badge--sand{background:var(--sand);color:var(--oak)}
+        .badge--light{background:rgba(255,255,255,.12);color:rgba(255,255,255,.9)}
+        p.lead{font-size:1.1rem;color:var(--textMid);line-height:1.8;max-width:620px}
+        .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-b);font-weight:600;font-size:.92rem;padding:15px 32px;border-radius:var(--r-s);border:none;cursor:pointer;transition:var(--ease);letter-spacing:.01em}
+        .btn svg{width:17px;height:17px;transition:transform var(--ease)}
+        .btn:hover svg{transform:translateX(3px)}
+        .btn--pine{background:var(--pine);color:var(--white)}
+        .btn--pine:hover{background:var(--pineLight);transform:translateY(-2px);box-shadow:var(--sh-m)}
+        .btn--white{background:var(--white);color:var(--pine)}
+        .btn--white:hover{background:var(--cream);transform:translateY(-2px)}
+        .btn--outline{background:transparent;color:var(--pine);border:2px solid var(--pine)}
+        .btn--outline:hover{background:var(--pine);color:var(--white)}
+        .btn--ghost{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,.35)}
+        .btn--ghost:hover{background:rgba(255,255,255,.1);border-color:#fff}
+        .btn--gold{background:var(--gold);color:var(--white)}
+        .btn--gold:hover{background:var(--goldLight);transform:translateY(-2px)}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* NAV */
+        .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(253,252,250,.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(221,215,204,.5);transition:var(--ease)}
+        .nav--s{box-shadow:var(--sh-s)}
+        .nav__in{display:flex;align-items:center;justify-content:space-between;height:72px}
+        .nav__logo{display:flex;align-items:center;gap:11px;font-family:var(--font-h);font-size:1.25rem;color:var(--charcoal);font-weight:500}
+        .nav__logo-i{width:38px;height:38px;background:var(--pine);border-radius:var(--r-s);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-b);font-weight:700;font-size:.7rem;letter-spacing:.03em}
+        .nav__links{display:flex;align-items:center;gap:4px;list-style:none}
+        .nav__links a{font-weight:500;font-size:.87rem;padding:7px 16px;border-radius:var(--r-s);transition:var(--ease);color:var(--text)}
+        .nav__links a:hover{background:var(--sand);color:var(--charcoal)}
+        .nav__cta{background:var(--pine)!important;color:#fff!important;font-weight:600!important}
+        .nav__cta:hover{background:var(--pineLight)!important}
+        .nav__mob{display:none;background:none;border:none;cursor:pointer;width:44px;height:44px;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+        .nav__mob span{width:22px;height:2px;background:var(--charcoal);border-radius:2px;transition:var(--ease)}
+
+        /* HERO */
+        .hero{position:relative;min-height:100vh;display:flex;align-items:center;background:linear-gradient(155deg,var(--cream) 0%,var(--warm) 45%,var(--pinePale) 100%);overflow:hidden;padding-top:72px}
+        .hero::after{content:'';position:absolute;top:-30%;right:-15%;width:70%;height:180%;background:radial-gradient(ellipse,rgba(196,149,50,.05) 0%,transparent 70%);pointer-events:none}
+        .hero__g{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;padding:56px 0}
+        .hero__sub{font-weight:600;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--oak);margin-bottom:18px;display:flex;align-items:center;gap:12px}
+        .hero__sub::before{content:'';width:36px;height:2px;background:var(--oak)}
+        .hero h1{color:var(--charcoal);margin-bottom:22px}
+        .hero h1 em{color:var(--pine);font-style:italic}
+        .hero__desc{font-size:1.1rem;color:var(--textMid);line-height:1.8;margin-bottom:36px;max-width:500px}
+        .hero__acts{display:flex;gap:14px;flex-wrap:wrap}
+        .hero__stats{display:flex;gap:36px;margin-top:52px;padding-top:36px;border-top:1px solid var(--border)}
+        .hero__sv{font-family:var(--font-h);font-size:1.85rem;color:var(--pine)}
+        .hero__sl{font-size:.82rem;color:var(--textMid);margin-top:3px}
+        .hero__vis{position:relative}
+        .hero__img{border-radius:var(--r-l);overflow:hidden;box-shadow:var(--sh-xl);aspect-ratio:4/3}
+        .hero__img img{width:100%;height:100%;object-fit:cover}
+        .hero__fl{position:absolute;bottom:-18px;left:-28px;background:var(--white);padding:18px 22px;border-radius:var(--r-m);box-shadow:var(--sh-l);display:flex;align-items:center;gap:14px;z-index:3}
+        .hero__fl-i{width:44px;height:44px;background:var(--pinePale);border-radius:var(--r-s);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+        .hero__fl strong{display:block;font-size:.9rem;color:var(--charcoal)}
+        .hero__fl span{font-size:.78rem;color:var(--textMid)}
+
+        /* TRUST */
+        .trust{background:var(--white);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 0}
+        .trust__in{display:flex;align-items:center;justify-content:center;gap:44px;flex-wrap:wrap}
+        .trust__it{display:flex;align-items:center;gap:10px;font-size:.87rem;font-weight:500;color:var(--textMid)}
+        .trust__ic{width:36px;height:36px;background:var(--pinePale);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+
+        /* ABOUT */
+        .about__g{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+        .about__img{border-radius:var(--r-l);overflow:hidden;box-shadow:var(--sh-l)}
+        .about__img img{width:100%;aspect-ratio:4/3;object-fit:cover}
+        .about h2{margin-bottom:18px}
+        .about__txt{color:var(--textMid);margin-bottom:16px;font-size:1.02rem;line-height:1.8}
+        .about__facts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
+        .about__fact{background:var(--cream);padding:20px;border-radius:var(--r-m)}
+        .about__fact strong{display:block;font-family:var(--font-h);font-size:1.5rem;color:var(--pine);margin-bottom:4px}
+        .about__fact span{font-size:.85rem;color:var(--textMid)}
+
+        /* MARKETS MAP */
+        .markets__header{text-align:center;max-width:660px;margin:0 auto 52px}
+        .markets__header h2{margin-bottom:14px}
+        .markets__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;max-width:900px;margin:0 auto 40px}
+        .market-tag{display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--border);border-radius:var(--r-s);padding:14px 18px;font-weight:500;font-size:.9rem;transition:var(--ease)}
+        .market-tag:hover{border-color:var(--oakLight);box-shadow:var(--sh-s);transform:translateY(-2px)}
+        .market-tag .flag{font-size:1.3rem}
+        .markets__cta{text-align:center;margin-top:36px}
+
+        /* B2B PRODUCTS */
+        .b2b__header{text-align:center;max-width:700px;margin:0 auto 20px}
+        .b2b__header h2{margin-bottom:14px}
+        .b2b__tabs{display:flex;justify-content:center;gap:8px;margin-bottom:44px;flex-wrap:wrap}
+        .b2b__tab{font-family:var(--font-b);font-weight:600;font-size:.87rem;padding:10px 24px;border:2px solid var(--border);border-radius:100px;background:transparent;cursor:pointer;transition:var(--ease);color:var(--text)}
+        .b2b__tab.active,.b2b__tab:hover{background:var(--pine);color:#fff;border-color:var(--pine)}
+        .b2b__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px}
+        .pcard{background:var(--white);border:1px solid var(--border);border-radius:var(--r-m);overflow:hidden;transition:var(--ease)}
+        .pcard:hover{box-shadow:var(--sh-m);transform:translateY(-3px)}
+        .pcard__img{aspect-ratio:4/3;overflow:hidden;background:var(--cream)}
+        .pcard__img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+        .pcard:hover .pcard__img img{transform:scale(1.05)}
+        .pcard__body{padding:22px}
+        .pcard__tag{display:inline-block;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:4px 11px;border-radius:100px;margin-bottom:8px}
+        .pcard__tag--king{background:var(--pinePale);color:var(--pine)}
+        .pcard__tag--royal{background:linear-gradient(135deg,#F5E6C8,#E8D5A8);color:var(--oakDark)}
+        .pcard__tag--teak{background:#F0E8D8;color:#6B5335}
+        .pcard__tag--beer{background:#E8E4F0;color:#4A3A6B}
+        .pcard__tag--bench{background:#DAE8E0;color:#2A5840}
+        .pcard__name{font-family:var(--font-h);font-size:1.1rem;color:var(--charcoal);margin-bottom:6px}
+        .pcard__spec{font-size:.83rem;color:var(--textMid);line-height:1.6}
+
+        /* FORMULAS */
+        .formulas__header{text-align:center;max-width:700px;margin:0 auto 56px}
+        .formulas__header h2{margin-bottom:14px;color:#fff}
+        .formulas__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+        .fcard{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-l);padding:36px 28px;transition:var(--ease);position:relative;overflow:hidden}
+        .fcard:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);transform:translateY(-4px)}
+        .fcard--feat{border-color:var(--gold);border-width:2px}
+        .fcard--feat::before{content:'Most Popular';position:absolute;top:0;left:0;right:0;background:var(--gold);color:#fff;text-align:center;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:7px}
+        .fcard--feat{padding-top:56px}
+        .fcard__icon{font-size:2rem;margin-bottom:20px}
+        .fcard h3{color:#fff;margin-bottom:6px}
+        .fcard__vol{font-size:.87rem;font-weight:600;color:var(--goldLight);margin-bottom:16px}
+        .fcard__desc{font-size:.92rem;color:rgba(255,255,255,.65);margin-bottom:24px;line-height:1.7}
+        .fcard__feats{list-style:none;margin-bottom:28px}
+        .fcard__feats li{font-size:.87rem;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:flex-start;gap:9px;color:rgba(255,255,255,.8)}
+        .fcard__feats li::before{content:'✓';color:var(--goldLight);font-weight:700;flex-shrink:0}
+        .fcard__feats li:last-child{border-bottom:none}
+        .fcard .btn{width:100%;justify-content:center}
+
+        /* ADVANTAGES */
+        .adv__g{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+        .adv__content h2{margin-bottom:18px}
+        .adv__content>p{color:var(--textMid);margin-bottom:40px;font-size:1.02rem}
+        .adv-item{display:flex;gap:18px;margin-bottom:28px}
+        .adv-item__ic{width:44px;height:44px;background:var(--pinePale);border-radius:var(--r-s);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+        .adv-item h4{font-size:1.05rem;color:var(--charcoal);margin-bottom:4px}
+        .adv-item p{font-size:.88rem;color:var(--textMid);line-height:1.6}
+        .adv__vis{border-radius:var(--r-l);overflow:hidden;box-shadow:var(--sh-xl)}
+        .adv__vis img{width:100%;aspect-ratio:3/4;object-fit:cover}
+
+        /* STEPS */
+        .steps__header{text-align:center;max-width:600px;margin:0 auto 64px}
+        .steps__header h2{margin-bottom:14px}
+        .steps__g{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;position:relative}
+        .steps__g::before{content:'';position:absolute;top:38px;left:12.5%;right:12.5%;height:2px;background:linear-gradient(90deg,var(--border),var(--oakLight),var(--border))}
+        .step{text-align:center;position:relative;z-index:1}
+        .step__n{width:76px;height:76px;background:var(--white);border:3px solid var(--pine);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:1.6rem;color:var(--pine);margin:0 auto 20px;box-shadow:var(--sh-s)}
+        .step h4{font-size:1.05rem;margin-bottom:8px;color:var(--charcoal)}
+        .step p{font-size:.87rem;color:var(--textMid);line-height:1.6}
+
+        /* FAQ */
+        .faq__header{text-align:center;max-width:600px;margin:0 auto 48px}
+        .faq__header h2{margin-bottom:14px}
+        .faq__list{max-width:780px;margin:0 auto}
+        .faq-i{border-bottom:1px solid var(--border)}
+        .faq-q{width:100%;background:none;border:none;cursor:pointer;padding:22px 0;display:flex;align-items:center;justify-content:space-between;gap:14px;text-align:left;font-family:var(--font-b);font-size:1.02rem;font-weight:600;color:var(--charcoal);transition:color var(--ease)}
+        .faq-q:hover{color:var(--pine)}
+        .faq-ic{width:30px;height:30px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--ease);font-size:1.15rem;color:var(--textMid)}
+        .faq-i.active .faq-ic{background:var(--pine);color:#fff;transform:rotate(45deg)}
+        .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease}
+        .faq-i.active .faq-a{max-height:500px;padding-bottom:22px}
+        .faq-a p{font-size:.93rem;color:var(--textMid);line-height:1.8}
+
+        /* CONTACT */
+        .contact__g{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:start}
+        .contact__info h2{margin-bottom:14px;color:var(--charcoal)}
+        .contact__info>p{color:var(--textMid);margin-bottom:36px;font-size:1.02rem}
+        .contact__det{display:flex;gap:14px;margin-bottom:22px}
+        .contact__det-ic{width:42px;height:42px;background:var(--pinePale);border-radius:var(--r-s);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+        .contact__det strong{display:block;font-size:.82rem;color:var(--textMid);font-weight:500;margin-bottom:2px}
+        .contact__det span,.contact__det a{font-weight:600;color:var(--charcoal)}
+        .contact__det a:hover{color:var(--pine)}
+        .contact__fw{background:var(--white);border:1px solid var(--border);border-radius:var(--r-l);padding:36px;box-shadow:var(--sh-m)}
+        .contact__ft{font-family:var(--font-h);font-size:1.4rem;margin-bottom:6px;color:var(--charcoal)}
+        .contact__fs{font-size:.87rem;color:var(--textMid);margin-bottom:28px}
+        .frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .fgrp{margin-bottom:18px}
+        .fgrp--full{grid-column:1/-1}
+        .fgrp label{display:block;font-weight:600;font-size:.82rem;color:var(--charcoal);margin-bottom:5px}
+        .fgrp label .req{color:var(--gold)}
+        .fgrp input,.fgrp select,.fgrp textarea{width:100%;font-family:var(--font-b);font-size:.93rem;padding:11px 15px;border:1.5px solid var(--border);border-radius:var(--r-s);background:var(--warm);color:var(--text);transition:var(--ease);outline:none}
+        .fgrp input:focus,.fgrp select:focus,.fgrp textarea:focus{border-color:var(--pine);box-shadow:0 0 0 3px rgba(27,58,45,.08)}
+        .fgrp textarea{resize:vertical;min-height:110px}
+        .fgrp select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236A6A66' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center;padding-right:38px}
+        .chk-group{margin-bottom:18px}
+        .chk-group__t{font-weight:600;font-size:.82rem;color:var(--charcoal);margin-bottom:8px}
+        .chk-group__opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+        .chk-label{display:flex;align-items:center;gap:7px;font-size:.87rem;color:var(--text);cursor:pointer;padding:7px 11px;border-radius:var(--r-s);border:1.5px solid var(--border);transition:var(--ease)}
+        .chk-label:hover{border-color:var(--pine);background:var(--pinePale)}
+        .chk-label input{accent-color:var(--pine)}
+        .form-sub{margin-top:6px}
+        .form-sub .btn{width:100%;justify-content:center}
+        .form-note{font-size:.78rem;color:var(--textMid);margin-top:10px;text-align:center}
+        .form-ok{display:none;text-align:center;padding:36px 18px}
+        .form-ok__ic{width:68px;height:68px;background:var(--pinePale);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:1.8rem}
+        .form-ok h3{margin-bottom:10px}
+        .form-ok p{color:var(--textMid);max-width:380px;margin:0 auto}
+        .retail-box{margin-top:36px;padding:22px;background:var(--pinePale);border-radius:var(--r-m)}
+        .retail-box h4{font-size:.95rem;color:var(--pine);margin-bottom:6px}
+        .retail-box p{font-size:.87rem;color:var(--textMid);margin-bottom:10px}
+        .retail-box a{font-weight:600;color:var(--pine);font-size:.87rem}
+
+        /* CTA */
+        .cta{background:linear-gradient(135deg,var(--charcoal) 0%,var(--pine) 100%);color:#fff;padding:76px 0;text-align:center;position:relative;overflow:hidden}
+        .cta::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23fff' fill-opacity='.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+        .cta h2{margin-bottom:14px;position:relative}
+        .cta p{color:rgba(255,255,255,.78);font-size:1.05rem;max-width:540px;margin:0 auto 32px;position:relative}
+        .cta__acts{display:flex;gap:14px;justify-content:center;position:relative;flex-wrap:wrap}
+
+        /* FOOTER */
+        .footer{background:var(--charcoal);color:rgba(255,255,255,.65);padding:56px 0 28px}
+        .footer__g{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:44px;margin-bottom:44px}
+        .footer__bd{font-size:.87rem;line-height:1.7;margin-top:14px}
+        .footer h4{color:#fff;font-size:.95rem;margin-bottom:16px}
+        .footer__li{list-style:none}
+        .footer__li li{margin-bottom:10px}
+        .footer__li a{font-size:.87rem;transition:color var(--ease)}
+        .footer__li a:hover{color:#fff}
+        .footer__legal{font-size:.82rem;margin-bottom:7px}
+        .footer__bot{border-top:1px solid rgba(255,255,255,.08);padding-top:22px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;flex-wrap:wrap;gap:14px}
+        .footer__bot-links{display:flex;gap:22px}
+        .footer__bot-links a:hover{color:#fff}
+
+        /* ANIMATIONS */
+        .fu{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+        .fu.vis{opacity:1;transform:translateY(0)}
+
+        /* RESPONSIVE */
+        @media(max-width:1024px){
+            .hero__g,.about__g,.adv__g,.contact__g{grid-template-columns:1fr}
+            .hero__vis,.about__img-wrap{max-width:540px}
+            .formulas__grid{grid-template-columns:1fr;max-width:460px;margin-left:auto;margin-right:auto}
+            .footer__g{grid-template-columns:1fr 1fr}
+            .steps__g{grid-template-columns:1fr 1fr;gap:36px}
+            .steps__g::before{display:none}
         }
-
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-        }
-
-        .header {
-            position: fixed;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            padding: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-
-        .nav {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            text-decoration: none;
-        }
-
-        .market-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .market-link {
-            text-decoration: none;
-            color: var(--primary-color);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: var(--transition);
-            font-weight: 500;
-        }
-
-        .market-link:hover {
-            background: var(--wood-color);
-            color: white;
-        }
-
-        .hero {
-            min-height: 80vh;
-            display: grid;
-            place-items: center;
-            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(139, 69, 19, 0.8)),
-                        url('https://www.e-woodproducts.be/cdn/shop/files/office-contact_1000x383.jpg?v=1692955107') center/cover;
-            color: white;
-            padding: 2rem;
-            margin-top: 60px;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: var(--wood-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .cta-button:hover {
-            background: var(--accent-color);
-            transform: translateY(-2px);
-        }
-
-        .section {
-            padding: 5rem 2rem;
-        }
-
-        .about {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-content {
-            padding-right: 2rem;
-        }
-
-        .about-content h2 {
-            font-size: 2.5rem;
-            color: var(--accent-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .about-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        .stats-section {
-            background: var(--light-bg);
-            padding: 4rem 2rem;
-        }
-
-        .stats-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .stat-item {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: var(--transition);
-        }
-
-        .stat-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 1.1rem;
-            color: var(--text-color);
-            font-weight: 500;
-        }
-
-        .contact {
-            background: white;
-            padding: 5rem 2rem;
-        }
-
-        .contact-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-        }
-
-        .contact-info {
-            background: var(--light-bg);
-            padding: 2rem;
-            border-radius: 10px;
-        }
-
-        .contact-info h2 {
-            color: var(--accent-color);
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-        }
-
-        .contact-info p {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer {
-            background: var(--primary-color);
-            color: white;
-            padding: 4rem 2rem;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-        }
-
-        .footer h3 {
-            color: var(--wood-color);
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-        }
-
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 0.8rem;
-            opacity: 0.8;
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover {
-            opacity: 1;
-            padding-left: 5px;
-        }
-
-        @media (max-width: 1024px) {
-            .about {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .about-content {
-                padding-right: 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .market-links {
-                display: none;
-            }
-
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero {
-                min-height: 60vh;
-            }
+        @media(max-width:768px){
+            .sec{padding:60px 0}
+            .nav__links{display:none;position:absolute;top:72px;left:0;right:0;background:var(--white);flex-direction:column;padding:22px;box-shadow:var(--sh-l);gap:3px}
+            .nav__links.open{display:flex}
+            .nav__links a{padding:11px 15px;width:100%}
+            .nav__mob{display:flex}
+            .hero{min-height:auto;padding-top:96px;padding-bottom:44px}
+            .hero__stats{gap:20px;flex-wrap:wrap}
+            .hero__fl{position:relative;bottom:auto;left:auto;margin-top:14px}
+            .trust__in{gap:20px}
+            .frow{grid-template-columns:1fr}
+            .chk-group__opts{grid-template-columns:1fr}
+            .steps__g{grid-template-columns:1fr;gap:28px}
+            .b2b__grid{grid-template-columns:1fr}
+            .markets__grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+            .contact__fw{padding:22px}
+            .cta__acts{flex-direction:column;align-items:center}
+            .footer__g{grid-template-columns:1fr;gap:28px}
+            .footer__bot{flex-direction:column;text-align:center}
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <nav class="nav">
-            <a href="/" class="logo">E-Products Europe</a>
-            <div class="market-links">
-                <a href="https://www.e-woodproducts.be" class="market-link">België</a>
-                <a href="https://www.e-woodproducts.com" class="market-link">Nederland</a>
-                <a href="https://www.e-woodproducts.com/de-de" class="market-link">Deutschland</a>
-                <a href="https://www.e-woodproducts.com/fr-fr" class="market-link">France</a>
-            </div>
-        </nav>
-    </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Specialist in Houten Producten</h1>
-            <p>Ontdek ons uitgebreide assortiment aan hoogwaardige houten producten en maatwerk oplossingen voor uw specifieke behoeften.</p>
-            <a href="#contact" class="cta-button">Contacteer Ons</a>
-        </div>
-    </section>
+<!-- NAV -->
+<nav class="nav" id="nav">
+    <div class="nav__in ctn-w">
+        <a href="#" class="nav__logo">
+            <div class="nav__logo-i">EP</div>
+            E-Products Europe
+        </a>
+        <ul class="nav__links" id="navLinks">
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#markets">Markets</a></li>
+            <li><a href="#products">B2B Products</a></li>
+            <li><a href="#formulas">Wholesale Formulas</a></li>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact" class="nav__cta">Request a Quote</a></li>
+        </ul>
+        <button class="nav__mob" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+</nav>
 
-    <section class="section">
-        <div class="about">
-            <div class="about-content">
-                <h2>Over E-Products Europe</h2>
-                <p>Als toonaangevende leverancier van houten producten combineren we vakmanschap met innovatie om de beste oplossingen te bieden voor onze klanten in heel Europa.</p>
-                <p>Met een focus op kwaliteit en duurzaamheid, leveren we producten die voldoen aan de hoogste standaarden in de industrie.</p>
-            </div>
-            <div class="about-image">
-                <img src="https://www.e-woodproducts.be/cdn/shop/files/office-contact_1000x383.jpg?v=1692955107" 
-                     alt="E-Products Europe kantoor" 
-                     loading="lazy"
-                     style="width: 100%; height: auto; object-fit: cover;">
-            </div>
-        </div>
-    </section>
-
-    <section class="stats-section">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <div class="stat-number" data-target="15">0</div>
-                <div class="stat-label">Jaren Ervaring</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" data-target="4">0</div>
-                <div class="stat-label">Europese Markten</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" data-target="178031">0</div>
-                <div class="stat-label">Tevreden Klanten</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="contact" id="contact">
-        <div class="contact-container">
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <h2>Contactgegevens</h2>
-                    <p><strong>BV E-Products Europe</strong></p>
-                    <p>Patijntjestraat 107</p>
-                    <p>9000 Gent</p>
-                    <p>BTW: BE 0500.621.156</p>
-                    <p>Email: <a href="mailto:support@e-woodproducts.com" style="color: var(--accent-color); text-decoration: none;">support@e-woodproducts.com</a></p>
+<!-- HERO -->
+<section class="hero" id="hero">
+    <div class="ctn-w">
+        <div class="hero__g">
+            <div>
+                <div class="hero__sub">European B2B Partner</div>
+                <h1>Wholesale Partner for Premium <em>Outdoor</em> Wooden Furniture</h1>
+                <p class="hero__desc">Become a reseller of our KING® picnic tables, ROYAL KING® tables, Dordogne teak benches, beer tables and garden benches. Professional pricing across 16 European markets.</p>
+                <div class="hero__acts">
+                    <a href="#contact" class="btn btn--pine">Request a Quote <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"/></svg></a>
+                    <a href="#products" class="btn btn--outline">Explore Products</a>
                 </div>
-                <div class="contact-info">
-                    <h2>Bankgegevens</h2>
-                    <p><strong>BIC:</strong> GEBA BE BB</p>
-                    <p><strong>IBAN:</strong> BE 61 0016 8384 4117</p>
+                <div class="hero__stats">
+                    <div><div class="hero__sv">16</div><div class="hero__sl">European Markets</div></div>
+                    <div><div class="hero__sv">Since 2011</div><div class="hero__sl">Trusted Experience</div></div>
+                    <div><div class="hero__sv">4.8★</div><div class="hero__sl">582+ Reviews</div></div>
+                </div>
+            </div>
+            <div class="hero__vis">
+                <div class="hero__img">
+                    <img src="https://cdn.shopify.com/s/files/1/0770/4697/2750/files/Vierkante_Picknicktafel_in_de_alpen.jpg?v=1732013213" alt="KING picnic table in a scenic outdoor setting" loading="eager">
+                </div>
+                <div class="hero__fl">
+                    <div class="hero__fl-i">🚛</div>
+                    <div><strong>Full & half truck delivery</strong><span>Across all of Europe</span></div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <div>
-                <h3>E-Products Europe</h3>
-                <p>Uw specialist in houten producten</p>
-            </div>
-            <div class="footer-links">
-                <h3>Markten</h3>
-                <a href="https://www.e-woodproducts.be">België</a>
-                <a href="https://www.e-woodproducts.com">Nederland</a>
-                <a href="https://www.e-woodproducts.com/de-de">Duitsland</a>
-                <a href="https://www.e-woodproducts.com/fr-fr">Frankrijk</a>
-            </div>
+<!-- TRUST -->
+<div class="trust">
+    <div class="ctn-w">
+        <div class="trust__in">
+            <div class="trust__it"><div class="trust__ic">🪵</div>Premium Impregnated Wood</div>
+            <div class="trust__it"><div class="trust__ic">🛡️</div>2-Year Warranty</div>
+            <div class="trust__it"><div class="trust__ic">🚚</div>Own Fleet Delivery</div>
+            <div class="trust__it"><div class="trust__ic">🔀</div>Mix &amp; Match Models</div>
+            <div class="trust__it"><div class="trust__ic">🌍</div>16 European Countries</div>
+        </div>
+    </div>
+</div>
 
-            <div>
-                <h3>Contact</h3>
-                <p>support@e-woodproducts.com</p>
-                <p>Patijntjestraat 107, 9000 Gent</p>
+<!-- ABOUT -->
+<section class="sec about" id="about">
+    <div class="ctn">
+        <div class="about__g">
+            <div class="about__img-wrap fu">
+                <div class="about__img">
+                    <img src="https://www.e-woodproducts.be/cdn/shop/files/office-contact_1000x383.jpg?v=1692955107" alt="E-Products Europe office" loading="lazy">
+                </div>
+            </div>
+            <div class="fu">
+                <span class="badge badge--sand">Our Story</span>
+                <h2>Born from Passion, Built for Europe</h2>
+                <p class="about__txt">E-Products Europe BV was founded in 2011 by Mark and Peter in Ghent, Belgium. What started as a small selection of picnic tables sold from a converted classroom has grown into a leading European distributor of quality wooden furniture — both indoor and outdoor.</p>
+                <p class="about__txt">Today, we serve 16 European markets from our 1,500 m² warehouse, supported by a dedicated team and our own delivery fleet. In late 2023, we unified all our webshops into one central platform: <a href="https://www.e-woodproducts.com" target="_blank" rel="noopener" style="color:var(--pine);font-weight:600;">e-woodproducts.com</a>.</p>
+                <div class="about__facts">
+                    <div class="about__fact"><strong>2011</strong><span>Founded in Ghent</span></div>
+                    <div class="about__fact"><strong>1,500 m²</strong><span>Warehouse space</span></div>
+                    <div class="about__fact"><strong>16</strong><span>European markets</span></div>
+                    <div class="about__fact"><strong>582+</strong><span>Customer reviews (4.8★)</span></div>
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
+</section>
 
-    <script>
-        // Animatie voor de statistieken
-        const stats = document.querySelectorAll('.stat-number');
-        
-        const animateStats = () => {
-            stats.forEach(stat => {
-                const target = parseInt(stat.getAttribute('data-target'));
-                const duration = 2000; // 2 seconden
-                const steps = 50;
-                const stepValue = target / steps;
-                let current = 0;
-                
-                const updateStat = () => {
-                    current += stepValue;
-                    if (current < target) {
-                        stat.textContent = Math.floor(current);
-                        requestAnimationFrame(updateStat);
-                    } else {
-                        stat.textContent = target;
-                    }
-                };
-                
-                updateStat();
-            });
-        };
+<!-- MARKETS -->
+<section class="sec sec--cream" id="markets">
+    <div class="ctn">
+        <div class="markets__header fu">
+            <span class="badge badge--sand">Where We Operate</span>
+            <h2>Active in 16 European Markets</h2>
+            <p class="lead" style="margin:14px auto 0;">We deliver across Europe with localised webshops, local language support, and adapted logistics for every region.</p>
+        </div>
+        <div class="markets__grid fu">
+            <div class="market-tag"><span class="flag">🇳🇱</span>Netherlands</div>
+            <div class="market-tag"><span class="flag">🇧🇪</span>Belgium</div>
+            <div class="market-tag"><span class="flag">🇩🇪</span>Germany</div>
+            <div class="market-tag"><span class="flag">🇫🇷</span>France</div>
+            <div class="market-tag"><span class="flag">🇱🇺</span>Luxembourg</div>
+            <div class="market-tag"><span class="flag">🇦🇹</span>Austria</div>
+            <div class="market-tag"><span class="flag">🇬🇧</span>United Kingdom</div>
+            <div class="market-tag"><span class="flag">🇮🇹</span>Italy</div>
+            <div class="market-tag"><span class="flag">🇪🇸</span>Spain</div>
+            <div class="market-tag"><span class="flag">🇩🇰</span>Denmark</div>
+            <div class="market-tag"><span class="flag">🇸🇪</span>Sweden</div>
+            <div class="market-tag"><span class="flag">🇫🇮</span>Finland</div>
+            <div class="market-tag"><span class="flag">🇲🇨</span>Monaco</div>
+            <div class="market-tag"><span class="flag">🇸🇲</span>San Marino</div>
+            <div class="market-tag"><span class="flag">🇻🇦</span>Vatican City</div>
+        </div>
+        <div class="markets__cta fu">
+            <a href="https://www.e-woodproducts.com" target="_blank" rel="noopener" class="btn btn--pine">Visit our Consumer Webshop <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>
+        </div>
+    </div>
+</section>
 
-        // Intersection Observer voor animatie triggering
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateStats();
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
+<!-- B2B PRODUCTS -->
+<section class="sec" id="products">
+    <div class="ctn">
+        <div class="b2b__header fu">
+            <span class="badge badge--sand">B2B Product Lines</span>
+            <h2>Premium Product Lines for Resellers</h2>
+            <p class="lead" style="margin:14px auto 0;">Four flagship product lines available at wholesale pricing. Mix and match across all lines in a single order.</p>
+        </div>
+        <div class="b2b__tabs fu">
+            <button class="b2b__tab active" data-tab="all">All Products</button>
+            <button class="b2b__tab" data-tab="king">KING® Picnic Tables</button>
+            <button class="b2b__tab" data-tab="royal">ROYAL KING® Tables</button>
+            <button class="b2b__tab" data-tab="teak">Dordogne Teak Benches</button>
+            <button class="b2b__tab" data-tab="beer">KING® Beer Tables</button>
+            <button class="b2b__tab" data-tab="bench">KING® Garden Benches</button>
+        </div>
+        <div class="b2b__grid" id="prodGrid">
+            <!-- KING Picnic Tables -->
+            <div class="pcard fu" data-cat="king"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.K140front2.jpg" alt="KING Picnic Table 140cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--king">KING®</span><h4 class="pcard__name">Picnic Table 140 cm</h4><p class="pcard__spec">40 mm plank thickness · Parasol hole · Foldable seats · Rounded corners</p></div></div>
+            <div class="pcard fu" data-cat="king"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.K180basic.jpg" alt="KING Picnic Table 180cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--king">KING®</span><h4 class="pcard__name">Picnic Table 180 cm</h4><p class="pcard__spec">40 mm plank thickness · Best-seller · Parasol hole · Foldable seats</p></div></div>
+            <div class="pcard fu" data-cat="king"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.K240front.jpg" alt="KING Picnic Table 240cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--king">KING®</span><h4 class="pcard__name">Picnic Table 240 cm</h4><p class="pcard__spec">40 mm plank thickness · Large format · Parasol hole · Foldable seats</p></div></div>
+            <div class="pcard fu" data-cat="king"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.K300front.jpg" alt="KING Picnic Table 300cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--king">KING®</span><h4 class="pcard__name">Picnic Table 300 cm</h4><p class="pcard__spec">40 mm plank thickness · XL format · Parasol hole · Foldable seats</p></div></div>
+            <div class="pcard fu" data-cat="king"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.KVK_front.jpg" alt="KING Square Picnic Table" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--king">KING®</span><h4 class="pcard__name">Square Picnic Table 115×115 cm</h4><p class="pcard__spec">40 mm plank thickness · Unique square design · Parasol hole</p></div></div>
+            <div class="pcard fu" data-cat="king"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/K180-RUGL-1000-1.jpg" alt="KING 180cm with backrests" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--king">KING®</span><h4 class="pcard__name">Picnic Table 180 cm with Backrests</h4><p class="pcard__spec">40 mm · Superior comfort · Integrated backrests · Foldable seats</p></div></div>
+            <!-- ROYAL KING -->
+            <div class="pcard fu" data-cat="royal"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.K180basic.jpg" alt="ROYAL KING 200cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--royal">ROYAL KING®</span><h4 class="pcard__name">Picnic Table 200 cm</h4><p class="pcard__spec">45 mm plank thickness · Premium · Parasol hole · Foldable seats</p></div></div>
+            <div class="pcard fu" data-cat="royal"><div class="pcard__img"><img src="https://www.kingpicknicktafels.be/foto/royal-king-rond-1000.jpg" alt="ROYAL KING XXL Round" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--royal">ROYAL KING®</span><h4 class="pcard__name">XXL Round Table 219×219 cm</h4><p class="pcard__spec">45 mm · Exceptional round design · Unique eye-catcher</p></div></div>
+            <div class="pcard fu" data-cat="royal"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.K240front.jpg" alt="ROYAL KING 240cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--royal">ROYAL KING®</span><h4 class="pcard__name">Picnic Table 240 cm</h4><p class="pcard__spec">45 mm plank thickness · Premium large · Parasol hole</p></div></div>
+            <div class="pcard fu" data-cat="royal"><div class="pcard__img"><img src="https://myshop.s3-external-3.amazonaws.com/shop2117100.pictures.K300front.jpg" alt="ROYAL KING 300cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--royal">ROYAL KING®</span><h4 class="pcard__name">Picnic Table 300 cm</h4><p class="pcard__spec">45 mm plank thickness · Premium XL · Parasol hole</p></div></div>
+            <!-- Dordogne Teak Benches -->
+            <div class="pcard fu" data-cat="teak"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/Teak-tuinbank-120-x-91-cm-dordogne-5-cm-pootdikte-quinto-quinto.jpg?v=1721133637&width=800" alt="Dordogne Teak Bench 120cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--teak">Dordogne Teak</span><h4 class="pcard__name">Teak Garden Bench 120 cm</h4><p class="pcard__spec">5 cm leg thickness · V-legal certified teak · Ergonomic curved backrest</p></div></div>
+            <div class="pcard fu" data-cat="teak"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/Teak-tuinbank-150-x-91-cm-dordogne-5-cm-pootdikte-quinto-quinto.jpg?v=1721133520&width=800" alt="Dordogne Teak Bench 150cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--teak">Dordogne Teak</span><h4 class="pcard__name">Teak Garden Bench 150 cm</h4><p class="pcard__spec">5 cm leg thickness · V-legal certified teak · Best-seller</p></div></div>
+            <div class="pcard fu" data-cat="teak"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/Teak-tuinbank-180-x-91-cm-dordogne-5-cm-pootdikte-quinto-quinto.jpg?v=1721133466&width=800" alt="Dordogne Teak Bench 180cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--teak">Dordogne Teak</span><h4 class="pcard__name">Teak Garden Bench 180 cm</h4><p class="pcard__spec">5 cm leg thickness · V-legal certified teak · Spacious seating</p></div></div>
+            <div class="pcard fu" data-cat="teak"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/Teak-tuinbank-210-x-91-cm-dordogne-5-cm-pootdikte-quinto-quinto.jpg?v=1721133295&width=800" alt="Dordogne Teak Bench 210cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--teak">Dordogne Teak</span><h4 class="pcard__name">Teak Garden Bench 210 cm</h4><p class="pcard__spec">5 cm leg thickness · 3 legs · V-legal certified · Extra long</p></div></div>
+            <!-- Beer Tables -->
+            <div class="pcard fu" data-cat="beer"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/biertafel-220cm-king-quinto.jpg?v=1721133900&width=800" alt="KING Beer Table 220cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--beer">KING® Beer Table</span><h4 class="pcard__name">Beer Table Set 220×70 cm</h4><p class="pcard__spec">Table + 2 benches · Pressure impregnated · Foldable legs · Event-ready</p></div></div>
+            <div class="pcard fu" data-cat="beer"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/biertafel-220x80-king-quinto.jpg?v=1721133850&width=800" alt="KING Beer Table 220x80cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--beer">KING® Beer Table</span><h4 class="pcard__name">Beer Table Set 220×80 cm</h4><p class="pcard__spec">Extra wide · Table + 2 benches · Pressure impregnated · Foldable</p></div></div>
+            <!-- KING Garden Benches -->
+            <div class="pcard fu" data-cat="bench"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/King-Charles-Tuinbank-140cm-quinto.jpg?v=1721134100&width=800" alt="KING Charles Garden Bench 140cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--bench">KING® Bench</span><h4 class="pcard__name">Charles Garden Bench 140 cm</h4><p class="pcard__spec">40 mm plank · 80 mm leg thickness · Pressure impregnated · 2-seater</p></div></div>
+            <div class="pcard fu" data-cat="bench"><div class="pcard__img"><img src="https://www.e-woodproducts.com/cdn/shop/files/King-Charles-Tuinbank-200cm-quinto.jpg?v=1721134050&width=800" alt="KING Charles Garden Bench 200cm" loading="lazy"></div><div class="pcard__body"><span class="pcard__tag pcard__tag--bench">KING® Bench</span><h4 class="pcard__name">Charles Garden Bench 200 cm</h4><p class="pcard__spec">40 mm plank · 80 mm leg thickness · Pressure impregnated · 3-seater</p></div></div>
+        </div>
+        <p style="text-align:center;margin-top:36px;font-size:.93rem;color:var(--textMid)" class="fu">All B2B prices are provided upon request and vary by volume and product mix. <a href="#contact" style="color:var(--pine);font-weight:600">Request your personalised quote →</a></p>
+    </div>
+</section>
 
-        document.querySelector('.stats-section').querySelectorAll('.stat-item').forEach(item => {
-            observer.observe(item);
+<!-- FORMULAS -->
+<section class="sec sec--pine" id="formulas">
+    <div class="ctn">
+        <div class="formulas__header fu">
+            <span class="badge badge--light">Wholesale Formulas</span>
+            <h2>Three Formulas Tailored to Your Business</h2>
+            <p style="color:rgba(255,255,255,.65);margin:14px auto 0;max-width:600px;font-size:1.02rem">Whether you're just starting out or are an established distributor, we have the right formula. Mix and match all product lines in every order.</p>
+        </div>
+        <div class="formulas__grid">
+            <div class="fcard fu">
+                <div class="fcard__icon">📦</div>
+                <h3>Starter Pack</h3>
+                <div class="fcard__vol">From 20 units</div>
+                <p class="fcard__desc">The ideal entry point to test our range and evaluate demand in your market. Choose freely across all product lines.</p>
+                <ul class="fcard__feats">
+                    <li>Minimum 20 units (any mix)</li>
+                    <li>Mix all product lines</li>
+                    <li>Professional pricing</li>
+                    <li>Easiest to arrange</li>
+                    <li>Personal guidance</li>
+                </ul>
+                <a href="#contact" class="btn btn--ghost">Request a Quote</a>
+            </div>
+            <div class="fcard fcard--feat fu">
+                <div class="fcard__icon">🚛</div>
+                <h3>Half Truck</h3>
+                <div class="fcard__vol">Significant volume</div>
+                <p class="fcard__desc">The ideal choice for regular resellers. Higher volume at substantially reduced pricing. Quantities vary by product mix.</p>
+                <ul class="fcard__feats">
+                    <li>Approx. half a full truck</li>
+                    <li>Major volume discount</li>
+                    <li>Full product mix possible</li>
+                    <li>Quantity depends on models</li>
+                    <li>Custom quote within 48h</li>
+                </ul>
+                <a href="#contact" class="btn btn--gold">Request a Quote</a>
+            </div>
+            <div class="fcard fu">
+                <div class="fcard__icon">🏭</div>
+                <h3>Full Truck</h3>
+                <div class="fcard__vol">Best unit price</div>
+                <p class="fcard__desc">The best per-unit price. Ideal for high-volume distributors. For reference: a full truck fits ~378 KING® 180 cm tables — varies by model mix.</p>
+                <ul class="fcard__feats">
+                    <li>Best professional pricing</li>
+                    <li>Priority delivery</li>
+                    <li>Custom composition</li>
+                    <li>Quantities vary by model</li>
+                    <li>Dedicated account manager</li>
+                </ul>
+                <a href="#contact" class="btn btn--ghost">Request a Quote</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ADVANTAGES -->
+<section class="sec" id="advantages">
+    <div class="ctn">
+        <div class="adv__g">
+            <div class="fu">
+                <span class="badge badge--sand">Why Choose Us</span>
+                <h2>A Winning Partnership for Your Business</h2>
+                <p>Since 2011 we've been supplying premium wooden furniture across Europe. Here's what sets us apart.</p>
+                <div class="adv-item"><div class="adv-item__ic">💰</div><div><h4>Unbeatable Wholesale Pricing</h4><p>The more you order, the lower the per-unit price. Volume discounts significantly below consumer retail pricing.</p></div></div>
+                <div class="adv-item"><div class="adv-item__ic">🪵</div><div><h4>Premium Quality Guaranteed</h4><p>Norway spruce (Picea abies) pressure impregnated Autoclave Class 4. V-legal certified teak for the Dordogne line. 2-year warranty on all products.</p></div></div>
+                <div class="adv-item"><div class="adv-item__ic">🚚</div><div><h4>Controlled Logistics</h4><p>We deliver with our own fleet and trusted logistics partners across all of Europe. Safe and careful transport that parcel services cannot offer.</p></div></div>
+                <div class="adv-item"><div class="adv-item__ic">📅</div><div><h4>Seasonal Planning Advice</h4><p>Order in autumn/winter (Sept–Feb) for delivery before high season (March–July). Production includes careful crafting, pressure impregnation and thorough drying — a process that takes time.</p></div></div>
+                <div class="adv-item"><div class="adv-item__ic">🔀</div><div><h4>Custom Truck Composition</h4><p>Freely mix KING® picnic tables, ROYAL KING® tables, Dordogne teak benches, beer tables and garden benches in a single order. We optimise the loading for you.</p></div></div>
+                <div class="adv-item"><div class="adv-item__ic">🤝</div><div><h4>Dedicated Support</h4><p>A single point of contact for your orders, advice on best-selling models, and personalised delivery tracking. Support in English, Dutch, French and German.</p></div></div>
+            </div>
+            <div class="fu">
+                <div class="adv__vis">
+                    <img src="https://www.e-woodproducts.com/cdn/shop/files/Teak-tuinbank-150-x-91-cm-dordogne-5-cm-pootdikte-quinto-quinto.jpg?v=1721133520&width=800" alt="Dordogne Teak Garden Bench in a beautiful garden setting" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec sec--cream" id="how">
+    <div class="ctn">
+        <div class="steps__header fu">
+            <span class="badge badge--sand">Simple &amp; Fast</span>
+            <h2>How to Become a Reseller</h2>
+            <p class="lead" style="margin:14px auto 0">Four simple steps to start offering our products to your customers.</p>
+        </div>
+        <div class="steps__g">
+            <div class="step fu"><div class="step__n">1</div><h4>Request a Quote</h4><p>Fill in our form with your preferred formula and products of interest. It's free and non-binding.</p></div>
+            <div class="step fu"><div class="step__n">2</div><h4>Receive Your Offer</h4><p>We'll send you a personalised quote within 48 hours with professional pricing tailored to your volume and product mix.</p></div>
+            <div class="step fu"><div class="step__n">3</div><h4>Plan Ahead</h4><p>Order ideally in autumn/winter for delivery before the season. Products are crafted, impregnated and dried with care.</p></div>
+            <div class="step fu"><div class="step__n">4</div><h4>Receive &amp; Resell</h4><p>We deliver to your depot with our own trucks or logistics partners. You're ready to sell!</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- SEASONAL ADVICE -->
+<section class="sec" style="padding:56px 0">
+    <div class="ctn">
+        <div class="fu" style="max-width:880px;margin:0 auto;background:var(--white);border:2px solid var(--gold);border-radius:var(--r-l);padding:36px;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start">
+            <div style="font-size:2.4rem;line-height:1">📅</div>
+            <div>
+                <h3 style="color:var(--charcoal);margin-bottom:10px;font-size:1.3rem">Important: Plan Your Orders Ahead</h3>
+                <p style="color:var(--text);line-height:1.8;margin-bottom:14px">Peak selling season for outdoor furniture runs from <strong>March to July</strong>. To have your stock ready, we recommend placing your order between <strong>September and October</strong>, with delivery between November and February.</p>
+                <p style="color:var(--text);line-height:1.8;margin-bottom:14px">Our products are <strong>carefully crafted, pressure-impregnated and thoroughly dried</strong> — a quality process that takes time. During peak season, production lead times can reach <strong>up to 3 months</strong>.</p>
+                <p style="color:var(--textMid);line-height:1.8;font-size:.93rem">Starter Packs (20+ units) are easier to arrange in-season, but for half and full trucks, early ordering is essential.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec sec--cream" id="faq">
+    <div class="ctn">
+        <div class="faq__header fu"><span class="badge badge--sand">FAQ</span><h2>Everything You Need to Know</h2></div>
+        <div class="faq__list fu">
+            <div class="faq-i"><button class="faq-q">Which product lines are available for wholesale?<span class="faq-ic">+</span></button><div class="faq-a"><p>We offer five B2B product lines: <strong>KING® Picnic Tables</strong> (40 mm, 140–300 cm + square + backrest versions), <strong>ROYAL KING® Picnic Tables</strong> (45 mm, 200–300 cm + XXL round), <strong>Dordogne Teak Garden Benches</strong> (120–210 cm, V-legal certified teak), <strong>KING® Beer Table Sets</strong> (220 cm, two widths), and <strong>KING® Charles Garden Benches</strong> (140 cm and 200 cm). You can freely mix all lines in a single order.</p></div></div>
+            <div class="faq-i"><button class="faq-q">What is the minimum order?<span class="faq-ic">+</span></button><div class="faq-a"><p>Our <strong>Starter Pack</strong> begins at 20 units minimum. You can compose your selection freely across all product lines. For higher volumes, we offer half-truck and full-truck formulas at even better pricing.</p></div></div>
+            <div class="faq-i"><button class="faq-q">Can I mix different products in one order?<span class="faq-ic">+</span></button><div class="faq-a"><p>Absolutely! All formulas allow a free mix of all product lines. For example: a truck with KING® picnic tables, Dordogne teak benches and beer table sets. We'll advise you on the best-selling models to optimise your assortment.</p></div></div>
+            <div class="faq-i"><button class="faq-q">How many units fit on a truck?<span class="faq-ic">+</span></button><div class="faq-a"><p>This depends entirely on the models chosen. For reference: a full truck can hold approximately <strong>378 KING® 180 cm picnic tables</strong>. Larger models (240, 300 cm), square or round tables, teak benches and beer tables all have different dimensions, so the count varies. With a mixed truck, we calculate the optimal loading for you. <strong>Request a quote</strong> specifying your desired models and we'll provide exact quantities.</p></div></div>
+            <div class="faq-i"><button class="faq-q">Which countries do you deliver to?<span class="faq-ic">+</span></button><div class="faq-a"><p>We deliver across <strong>16 European countries</strong>: Netherlands, Belgium, Germany, France, Luxembourg, Austria, United Kingdom, Italy, Spain, Denmark, Sweden, Finland, Monaco, San Marino and Vatican City. We use our own fleet combined with specialised logistics partners to ensure safe delivery of large furniture items.</p></div></div>
+            <div class="faq-i"><button class="faq-q">What are the delivery lead times?<span class="faq-ic">+</span></button><div class="faq-a"><p>Lead times depend on the order period and volume. <strong>Our advice: order in autumn/winter</strong> (September–February) for delivery well before peak season (March–July). During peak season, production lead times can reach approximately <strong>3 months</strong>. Our products are carefully crafted, impregnated under pressure and thoroughly dried — a quality process that cannot be rushed. Starter Packs are quicker and easier to arrange, but even for those we recommend ordering ahead. For half and full trucks, early ordering is strongly advised.</p></div></div>
+            <div class="faq-i"><button class="faq-q">What type of wood is used?<span class="faq-ic">+</span></button><div class="faq-a"><p>Our KING® and ROYAL KING® products are made from <strong>premium Norway spruce (Picea abies)</strong>, pressure-impregnated Autoclave Class 4, protecting against moisture, mould and insects. The Dordogne bench line uses <strong>V-legal certified teak wood</strong>, known for its exceptional weather resistance and rich natural colour. Teak is kiln-dried to a 16% moisture content.</p></div></div>
+            <div class="faq-i"><button class="faq-q">What warranty is provided?<span class="faq-ic">+</span></button><div class="faq-a"><p>All products come with a <strong>2-year warranty</strong> covering manufacturing defects. Wood is a natural product, so characteristics like knots, colour variations and minor cracks are considered normal and are not covered.</p></div></div>
+            <div class="faq-i"><button class="faq-q">What's the difference between KING® and ROYAL KING®?<span class="faq-ic">+</span></button><div class="faq-a"><p>The main difference is <strong>plank thickness</strong>: 40 mm for KING® and 45 mm for ROYAL KING®. ROYAL KING® tables are heavier, more robust, and often 10 mm thicker than competitors' offerings. Both lines share the same quality: Autoclave Class 4 impregnation, rounded corners and 2-year warranty.</p></div></div>
+            <div class="faq-i"><button class="faq-q">Are prices shown on the website?<span class="faq-ic">+</span></button><div class="faq-a"><p>B2B wholesale prices are provided exclusively <strong>upon request</strong>. The price depends on the formula chosen (Starter Pack, half or full truck), product mix and total volume. Request your free quote and receive a personalised offer within 48 hours.</p></div></div>
+            <div class="faq-i"><button class="faq-q">When should I place my order to be ready for the season?<span class="faq-ic">+</span></button><div class="faq-a"><p>We strongly recommend <strong>ordering in September or October</strong> for delivery between November and February. This way, you'll have full stock before peak season (March–July). Ordering during peak season is possible but expect lead times of approximately <strong>3 months</strong>. Starter Packs are more flexible, but for half and full trucks, planning ahead is essential.</p></div></div>
+            <div class="faq-i"><button class="faq-q">In which languages can I communicate with you?<span class="faq-ic">+</span></button><div class="faq-a"><p>Our team provides support in <strong>English, Dutch, French and German</strong>. All quotes and documentation can be provided in your preferred language.</p></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec" id="contact">
+    <div class="ctn">
+        <div class="contact__g">
+            <div class="contact__info fu">
+                <span class="badge badge--sand">Contact</span>
+                <h2>Request Your Wholesale Quote</h2>
+                <p>Fill in the form and receive a personalised offer within 48 hours. Free, fast and non-binding.</p>
+                <div class="contact__det"><div class="contact__det-ic">📧</div><div><strong>Email</strong><a href="mailto:support@e-woodproducts.com">support@e-woodproducts.com</a></div></div>
+                <div class="contact__det"><div class="contact__det-ic">🏢</div><div><strong>Head Office</strong><span>E-Products Europe BV<br>Patijntjestraat 107<br>9000 Ghent, Belgium</span></div></div>
+                <div class="contact__det"><div class="contact__det-ic">📋</div><div><strong>Company Info</strong><span>VAT: BE 0500.621.156<br>BIC: GEBA BE BB<br>IBAN: BE 61 0016 8384 4117</span></div></div>
+                <div class="retail-box">
+                    <h4>🛒 Looking for individual products?</h4>
+                    <p>For individual consumer purchases, visit our webshop with delivery across Europe.</p>
+                    <a href="https://www.e-woodproducts.com" target="_blank" rel="noopener">Visit e-woodproducts.com →</a>
+                </div>
+            </div>
+            <div class="contact__fw fu">
+                <div id="formContent">
+                    <h3 class="contact__ft">Quote Request Form</h3>
+                    <p class="contact__fs">Fields marked with * are required.</p>
+                    <form id="quoteForm" data-email="support@e-woodproducts.com">
+                        <input type="text" name="_gotcha" style="display:none">
+                        <div class="frow">
+                            <div class="fgrp"><label for="company">Company <span class="req">*</span></label><input type="text" id="company" name="company" placeholder="Your company name" required></div>
+                            <div class="fgrp"><label for="vat">VAT Number</label><input type="text" id="vat" name="vat" placeholder="e.g. DE123456789"></div>
+                        </div>
+                        <div class="frow">
+                            <div class="fgrp"><label for="name">Full Name <span class="req">*</span></label><input type="text" id="name" name="name" placeholder="Your name" required></div>
+                            <div class="fgrp"><label for="email">Email <span class="req">*</span></label><input type="email" id="email" name="email" placeholder="you@company.com" required></div>
+                        </div>
+                        <div class="frow">
+                            <div class="fgrp"><label for="phone">Phone</label><input type="tel" id="phone" name="phone" placeholder="+49 ..."></div>
+                            <div class="fgrp"><label for="country">Country <span class="req">*</span></label>
+                                <select id="country" name="country" required>
+                                    <option value="" disabled selected>Select country</option>
+                                    <option>Netherlands</option><option>Belgium</option><option>Germany</option><option>France</option><option>Luxembourg</option><option>Austria</option><option>United Kingdom</option><option>Italy</option><option>Spain</option><option>Denmark</option><option>Sweden</option><option>Finland</option><option>Monaco</option><option>San Marino</option><option>Vatican City</option><option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="fgrp"><label for="formula">Preferred Formula <span class="req">*</span></label>
+                            <select id="formula" name="formula" required>
+                                <option value="" disabled selected>Choose a formula</option>
+                                <option>Starter Pack (from 20 units)</option>
+                                <option>Half Truck</option>
+                                <option>Full Truck</option>
+                                <option>Not sure yet — advise me</option>
+                            </select>
+                        </div>
+                        <div class="chk-group">
+                            <div class="chk-group__t">Product lines of interest:</div>
+                            <div class="chk-group__opts">
+                                <label class="chk-label"><input type="checkbox" name="products[]" value="KING Picnic Tables">KING® Picnic Tables</label>
+                                <label class="chk-label"><input type="checkbox" name="products[]" value="ROYAL KING Picnic Tables">ROYAL KING® Tables</label>
+                                <label class="chk-label"><input type="checkbox" name="products[]" value="Dordogne Teak Benches">Dordogne Teak Benches</label>
+                                <label class="chk-label"><input type="checkbox" name="products[]" value="KING Beer Tables">KING® Beer Tables</label>
+                                <label class="chk-label"><input type="checkbox" name="products[]" value="KING Garden Benches">KING® Garden Benches</label>
+                                <label class="chk-label"><input type="checkbox" name="products[]" value="All product lines">All product lines</label>
+                            </div>
+                        </div>
+                        <div class="fgrp fgrp--full"><label for="message">Message / Details</label><textarea id="message" name="message" placeholder="Specify your needs: quantities per product, preferred delivery date, questions..."></textarea></div>
+                        <div class="form-sub"><button type="submit" class="btn btn--pine" id="submitBtn">Send Quote Request <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg></button></div>
+                        <p class="form-note">Free and non-binding. Response within 48 business hours.</p>
+                    </form>
+                </div>
+                <div class="form-ok" id="formSuccess">
+                    <div class="form-ok__ic">✓</div>
+                    <h3>Request Sent!</h3>
+                    <p>Thank you for your quote request. Our team will contact you within 48 business hours with a personalised offer.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <div class="ctn">
+        <h2 class="fu">Ready to Start Reselling?</h2>
+        <p class="fu">Join our European network of resellers and offer premium KING® wooden furniture to your customers.</p>
+        <div class="cta__acts fu">
+            <a href="#contact" class="btn btn--white">Request a Quote <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"/></svg></a>
+            <a href="#formulas" class="btn btn--ghost">Review Our Formulas</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="ctn">
+        <div class="footer__g">
+            <div>
+                <div class="nav__logo" style="margin-bottom:0"><div class="nav__logo-i">EP</div>E-Products Europe</div>
+                <p class="footer__bd">European wholesale distributor of premium KING® outdoor furniture, Dordogne teak benches and more. Your trusted B2B partner since 2011.</p>
+            </div>
+            <div>
+                <h4>Navigation</h4>
+                <ul class="footer__li">
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#markets">Our Markets</a></li>
+                    <li><a href="#products">B2B Products</a></li>
+                    <li><a href="#formulas">Wholesale Formulas</a></li>
+                    <li><a href="#how">How It Works</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contact">Request a Quote</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Product Lines</h4>
+                <ul class="footer__li">
+                    <li><a href="#products">KING® Picnic Tables</a></li>
+                    <li><a href="#products">ROYAL KING® Tables</a></li>
+                    <li><a href="#products">Dordogne Teak Benches</a></li>
+                    <li><a href="#products">KING® Beer Tables</a></li>
+                    <li><a href="#products">KING® Garden Benches</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Legal Information</h4>
+                <p class="footer__legal">E-Products Europe BV</p>
+                <p class="footer__legal">Patijntjestraat 107<br>9000 Ghent, Belgium</p>
+                <p class="footer__legal">VAT: BE 0500.621.156</p>
+                <p class="footer__legal" style="margin-top:14px"><a href="mailto:support@e-woodproducts.com" style="color:var(--goldLight)">support@e-woodproducts.com</a></p>
+                <p class="footer__legal" style="margin-top:8px"><a href="https://www.e-woodproducts.com" target="_blank" rel="noopener" style="color:var(--goldLight)">e-woodproducts.com</a></p>
+            </div>
+        </div>
+        <div class="footer__bot">
+            <span>&copy; 2025 E-Products Europe BV. All rights reserved.</span>
+            <div class="footer__bot-links">
+                <a href="https://www.e-woodproducts.com/en/pages/general-terms" target="_blank" rel="noopener">Terms &amp; Conditions</a>
+                <a href="https://www.e-woodproducts.com/en/pages/privacy-policy-of-e-products-europe-bv" target="_blank" rel="noopener">Privacy Policy</a>
+                <a href="https://www.e-woodproducts.com" target="_blank" rel="noopener">Consumer Webshop</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Mobile nav
+const navT=document.getElementById('navToggle'),navL=document.getElementById('navLinks');
+navT.addEventListener('click',()=>navL.classList.toggle('open'));
+navL.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navL.classList.remove('open')));
+
+// Nav scroll
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('nav--s',scrollY>50));
+
+// Product tabs
+document.querySelectorAll('.b2b__tab').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+        document.querySelectorAll('.b2b__tab').forEach(t=>t.classList.remove('active'));
+        tab.classList.add('active');
+        const c=tab.dataset.tab;
+        document.querySelectorAll('.pcard').forEach(p=>{
+            p.style.display=(c==='all'||p.dataset.cat===c)?'':'none';
         });
-    </script>
+    });
+});
+
+// FAQ
+document.querySelectorAll('.faq-q').forEach(b=>{
+    b.addEventListener('click',()=>{
+        const i=b.parentElement,a=i.classList.contains('active');
+        document.querySelectorAll('.faq-i').forEach(x=>x.classList.remove('active'));
+        if(!a)i.classList.add('active');
+    });
+});
+
+// Form
+const form=document.getElementById('quoteForm'),fc=document.getElementById('formContent'),fs=document.getElementById('formSuccess');
+form.addEventListener('submit',e=>{
+    e.preventDefault();
+    const d=new FormData(form),products=d.getAll('products[]').join(', ');
+    const email='support@e-woodproducts.com';
+    const subj=encodeURIComponent('B2B Quote Request — '+(d.get('company')||'Company'));
+    const body=encodeURIComponent(
+        `=== B2B QUOTE REQUEST ===\n\nCompany: ${d.get('company')||'-'}\nVAT: ${d.get('vat')||'-'}\nName: ${d.get('name')||'-'}\nEmail: ${d.get('email')||'-'}\nPhone: ${d.get('phone')||'-'}\nCountry: ${d.get('country')||'-'}\n\nFormula: ${d.get('formula')||'-'}\nProducts: ${products||'None selected'}\n\nMessage:\n${d.get('message')||'No message'}\n\n---\nSent from e-productseurope.com`
+    );
+    window.location.href=`mailto:${email}?subject=${subj}&body=${body}`;
+    setTimeout(()=>{fc.style.display='none';fs.style.display='block'},500);
+});
+
+// Scroll animations
+const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
+},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',function(e){
+        e.preventDefault();
+        const t=document.querySelector(this.getAttribute('href'));
+        if(t){const nh=document.getElementById('nav').offsetHeight;window.scrollTo({top:t.getBoundingClientRect().top+pageYOffset-nh,behavior:'smooth'})}
+    });
+});
+</script>
 </body>
 </html>
