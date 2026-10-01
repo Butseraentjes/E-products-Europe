@@ -11,6 +11,8 @@
 // Geheim:     npx wrangler secret put BEHEER_SLEUTEL
 //             npx wrangler secret put EMAILJS_PRIVATE   (optioneel, zie meldSupport)
 
+import { offertePagina, nietGevonden } from './offerte.mjs';
+
 const MAX = { kort: 120, lang: 2000 };
 
 // Welke vennootschap een aanvraag behandelt. Moet gelijk blijven met
@@ -218,6 +220,140 @@ async function afvinken(req, env) {
   return Response.json({ ok: true, nummer, status: nieuw.status });
 }
 
+// ── offertes (fase 5) ───────────────────────────────────────────────────────
+//
+// De offerte staat onder `offerte:<nummer>` in dezelfde KV. De URL draagt een
+// geheime sleutel, zodat niemand met een ander offertenummer kan meekijken.
+
+function nuISO() {
+  return new Date().toISOString();
+}
+
+// Toont de offerte en noteert de eerste opening. Dat laatste is het halve punt van
+// fase 5: we zien eindelijk wie zijn offerte bekeken heeft en wie niet.
+async function toonOfferte(req, env, nummer, sleutel) {
+  if (!env.AANVRAGEN) return new Response(nietGevonden(), { status: 503, headers: htmlKop() });
+  const o = await env.AANVRAGEN.get(`offerte:${nummer}`, 'json');
+  if (!o || o.sleutel !== sleutel) {
+    return new Response(nietGevonden(), { status: 404, headers: htmlKop() });
+  }
+
+  const verlopen = new Date(o.geldig_tot) < new Date(new Date().toISOString().slice(0, 10));
+  const stand = o.aanvaard_op ? 'aanvaard' : verlopen ? 'verlopen' : 'open';
+
+  if (!o.geopend_op) {
+    // Eén schrijfactie, alleen de eerste keer — de gratis KV heeft 1.000 per dag.
+    const bij = { ...o, geopend_op: nuISO(), keer_geopend: 1 };
+    await env.AANVRAGEN.put(`offerte:${nummer}`, JSON.stringify(bij), {
+      metadata: { soort: 'offerte', firma: o.firma, status: stand, geopend: true },
+    }).catch(() => {});
+  } else if ((o.keer_geopend || 1) < 50) {
+    const bij = { ...o, keer_geopend: (o.keer_geopend || 1) + 1, laatst_geopend_op: nuISO() };
+    await env.AANVRAGEN.put(`offerte:${nummer}`, JSON.stringify(bij), {
+      metadata: { soort: 'offerte', firma: o.firma, status: stand, geopend: true },
+    }).catch(() => {});
+  }
+
+  return new Response(offertePagina(o, stand), { status: 200, headers: htmlKop() });
+}
+
+function htmlKop() {
+  return {
+    'content-type': 'text/html; charset=utf-8',
+    'cache-control': 'no-store',
+    'x-robots-tag': 'noindex, nofollow',
+  };
+}
+
+// De klant drukt op "offerte aanvaarden". We noteren het en melden het aan support;
+// de bestelling zelf maakt support, zoals altijd met een mensenklik.
+async function aanvaardOfferte(req, env) {
+  const origin = req.headers.get('origin') || '';
+  const b = await req.json().catch(() => ({}));
+  const nummer = kuis(b.nummer, 40);
+  const sleutel = kuis(b.sleutel, 60);
+  if (!nummer || !sleutel) return antwoord({ ok: false, fout: 'onvolledig' }, 400, origin);
+  if (!env.AANVRAGEN) return antwoord({ ok: false, fout: 'opslag niet ingesteld' }, 503, origin);
+
+  const o = await env.AANVRAGEN.get(`offerte:${nummer}`, 'json');
+  if (!o || o.sleutel !== sleutel) return antwoord({ ok: false, fout: 'onbekend' }, 404, origin);
+  if (o.aanvaard_op) return antwoord({ ok: true, nummer, al: true }, 200, origin);
+  if (new Date(o.geldig_tot) < new Date(new Date().toISOString().slice(0, 10))) {
+    return antwoord({ ok: false, fout: 'verlopen' }, 410, origin);
+  }
+
+  const bij = { ...o, aanvaard_op: nuISO(), status: 'aanvaard' };
+  await env.AANVRAGEN.put(`offerte:${nummer}`, JSON.stringify(bij), {
+    metadata: { soort: 'offerte', firma: o.firma, status: 'aanvaard' },
+  });
+
+  await meldAanvaarding(bij, env).catch(() => {});
+  return antwoord({ ok: true, nummer }, 200, origin);
+}
+
+async function meldAanvaarding(o, env) {
+  if (!env.EMAILJS_PRIVATE || !env.EMAILJS_SERVICE || !env.EMAILJS_TPL_ADMIN) return;
+  const regels = o.regels.map((r) => `  ${r.aantal} × ${r.naam} à € ${Number(r.stukprijs).toFixed(2)}`).join('\n');
+  await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      service_id: env.EMAILJS_SERVICE,
+      template_id: env.EMAILJS_TPL_ADMIN,
+      user_id: env.EMAILJS_PUBLIC,
+      accessToken: env.EMAILJS_PRIVATE,
+      template_params: {
+        to_email: 'support@e-woodproducts.com',
+        subject: `Offerte ${o.nummer} AANVAARD — ${o.klant.organisatie}`,
+        message: [
+          `Offerte ${o.nummer} is aanvaard door de klant.`,
+          `Vennootschap: ${o.firma}`,
+          `Klant:        ${o.klant.organisatie}${o.klant.contact ? ` · ${o.klant.contact}` : ''}`,
+          `E-mail:       ${o.klant.email || '-'}`,
+          '',
+          regels,
+          '',
+          `Totaal incl. btw: € ${Number(o.incl_btw).toFixed(2)}`,
+          '',
+          'De bestelling zelf moet nog met de hand aangemaakt worden.',
+        ].join('\n'),
+        reply_to: o.klant.email || 'support@e-woodproducts.com',
+      },
+    }),
+  });
+}
+
+// Offertes klaarzetten en opvolgen, voor de scripts op Peters Mac.
+async function offerteBeheer(req, env) {
+  const sleutel = req.headers.get('x-beheer-sleutel');
+  if (!env.BEHEER_SLEUTEL || sleutel !== env.BEHEER_SLEUTEL) {
+    return new Response('niet toegelaten', { status: 401 });
+  }
+  if (req.method === 'POST') {
+    const o = await req.json().catch(() => null);
+    if (!o || !o.nummer || !o.sleutel || !Array.isArray(o.regels)) {
+      return Response.json({ ok: false, fout: 'onvolledige offerte' }, { status: 400 });
+    }
+    await env.AANVRAGEN.put(`offerte:${o.nummer}`, JSON.stringify({ ...o, status: 'open' }), {
+      metadata: { soort: 'offerte', firma: o.firma, status: 'open' },
+    });
+    return Response.json({ ok: true, nummer: o.nummer, url: `${env.SITE_URL}/offerte/${o.nummer}/${o.sleutel}` });
+  }
+  // GET: alle offertes, voor de opvolglijst.
+  const uit = [];
+  let cursor;
+  do {
+    const blad = await env.AANVRAGEN.list({ prefix: 'offerte:', cursor, limit: 1000 });
+    for (const k of blad.keys) {
+      const o = await env.AANVRAGEN.get(k.name, 'json');
+      if (o) uit.push(o);
+    }
+    cursor = blad.list_complete ? null : blad.cursor;
+  } while (cursor);
+  uit.sort((a, b) => (a.gemaakt_op < b.gemaakt_op ? 1 : -1));
+  return Response.json({ ok: true, aantal: uit.length, offertes: uit });
+}
+
 export default {
   async fetch(req, env) {
     const u = new URL(req.url);
@@ -238,6 +374,13 @@ export default {
     if (u.pathname === '/api/aanvraag' && req.method === 'POST') return aanvraag(req, env);
     if (u.pathname === '/api/aanvragen' && req.method === 'GET') return lijst(req, env);
     if (u.pathname === '/api/afvinken' && req.method === 'POST') return afvinken(req, env);
+
+    // Offertes (fase 5)
+    if (u.pathname === '/api/offerte/aanvaarden' && req.method === 'POST') return aanvaardOfferte(req, env);
+    if (u.pathname === '/api/offertes') return offerteBeheer(req, env);
+
+    const offerte = u.pathname.match(/^\/offerte\/([A-Za-z0-9-]{3,40})\/([A-Za-z0-9_-]{8,60})\/?$/);
+    if (offerte && req.method === 'GET') return toonOfferte(req, env, offerte[1], offerte[2]);
 
     return new Response('niet gevonden', { status: 404 });
   },

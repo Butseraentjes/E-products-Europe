@@ -245,7 +245,7 @@
       knop.disabled = true;
       knop.textContent = TEKST.bezig;
 
-      fetch('/api/aanvraag', {
+      fetch('https://aanvragen-eproductseurope.peterbutseraen.workers.dev/api/aanvraag', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(gegevens)

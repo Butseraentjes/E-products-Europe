@@ -17,6 +17,14 @@ const WORTEL = join(HIER, '..');
 const UIT = join(WORTEL, 'public');
 const SITE = 'https://www.e-productseurope.com';
 
+// Waar het formulier zijn aanvraag naartoe stuurt.
+// Op Cloudflare Pages draait de Worker op hetzelfde domein en volstaat '/api/aanvraag'.
+// Zolang het domein nog op Render staat (statisch, geen /api), moet dat de volledige
+// Worker-URL zijn. Overschakelen zodra de nameservers bij Spinternet verhuisd zijn:
+//   API_BASIS = ''  →  de site praat dan met zijn eigen domein.
+const API_BASIS =
+  process.env.EPEUROPE_API_BASIS ?? 'https://aanvragen-eproductseurope.peterbutseraen.workers.dev';
+
 const groep = JSON.parse(readFileSync(join(WORTEL, 'data/groep.json'), 'utf8'));
 const producten = JSON.parse(readFileSync(join(WORTEL, 'data/producten.json'), 'utf8'));
 
@@ -494,7 +502,7 @@ ${punten}
       knop.disabled = true;
       knop.textContent = TEKST.bezig;
 
-      fetch('/api/aanvraag', {
+      fetch('${API_BASIS}/api/aanvraag', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(gegevens)
