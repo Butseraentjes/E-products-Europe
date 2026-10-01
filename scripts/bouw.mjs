@@ -28,6 +28,7 @@ const API_BASIS =
 const groep = JSON.parse(readFileSync(join(WORTEL, 'data/groep.json'), 'utf8'));
 const producten = JSON.parse(readFileSync(join(WORTEL, 'data/producten.json'), 'utf8'));
 const beelden = JSON.parse(readFileSync(join(WORTEL, 'data/beelden.json'), 'utf8'));
+const europa = JSON.parse(readFileSync(join(WORTEL, 'data/europa-paden.json'), 'utf8'));
 
 // Shopify levert zelf een modern formaat als je ?width= meegeeft.
 const beeld = (sleutel, breedte) => `${beelden._basis}${beelden[sleutel].bestand}?width=${breedte}`;
@@ -190,7 +191,7 @@ function firmaKaart(f, taal) {
     ? `<dt>${esc(t('firma.magazijn', taal))}</dt><dd>${esc(f.magazijn)}</dd>`
     : '';
   const siret = f.siret ? `<dt>SIRET</dt><dd>${esc(f.siret)}</dd>` : '';
-  return `        <article class="kaart">
+  return `        <article class="kaart" id="firma-${f.id}">
           <p class="kaart__rol">${esc(f.rol === 'holding' ? rol : `${rol} · ${landnaam}`)}</p>
           <h3>${esc(f.naam)}</h3>
           <address>${f.adres.map(esc).join('<br>')}</address>
@@ -242,6 +243,98 @@ function jaarringen() {
         <text x="17" y="23" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#241c16" text-anchor="middle">EP</text>
       </g>
     </svg>`;
+}
+
+// De Europakaart: het continent als aaneengelegde houtstalen, met drie gloeiende
+// werkplaatsen en leverroutes die er als takken uitgroeien. De landvormen komen uit
+// open geodata (zie scripts/europakaart.mjs); de houttinten, de gloed, de gloeiende
+// vestigingen en de groeiende routes zijn zelf getekend — geen foto, geen kant-en-klare
+// kaartendienst, geen tracking.
+function stadVan(f) {
+  return f.adres[1].replace(/^\S+\s+/, '');
+}
+
+// Een lichtjes andere houttint per land, zoals planken in een vloer nooit precies
+// dezelfde kleur hebben. Vast per landcode (geen Math.random): herbouwen geeft
+// steeds hetzelfde beeld.
+function houtTint(iso) {
+  let h = 0;
+  for (const c of iso) h = (h * 31 + c.charCodeAt(0)) % 997;
+  const lichtheid = 55 + (h % 10); // 55–64 %
+  return `hsl(30 44% ${lichtheid}%)`;
+}
+
+function boogpad(x1, y1, x2, y2) {
+  const dx = x2 - x1, dy = y2 - y1;
+  const afstand = Math.hypot(dx, dy) || 1;
+  const buig = Math.min(afstand * 0.16, 60);
+  const cx = (x1 + x2) / 2 + (-dy / afstand) * buig;
+  const cy = (y1 + y2) / 2 + (dx / afstand) * buig;
+  return `M${x1} ${y1} Q${cx} ${cy} ${x2} ${y2}`;
+}
+
+function europakaart(taal) {
+  const [VW, VH] = europa._view;
+
+  const landen = Object.entries(europa.landen)
+    .map(([iso, l]) => `<path class="ekaart__land" d="${l.pad}" fill="${houtTint(iso)}"><title>${esc(l.naam)}</title></path>`)
+    .join('');
+
+  const hubVoorFirma = Object.fromEntries(groep.kaart.vestigingen.map((v) => [v.firma, v]));
+
+  const routes = groep.kaart.markten
+    .map((m, i) => {
+      const firmaId = groep.routering[m.land] || 'bv';
+      const hub = hubVoorFirma[firmaId];
+      if (!hub) return '';
+      return `<path class="ekaart__route" d="${boogpad(hub.x, hub.y, m.x, m.y)}" style="--vertraging:${i * 85}ms"/>`;
+    })
+    .join('');
+
+  const marktpunten = groep.kaart.markten
+    .map(
+      (m) => `<g class="ekaart__markt" transform="translate(${m.x} ${m.y})">
+        <circle r="4"/>
+        <title>${esc(land(m.land, taal))}</title>
+        <text x="7" y="4">${esc(m.land)}</text>
+      </g>`
+    )
+    .join('');
+
+  const hubs = groep.kaart.vestigingen
+    .map((v) => {
+      const f = firma(v.firma);
+      const stad = stadVan(f);
+      return `<a class="ekaart__hub" href="#firma-${v.firma}" aria-label="${esc(f.naam)} — ${esc(stad)}">
+        <g transform="translate(${v.x} ${v.y})">
+          <circle class="ekaart__puls" r="7"/>
+          <circle class="ekaart__punt" r="4.5"/>
+          <text class="ekaart__stad" x="0" y="-13">${esc(stad)}</text>
+        </g>
+      </a>`;
+    })
+    .join('');
+
+  return `    <figure class="ekaart__wrap op">
+      <svg class="ekaart__svg" viewBox="0 0 ${VW} ${VH}" role="img" aria-label="${esc(t('kaart.kop', taal))}">
+        <defs>
+          <radialGradient id="ekaartGloed" cx="27%" cy="54%" r="65%">
+            <stop offset="0%" stop-color="#4a3826"/>
+            <stop offset="100%" stop-color="#1f1810"/>
+          </radialGradient>
+        </defs>
+        <rect class="ekaart__achtergrond" width="${VW}" height="${VH}" fill="url(#ekaartGloed)"/>
+        <g class="ekaart__landen">${landen}</g>
+        <g class="ekaart__routes">${routes}</g>
+        <g class="ekaart__markten">${marktpunten}</g>
+        <g class="ekaart__hubs">${hubs}</g>
+      </svg>
+      <figcaption class="ekaart__legende">
+        <span><i class="ekaart__chip ekaart__chip--hub"></i>${esc(t('kaart.legende.vestiging', taal))}</span>
+        <span><i class="ekaart__chip ekaart__chip--markt"></i>${esc(t('kaart.legende.markt', taal))}</span>
+        <span class="ekaart__hint">${esc(t('kaart.legende.hint', taal))}</span>
+      </figcaption>
+    </figure>`;
 }
 
 function startPagina(taal) {
@@ -300,6 +393,12 @@ function startPagina(taal) {
         <h2 class="band__kop">${esc(t('home.firmas.kop', taal))}</h2>
         <p class="band__lood">${esc(t('home.wie.tekst', taal))}</p>
       </div>
+      <div class="lees op">
+        <p class="opschrift">${esc(t('kaart.opschrift', taal))}</p>
+        <h2 class="band__kop">${esc(t('kaart.kop', taal))}</h2>
+        <p class="band__lood">${esc(t('kaart.tekst', taal))}</p>
+      </div>
+${europakaart(taal)}
       <div class="raster raster--3 op">
 ${groep.firmas.map((f) => firmaKaart(f, taal)).join('\n')}
       </div>

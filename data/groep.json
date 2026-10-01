@@ -245,5 +245,95 @@
       "naam": "tablesdepique-nique.fr",
       "url": "https://www.tablesdepique-nique.fr/"
     }
-  ]
+  ],
+  "kaart": {
+    "_uitleg": "Pixelposities (0..1000 x 0..760) voor de Europakaart op de startpagina. Zelfde projectie als scripts/europakaart.mjs. Een vestiging/markt toevoegen: coördinaat opzoeken en met dezelfde formule omrekenen (of het script tijdelijk aanpassen).",
+    "vestigingen": [
+      {
+        "firma": "bv",
+        "stad": "Gent",
+        "x": 277.7,
+        "y": 409.8
+      },
+      {
+        "firma": "gmbh",
+        "stad": "Kleve",
+        "x": 323.4,
+        "y": 394.8
+      },
+      {
+        "firma": "sarl",
+        "stad": "Sainte Catherine",
+        "x": 250.9,
+        "y": 421.3
+      }
+    ],
+    "markten": [
+      {
+        "land": "BE",
+        "x": 291.9,
+        "y": 413.9
+      },
+      {
+        "land": "NL",
+        "x": 307.4,
+        "y": 387.6
+      },
+      {
+        "land": "LU",
+        "x": 323.2,
+        "y": 435.0
+      },
+      {
+        "land": "DE",
+        "x": 404.7,
+        "y": 407.5
+      },
+      {
+        "land": "AT",
+        "x": 482.1,
+        "y": 482.3
+      },
+      {
+        "land": "FR",
+        "x": 249.2,
+        "y": 508.8
+      },
+      {
+        "land": "MC",
+        "x": 347.5,
+        "y": 560.1
+      },
+      {
+        "land": "IT",
+        "x": 444.7,
+        "y": 598.3
+      },
+      {
+        "land": "ES",
+        "x": 136.8,
+        "y": 627.3
+      },
+      {
+        "land": "DK",
+        "x": 386.8,
+        "y": 302.8
+      },
+      {
+        "land": "SE",
+        "x": 559.2,
+        "y": 223.3
+      },
+      {
+        "land": "FI",
+        "x": 693.4,
+        "y": 186.5
+      },
+      {
+        "land": "GB",
+        "x": 142.6,
+        "y": 320.8
+      }
+    ]
+  }
 }

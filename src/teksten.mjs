@@ -409,6 +409,25 @@ export const T = {
     en: 'Our outdoor furniture is pressure-treated spruce: it can rain, freeze and blaze without a yearly coat of oil. The Dordogne benches are teak, a wood that may silver without losing its strength.',
   },
 
+
+  // ─── de Europakaart ───────────────────────────────────────────────────────
+  'kaart.opschrift': { nl: 'Waar we leveren', fr: 'Où nous livrons', de: 'Wohin wir liefern', en: 'Where we deliver' },
+  'kaart.kop': { nl: 'Eén continent, drie werkplaatsen', fr: 'Un continent, trois ateliers', de: 'Ein Kontinent, drei Standorte', en: 'One continent, three workshops' },
+  'kaart.tekst': {
+    nl: 'Van Gent, Kleve en Sainte Catherine vertrekken onze bestelwagens naar heel Europa. Klik op een vestiging voor haar gegevens.',
+    fr: 'Depuis Gand, Kleve et Sainte Catherine, nos camionnettes partent vers toute l’Europe. Cliquez sur une société pour ses coordonnées.',
+    de: 'Von Gent, Kleve und Sainte Catherine aus fahren unsere Lieferwagen durch ganz Europa. Klicken Sie auf eine Gesellschaft für ihre Daten.',
+    en: 'From Ghent, Kleve and Sainte Catherine, our vans reach across Europe. Click a company for its details.',
+  },
+  'kaart.legende.vestiging': { nl: 'Vestiging', fr: 'Siège', de: 'Standort', en: 'Headquarters' },
+  'kaart.legende.markt': { nl: 'Markt', fr: 'Marché', de: 'Markt', en: 'Market' },
+  'kaart.legende.hint': {
+    nl: 'Hover of klik een vestiging',
+    fr: 'Survolez ou cliquez une société',
+    de: 'Standort anklicken oder berühren',
+    en: 'Hover or click a headquarters',
+  },
+
   // ─── voettekst ───────────────────────────────────────────────────────────
   'voet.groep': {
     nl: 'E-Products Europe is de groep achter onze webwinkels in België, Duitsland en Frankrijk.',

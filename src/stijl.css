@@ -216,8 +216,20 @@ h1, h2, h3 {
 .kaart {
   background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.1);
   border-radius: var(--radius); padding: 28px; transition: .25s;
+  scroll-margin-top: 120px;
 }
 .kaart:hover { background: rgba(255,255,255,.075); border-color: rgba(206,151,102,.45); transform: translateY(-3px); }
+/* Klik je op een vestiging op de Europakaart, dan springt de pagina hierheen —
+   deze gloed maakt duidelijk wélke kaart het was. */
+.kaart:target {
+  border-color: var(--brons); background: rgba(206,151,102,.1);
+  box-shadow: 0 0 0 3px rgba(206,151,102,.28), 0 18px 50px rgba(0,0,0,.35);
+  animation: kaartGevonden 2.2s ease;
+}
+@keyframes kaartGevonden {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(206,151,102,.28), 0 18px 50px rgba(0,0,0,.35); }
+  30% { box-shadow: 0 0 0 7px rgba(206,151,102,.14), 0 18px 50px rgba(0,0,0,.35); }
+}
 .kaart h3 { font-size: 22px; margin: 0 0 4px; color: var(--crème); }
 .kaart__rol { font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--brons); font-weight: 600; margin-bottom: 12px; }
 .kaart address { font-style: normal; font-size: 14.5px; color: rgba(248,243,232,.66); margin-bottom: 14px; }
@@ -306,6 +318,75 @@ button.knop[disabled] { opacity: .6; cursor: default; transform: none; }
 .voet a:hover { color: var(--brons-licht); }
 .voet .zacht { color: rgba(248,243,232,.5); font-size: 14px; }
 .voet__slot { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.08); font-size: 13.5px; color: rgba(248,243,232,.4); }
+
+/* ── Europakaart ─────────────────────────────────────────────────────────── */
+/* Het continent als aaneengelegde houtstalen: elk land een eigen tint (zie
+   houtTint in bouw.mjs), met drie gloeiende vestigingen en leverroutes die er
+   als takken uitgroeien zodra de kaart in beeld komt. */
+.ekaart__wrap {
+  margin: 44px 0 8px; border-radius: 22px; overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,.45);
+}
+.ekaart__svg { width: 100%; height: auto; display: block; }
+.ekaart__land {
+  stroke: #1a1410; stroke-width: 0.8; stroke-opacity: .55;
+  transition: filter .25s ease;
+}
+.ekaart__landen:hover .ekaart__land { filter: saturate(.7); }
+.ekaart__land:hover { filter: saturate(1.3) brightness(1.08); }
+
+.ekaart__route {
+  fill: none; stroke: var(--brons-licht); stroke-width: 1.3; stroke-linecap: round;
+  opacity: .62; stroke-dasharray: 1400; stroke-dashoffset: 1400;
+  transition: stroke-dashoffset 1.7s cubic-bezier(.2,.7,.2,1);
+  transition-delay: var(--vertraging, 0ms);
+}
+.ekaart__wrap.zichtbaar .ekaart__route { stroke-dashoffset: 0; }
+
+.ekaart__markt circle { fill: var(--brons-licht); opacity: .9; }
+.ekaart__markt text {
+  font-size: 11px; font-weight: 600; fill: rgba(248,243,232,.75);
+  letter-spacing: .04em; font-family: 'Inter', sans-serif;
+}
+
+.ekaart__hub { cursor: pointer; }
+.ekaart__punt { fill: var(--brons-licht); }
+.ekaart__puls {
+  fill: var(--brons-licht); opacity: .45; transform-box: fill-box; transform-origin: center;
+  animation: ekaartPuls 2.6s ease-out infinite;
+}
+.ekaart__hub:nth-of-type(2) .ekaart__puls { animation-delay: .5s; }
+.ekaart__hub:nth-of-type(3) .ekaart__puls { animation-delay: 1s; }
+@keyframes ekaartPuls {
+  0% { r: 4.5; opacity: .55; }
+  100% { r: 16; opacity: 0; }
+}
+/* Gent, Kleve en Sainte Catherine liggen in het echt vlak bij elkaar — alle drie
+   labels tegelijk tonen geeft een onleesbare kluwen. Daarom alleen de naam bij hover
+   of toetsenbordfocus; de stip zelf is altijd zichtbaar en klikbaar, en de naam staat
+   toch al op de kaart (de firmakaart waar de link naartoe springt). */
+.ekaart__stad {
+  font-family: 'Fraunces', Georgia, serif; font-size: 15px; font-weight: 600;
+  fill: var(--crème); text-anchor: middle; paint-order: stroke;
+  stroke: var(--nacht); stroke-width: 4px; stroke-linejoin: round;
+  opacity: 0; transition: opacity .18s ease; pointer-events: none;
+}
+.ekaart__hub:hover .ekaart__punt, .ekaart__hub:focus-visible .ekaart__punt { r: 6.5; }
+.ekaart__hub:hover .ekaart__stad, .ekaart__hub:focus-visible .ekaart__stad {
+  opacity: 1; fill: var(--brons-licht);
+}
+.ekaart__hub:focus-visible .ekaart__punt { outline: 2px solid var(--brons-licht); outline-offset: 3px; }
+
+.ekaart__legende {
+  display: flex; gap: 22px; margin: 18px 4px 0; font-size: 13px;
+  color: rgba(248,243,232,.6);
+}
+.ekaart__legende span { display: inline-flex; align-items: center; gap: 7px; }
+.ekaart__chip { width: 9px; height: 9px; border-radius: 50%; display: inline-block; background: var(--brons-licht); }
+.ekaart__chip--hub { box-shadow: 0 0 0 4px rgba(224,168,120,.3); }
+.ekaart__chip--markt { opacity: .65; }
+.ekaart__legende { align-items: center; }
+.ekaart__hint { font-size: 12.5px; color: rgba(248,243,232,.4); margin-left: auto; }
 
 /* ── opkomen bij scroll ──────────────────────────────────────────────────── */
 .op { opacity: 0; transform: translateY(26px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
