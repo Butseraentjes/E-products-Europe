@@ -89,6 +89,7 @@ ${hreflang}
   <meta property="og:locale" content="${taal}">
   <link rel="stylesheet" href="/stijl.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="msvalidate.01" content="72A0E590C5D434F652C1E4256F2B418C">
 ${extraHoofd}</head>
 <body>
   <header class="kop">
@@ -735,6 +736,10 @@ schrijf(
   'favicon.svg',
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#CE9766"/><text x="32" y="43" font-family="Helvetica,Arial,sans-serif" font-size="30" font-weight="700" fill="#fff" text-anchor="middle">EP</text></svg>\n`
 );
+
+// Eigendomsbewijs voor Google Search Console. NIET verwijderen: zonder dit bestand
+// verliezen we de toegang tot de meetgegevens van dit domein.
+schrijf('googleb0cdacf373743028.html', 'google-site-verification: googleb0cdacf373743028.html\n');
 
 schrijf('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
 
