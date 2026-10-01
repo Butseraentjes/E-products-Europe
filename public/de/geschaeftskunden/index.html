@@ -6,16 +6,20 @@
   <title>Angebot für Gemeinden, Schulen, Vereine und Unternehmen</title>
   <meta name="description" content="Fordern Sie ein Angebot auf den Namen Ihrer Organisation an: Picknicktische, Gartenbänke und Biertische, mit Bestellschein, Rechnung und Lieferung nach Absprache.">
   <link rel="canonical" href="https://www.e-productseurope.com/de/geschaeftskunden/">
+  <link rel="alternate" hreflang="en" href="https://www.e-productseurope.com/en/business/">
   <link rel="alternate" hreflang="nl" href="https://www.e-productseurope.com/nl/zakelijk/">
   <link rel="alternate" hreflang="fr" href="https://www.e-productseurope.com/fr/professionnels/">
   <link rel="alternate" hreflang="de" href="https://www.e-productseurope.com/de/geschaeftskunden/">
-  <link rel="alternate" hreflang="en" href="https://www.e-productseurope.com/en/business/">
   <link rel="alternate" hreflang="x-default" href="https://www.e-productseurope.com/en/business/">
   <meta property="og:title" content="Angebot für Gemeinden, Schulen, Vereine und Unternehmen">
   <meta property="og:description" content="Fordern Sie ein Angebot auf den Namen Ihrer Organisation an: Picknicktische, Gartenbänke und Biertische, mit Bestellschein, Rechnung und Lieferung nach Absprache.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.e-productseurope.com/de/geschaeftskunden/">
   <meta property="og:locale" content="de">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.shopify.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="/stijl.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta name="msvalidate.01" content="72A0E590C5D434F652C1E4256F2B418C">
@@ -36,23 +40,25 @@
           <a href="/de/unterlagen/">Unterlagen</a>
       </nav>
       <div class="talen" role="group" aria-label="Sprache">
+          <a href="/en/business/" hreflang="en" lang="en" title="English">en</a>
           <a href="/nl/zakelijk/" hreflang="nl" lang="nl" title="Nederlands">nl</a>
           <a href="/fr/professionnels/" hreflang="fr" lang="fr" title="Français">fr</a>
           <a href="/de/geschaeftskunden/" hreflang="de" lang="de" title="Deutsch" aria-current="true">de</a>
-          <a href="/en/business/" hreflang="en" lang="en" title="English">en</a>
       </div>
     </div>
   </header>
-  <div class="hero">
+  <div class="paginakop">
+    <img class="paginakop__beeld" src="https://cdn.shopify.com/s/files/1/0770/4697/2750/files/bedrijf-K180.jpg?width=1600" alt="" aria-hidden="true" loading="eager">
     <div class="wrap">
       <h1>Kaufen Sie für eine Organisation?</h1>
       <p>Gemeinden, Schulen, Vereine, Campingplätze, Gastronomie und Unternehmen kaufen bei uns mehrere Stücke auf einmal. Dafür brauchen Sie oft Unterlagen, die ein Online-Shop nicht liefert: ein Angebot auf Ihren Namen, einen Bestellschein, eine Rechnung mit Ihrer Umsatzsteuer-Nummer oder einen passenden Liefertermin. Fragen Sie es hier an; Sie erhalten Antwort von der Gesellschaft Ihres Landes.</p>
     </div>
   </div>
-  <main class="wrap">
+  <main class="band band--licht">
+    <div class="wrap">
     <section>
       <h2>Was Sie von uns anfragen können</h2>
-      <ul class="lijst-schoon">
+      <ul class="lijst">
         <li>Ein Angebot auf den Namen Ihrer Organisation, mit Gültigkeitsdatum.</li>
         <li>Einen Bestellschein oder eine Rechnung mit Ihrer Umsatzsteuer-Nummer und Ihrer internen Referenz.</li>
         <li>Einen Liefertermin in Absprache: wir rufen Sie an, sobald die Tour geplant ist.</li>
@@ -183,9 +189,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>April bis Juli</td><td>1 tot 9 werkdagen</td><td>1 tot 21 dagen</td></tr>
-            <tr><td>August bis März</td><td>gemiddeld 3,5 weken, uiterlijk 8 weken</td><td>uiterlijk 8 weken</td></tr>
-            <tr><td>Kleine Stücke, per Paketdienst</td><td colspan="2">1 tot 2 werkdagen</td></tr>
+            <tr><td>April bis Juli</td><td>1 bis 9 Werktage</td><td>1 bis 21 Tage</td></tr>
+            <tr><td>August bis März</td><td>durchschnittlich 3,5 Wochen, spätestens 8 Wochen</td><td>spätestens 8 Wochen</td></tr>
+            <tr><td>Kleine Stücke, per Paketdienst</td><td colspan="2">1 bis 2 Werktage</td></tr>
           </tbody>
         </table>
       </div>
@@ -313,6 +319,28 @@
         </div>
       </div>
     </div>
+      <p class="voet__slot">© 2026 E-Products Europe · E-Products Europe BV · E-Products Deutschland GmbH · E-Products France SARL</p>
+    </div>
   </footer>
+  <script>
+  (function () {
+    // Kop wordt vast zodra je scrolt.
+    var kop = document.querySelector('.kop');
+    var vast = function () { kop.classList.toggle('kop--vast', window.scrollY > 40); };
+    vast(); window.addEventListener('scroll', vast, { passive: true });
+
+    // Blokken komen rustig op. Wie beweging uit heeft staan, ziet ze meteen.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.op').forEach(function (e) { e.classList.add('zichtbaar'); });
+      return;
+    }
+    var kijker = new IntersectionObserver(function (regels) {
+      regels.forEach(function (r) {
+        if (r.isIntersecting) { r.target.classList.add('zichtbaar'); kijker.unobserve(r.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.op').forEach(function (e) { kijker.observe(e); });
+  })();
+  </script>
 </body>
 </html>

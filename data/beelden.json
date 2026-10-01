@@ -1,0 +1,71 @@
+{
+  "_uitleg": "De beelden van de site. ALLEEN echte foto's uit onze eigen Shopify-bibliotheek — geen AI-beelden (vaste regel). Breedte via Shopify's eigen ?width=, dat levert vanzelf een modern formaat.",
+  "_regel": "Een beeld van 1024x1024 of 1248x832 is bij ons bijna altijd een AI-upload. Die staan hier niet in. Alles hieronder is 1700 px of groter en is een echte foto van een echte tafel.",
+  "_basis": "https://cdn.shopify.com/s/files/1/0770/4697/2750/files/",
+
+  "hero": {
+    "bestand": "picknicktafel-k300-gedekte-tafel-op-grind.jpg",
+    "formaat": "2048x2048",
+    "alt": {
+      "en": "A three-metre KING picnic table set for dinner in a sunlit garden",
+      "nl": "Een KING picknicktafel van drie meter, gedekt in een zonnige tuin",
+      "fr": "Une table de pique-nique KING de trois mètres, dressée dans un jardin ensoleillé",
+      "de": "Ein drei Meter langer KING Picknicktisch, gedeckt in einem sonnigen Garten"
+    }
+  },
+
+  "buiten": {
+    "bestand": "picknicktafel-k180-volledige-tafel-tuin.jpg",
+    "formaat": "3264x3264",
+    "alt": {
+      "en": "A KING picnic table of 180 cm in a garden",
+      "nl": "Een KING picknicktafel van 180 cm in een tuin",
+      "fr": "Une table de pique-nique KING de 180 cm dans un jardin",
+      "de": "Ein KING Picknicktisch von 180 cm in einem Garten"
+    }
+  },
+
+  "binnen": {
+    "bestand": "liora-8.png",
+    "formaat": "2000x2000",
+    "alt": {
+      "en": "The Liora coffee table in a warm oak living room",
+      "nl": "De Liora salontafel in een warme eiken woonkamer",
+      "fr": "La table basse Liora dans un salon en chêne chaleureux",
+      "de": "Der Liora Couchtisch in einem warmen Eichen-Wohnzimmer"
+    }
+  },
+
+  "hout": {
+    "bestand": "picknicktafel-k180-planken-detail.jpg",
+    "formaat": "3264x3264",
+    "alt": {
+      "en": "Close-up of the spruce planks of a KING picnic table",
+      "nl": "Close-up van de vurenhouten planken van een KING picknicktafel",
+      "fr": "Gros plan sur les planches en épicéa d’une table de pique-nique KING",
+      "de": "Nahaufnahme der Fichtenbohlen eines KING Picknicktisches"
+    }
+  },
+
+  "werk": {
+    "bestand": "bedrijf-K180.jpg",
+    "formaat": "2816x2112",
+    "alt": {
+      "en": "A KING picnic table at a company site",
+      "nl": "Een KING picknicktafel bij een bedrijf",
+      "fr": "Une table de pique-nique KING sur un site d’entreprise",
+      "de": "Ein KING Picknicktisch auf einem Firmengelände"
+    }
+  },
+
+  "_niet_gebruiken": {
+    "_waarom": "AI-uploads, herkenbaar aan 1024x1024 / 1248x832 / 832x832. Niet op de site zetten.",
+    "voorbeelden": [
+      "lente-tuin.png",
+      "modern-terras-lounge.png",
+      "tuinset-met-koppel-in-tuin.png",
+      "bokeh-tuin.png",
+      "picknicktafel-king-180-cm-angle-zomer.png"
+    ]
+  }
+}

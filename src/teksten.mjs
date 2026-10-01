@@ -8,7 +8,10 @@
 //  · geen prijzen, geen rekeningnummers
 //  · geen onbevestigde claims (oppervlakte magazijn, oprichtingsjaar, aantal markten)
 
-export const TALEN = ['nl', 'fr', 'de', 'en'];
+// Engels is de hoofdtaal (Peter, 1 okt 2026): / stuurt naar /en/ en de taalkiezer
+// zet Engels vooraan. Nederlands, Frans en Duits zijn de bijtalen.
+export const TALEN = ['en', 'nl', 'fr', 'de'];
+export const HOOFDTAAL = 'en';
 
 export const TAALNAAM = { nl: 'Nederlands', fr: 'Français', de: 'Deutsch', en: 'English' };
 
@@ -366,6 +369,45 @@ export const T = {
   'doc.lijn.teak': { nl: 'Teak tuinbanken Dordogne', fr: 'Bancs de jardin en teck Dordogne', de: 'Teak-Gartenbänke Dordogne', en: 'Dordogne teak garden benches' },
   'doc.lijn.bier': { nl: 'Biertafelsets', fr: 'Ensembles tables de brasserie', de: 'Biertisch-Garnituren', en: 'Beer table sets' },
   'doc.lijn.tuinbank': { nl: 'Tuinbanken', fr: 'Bancs de jardin', de: 'Gartenbänke', en: 'Garden benches' },
+
+
+  // ─── nieuw ontwerp: hero en de twee werelden ─────────────────────────────
+  'hero.kop1': { nl: 'Twee werelden,', fr: 'Deux univers,', de: 'Zwei Welten,', en: 'Two worlds,' },
+  'hero.kop2': { nl: 'één hout.', fr: 'un seul bois.', de: 'ein Holz.', en: 'one wood.' },
+  'hero.lood': {
+    nl: 'Tuintafels waar twaalf mensen aan zitten. En meubels voor binnen, voor één rustige hoek. Wij leveren ze zelf, met onze eigen bestelwagens.',
+    fr: 'Des tables de jardin où douze personnes prennent place. Et du mobilier d’intérieur, pour un coin tranquille. Nous livrons nous-mêmes, avec nos propres camionnettes.',
+    de: 'Gartentische, an denen zwölf Menschen sitzen. Und Möbel für drinnen, für eine ruhige Ecke. Wir liefern selbst, mit unseren eigenen Lieferwagen.',
+    en: 'Garden tables that seat twelve. And indoor pieces for one quiet corner. We deliver them ourselves, with our own vans.',
+  },
+  'hero.merken': { nl: 'Drie vennootschappen', fr: 'Trois sociétés', de: 'Drei Gesellschaften', en: 'Three companies' },
+
+  'wereld.buiten.label': { nl: 'Buiten', fr: 'Extérieur', de: 'Draußen', en: 'Outdoor' },
+  'wereld.buiten.kop': { nl: 'Voor de lange zomer', fr: 'Pour les longs étés', de: 'Für den langen Sommer', en: 'Built for long summers' },
+  'wereld.buiten.tekst': {
+    nl: 'Picknicktafels van 140 tot 300 cm, vierkant en rond, tuinbanken, biertafelsets en kindertafels. Vurenhout dat onder druk is verduurzaamd, zodat het jaarrond buiten kan staan.',
+    fr: 'Tables de pique-nique de 140 à 300 cm, carrées et rondes, bancs de jardin, ensembles de brasserie et tables pour enfants. Bois d’épicéa traité sous pression, pour rester dehors toute l’année.',
+    de: 'Picknicktische von 140 bis 300 cm, quadratisch und rund, Gartenbänke, Biertisch-Garnituren und Kindertische. Druckimprägniertes Fichtenholz, das ganzjährig draußen bleiben kann.',
+    en: 'Picnic tables from 140 to 300 cm, square and round, garden benches, beer table sets and children’s tables. Pressure-treated spruce that stays outside all year.',
+  },
+  'wereld.binnen.label': { nl: 'Binnen', fr: 'Intérieur', de: 'Drinnen', en: 'Indoor' },
+  'wereld.binnen.kop': { nl: 'En voor de kamer ernaast', fr: 'Et pour la pièce d’à côté', de: 'Und für den Raum daneben', en: 'And for the room next door' },
+  'wereld.binnen.tekst': {
+    nl: 'Salontafels, dressoirs, ladekasten, tv-meubels en nachtkastjes. Zachte vormen, warme tinten — gemaakt om jaren mee te gaan, binnen net zo goed als buiten.',
+    fr: 'Tables basses, buffets, commodes, meubles TV et tables de chevet. Des formes douces, des teintes chaudes — faits pour durer, à l’intérieur comme à l’extérieur.',
+    de: 'Couchtische, Sideboards, Kommoden, TV-Möbel und Nachttische. Weiche Formen, warme Töne — gemacht, um zu bleiben, drinnen wie draußen.',
+    en: 'Coffee tables, sideboards, dressers, TV units and bedside tables. Soft shapes, warm tones — made to last, indoors as much as out.',
+  },
+  'wereld.meer': { nl: 'Bekijk de winkels', fr: 'Voir les boutiques', de: 'Zu den Shops', en: 'See the shops' },
+
+  'hout.opschrift': { nl: 'Het hout', fr: 'Le bois', de: 'Das Holz', en: 'The wood' },
+  'hout.kop': { nl: 'Van vuren tot teak', fr: 'De l’épicéa au teck', de: 'Von Fichte bis Teak', en: 'From spruce to teak' },
+  'hout.tekst': {
+    nl: 'Onze buitenmeubelen zijn van vurenhout dat onder druk is verduurzaamd: het mag regenen, vriezen en zomeren zonder dat je het elk jaar moet behandelen. De Dordogne-banken zijn van teak, een hout dat grijs mag worden zonder zijn kracht te verliezen. Welk hout waarvoor dient, leggen we uit in onze Houtwijzer.',
+    fr: 'Nos meubles d’extérieur sont en épicéa traité sous pression : il peut pleuvoir, geler et faire grand soleil sans traitement annuel. Les bancs Dordogne sont en teck, un bois qui peut griser sans rien perdre de sa solidité.',
+    de: 'Unsere Außenmöbel bestehen aus druckimprägniertem Fichtenholz: Regen, Frost und Sommer, ohne jährliche Behandlung. Die Dordogne-Bänke sind aus Teak, einem Holz, das vergrauen darf, ohne an Kraft zu verlieren.',
+    en: 'Our outdoor furniture is pressure-treated spruce: it can rain, freeze and blaze without a yearly coat of oil. The Dordogne benches are teak, a wood that may silver without losing its strength.',
+  },
 
   // ─── voettekst ───────────────────────────────────────────────────────────
   'voet.groep': {

@@ -6,16 +6,20 @@
   <title>Technische fiches en bedrijfsgegevens</title>
   <meta name="description" content="Maten, gewichten en houtsoort van onze picknicktafels, tuinbanken en biertafels, plus de bedrijfsgegevens van de drie vennootschappen.">
   <link rel="canonical" href="https://www.e-productseurope.com/nl/documenten/">
+  <link rel="alternate" hreflang="en" href="https://www.e-productseurope.com/en/documents/">
   <link rel="alternate" hreflang="nl" href="https://www.e-productseurope.com/nl/documenten/">
   <link rel="alternate" hreflang="fr" href="https://www.e-productseurope.com/fr/documents/">
   <link rel="alternate" hreflang="de" href="https://www.e-productseurope.com/de/unterlagen/">
-  <link rel="alternate" hreflang="en" href="https://www.e-productseurope.com/en/documents/">
   <link rel="alternate" hreflang="x-default" href="https://www.e-productseurope.com/en/documents/">
   <meta property="og:title" content="Technische fiches en bedrijfsgegevens">
   <meta property="og:description" content="Maten, gewichten en houtsoort van onze picknicktafels, tuinbanken en biertafels, plus de bedrijfsgegevens van de drie vennootschappen.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.e-productseurope.com/nl/documenten/">
   <meta property="og:locale" content="nl">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.shopify.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="/stijl.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta name="msvalidate.01" content="72A0E590C5D434F652C1E4256F2B418C">
@@ -36,20 +40,22 @@
           <a href="/nl/documenten/" aria-current="page">Documenten</a>
       </nav>
       <div class="talen" role="group" aria-label="Taal">
+          <a href="/en/documents/" hreflang="en" lang="en" title="English">en</a>
           <a href="/nl/documenten/" hreflang="nl" lang="nl" title="Nederlands" aria-current="true">nl</a>
           <a href="/fr/documents/" hreflang="fr" lang="fr" title="Français">fr</a>
           <a href="/de/unterlagen/" hreflang="de" lang="de" title="Deutsch">de</a>
-          <a href="/en/documents/" hreflang="en" lang="en" title="English">en</a>
       </div>
     </div>
   </header>
-  <div class="hero">
+  <div class="paginakop">
+    <img class="paginakop__beeld" src="https://cdn.shopify.com/s/files/1/0770/4697/2750/files/picknicktafel-k180-planken-detail.jpg?width=1600" alt="" aria-hidden="true" loading="eager">
     <div class="wrap">
       <h1>Voor een bestek of een interne goedkeuring</h1>
       <p>Hieronder staan de gegevens die in een bestek of een aanvraag gevraagd worden. Staat er iets niet bij, vraag het dan via het zakelijke formulier — dan zoeken we het op in plaats van te gokken.</p>
     </div>
   </div>
-  <main class="wrap">
+  <main class="band band--licht">
+    <div class="wrap">
     <section>
       <div class="tabelrol">
         <table>
@@ -217,6 +223,28 @@
         </div>
       </div>
     </div>
+      <p class="voet__slot">© 2026 E-Products Europe · E-Products Europe BV · E-Products Deutschland GmbH · E-Products France SARL</p>
+    </div>
   </footer>
+  <script>
+  (function () {
+    // Kop wordt vast zodra je scrolt.
+    var kop = document.querySelector('.kop');
+    var vast = function () { kop.classList.toggle('kop--vast', window.scrollY > 40); };
+    vast(); window.addEventListener('scroll', vast, { passive: true });
+
+    // Blokken komen rustig op. Wie beweging uit heeft staan, ziet ze meteen.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.op').forEach(function (e) { e.classList.add('zichtbaar'); });
+      return;
+    }
+    var kijker = new IntersectionObserver(function (regels) {
+      regels.forEach(function (r) {
+        if (r.isIntersecting) { r.target.classList.add('zichtbaar'); kijker.unobserve(r.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.op').forEach(function (e) { kijker.observe(e); });
+  })();
+  </script>
 </body>
 </html>

@@ -27,6 +27,11 @@ const API_BASIS =
 
 const groep = JSON.parse(readFileSync(join(WORTEL, 'data/groep.json'), 'utf8'));
 const producten = JSON.parse(readFileSync(join(WORTEL, 'data/producten.json'), 'utf8'));
+const beelden = JSON.parse(readFileSync(join(WORTEL, 'data/beelden.json'), 'utf8'));
+
+// Shopify levert zelf een modern formaat als je ?width= meegeeft.
+const beeld = (sleutel, breedte) => `${beelden._basis}${beelden[sleutel].bestand}?width=${breedte}`;
+const beeldAlt = (sleutel, taal) => beelden[sleutel].alt[taal] || beelden[sleutel].alt.en;
 
 const firma = (id) => groep.firmas.find((f) => f.id === id);
 const esc = (s) =>
@@ -87,6 +92,10 @@ ${hreflang}
   <meta property="og:type" content="website">
   <meta property="og:url" content="${SITE}${url(taal, paginaId)}">
   <meta property="og:locale" content="${taal}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.shopify.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="/stijl.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta name="msvalidate.01" content="72A0E590C5D434F652C1E4256F2B418C">
@@ -139,7 +148,31 @@ ${inhoud}
         </div>
       </div>
     </div>
+      <p class="voet__slot">© ${new Date().getFullYear()} ${esc(t('site.naam', taal))} · ${groep.firmas
+        .map((f) => esc(f.naam))
+        .join(' · ')}</p>
+    </div>
   </footer>
+  <script>
+  (function () {
+    // Kop wordt vast zodra je scrolt.
+    var kop = document.querySelector('.kop');
+    var vast = function () { kop.classList.toggle('kop--vast', window.scrollY > 40); };
+    vast(); window.addEventListener('scroll', vast, { passive: true });
+
+    // Blokken komen rustig op. Wie beweging uit heeft staan, ziet ze meteen.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.op').forEach(function (e) { e.classList.add('zichtbaar'); });
+      return;
+    }
+    var kijker = new IntersectionObserver(function (regels) {
+      regels.forEach(function (r) {
+        if (r.isIntersecting) { r.target.classList.add('zichtbaar'); kijker.unobserve(r.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.op').forEach(function (e) { kijker.observe(e); });
+  })();
+  </script>
 </body>
 </html>
 `;
@@ -173,37 +206,118 @@ function firmaKaart(f, taal) {
         </article>`;
 }
 
+// De jaarringen-band. Zelf getekend uit de kleuren van onze eigen plankfoto —
+// geen AI-beeld, geen bestand om te laden. Met het logo in de hoek, zoals afgesproken
+// voor elke visual die we zelf maken.
+function jaarringen() {
+  const ringen = [];
+  // Onregelmatige afstanden: echte jaarringen staan nooit even ver uit elkaar.
+  let straal = 40;
+  const zaad = [37, 23, 51, 19, 44, 28, 61, 33, 25, 47, 21, 55, 31, 42, 26, 58, 35, 49, 23, 40];
+  for (let i = 0; i < zaad.length; i++) {
+    straal += zaad[i];
+    const dikte = 1 + (i % 3) * 0.6;
+    const doorzicht = (0.34 - i * 0.012).toFixed(3);
+    ringen.push(
+      `<circle cx="210" cy="640" r="${straal}" fill="none" stroke="#CE9766" stroke-width="${dikte}" opacity="${doorzicht}"/>`
+    );
+  }
+  return `<svg class="nerf__svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+      <defs>
+        <radialGradient id="gloed" cx="15%" cy="72%" r="70%">
+          <stop offset="0%" stop-color="#3a2a1d"/>
+          <stop offset="100%" stop-color="#1a1410"/>
+        </radialGradient>
+      </defs>
+      <rect width="1440" height="900" fill="url(#gloed)"/>
+      <g>${ringen.join('')}</g>
+      <g opacity=".5" fill="none" stroke="#CE9766" stroke-width="1.1">
+        ${Array.from({ length: 7 }, (_, i) => {
+          const y = 120 + i * 118;
+          return `<path d="M760 ${y} C 940 ${y - 26}, 1120 ${y + 30}, 1440 ${y - 10}" opacity="${(0.3 - i * 0.03).toFixed(2)}"/>`;
+        }).join('')}
+      </g>
+      <g transform="translate(1290 810)" opacity=".55">
+        <rect width="34" height="34" rx="9" fill="#CE9766"/>
+        <text x="17" y="23" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#241c16" text-anchor="middle">EP</text>
+      </g>
+    </svg>`;
+}
+
 function startPagina(taal) {
   const inhoud = `  <div class="hero">
-    <div class="wrap">
-      <h1>${esc(t('home.hero.kop', taal))}</h1>
-      <p>${esc(t('home.hero.tekst', taal))}</p>
+    <img class="hero__beeld" src="${beeld('hero', 2000)}" alt="${esc(beeldAlt('hero', taal))}" fetchpriority="high" width="2048" height="2048">
+    <div class="hero__in">
+      <h1>${esc(t('hero.kop1', taal))}<br><em>${esc(t('hero.kop2', taal))}</em></h1>
+      <p class="hero__lood">${esc(t('hero.lood', taal))}</p>
       <div class="knoppen">
         <a class="knop" href="${url(taal, 'winkels')}">${esc(t('home.hero.knop_winkels', taal))}</a>
-        <a class="knop knop--rand" href="${url(taal, 'zakelijk')}">${esc(t('home.hero.knop_zakelijk', taal))}</a>
+        <a class="knop knop--glas" href="${url(taal, 'zakelijk')}">${esc(t('home.hero.knop_zakelijk', taal))}</a>
       </div>
+      <p class="hero__merken">
+        <span>${esc(t('hero.merken', taal))}</span>
+        ${groep.firmas.map((f) => `<span><b>${esc(land(f.land, taal))}</b></span>`).join('\n        ')}
+      </p>
     </div>
   </div>
-  <main class="wrap">
-    <section>
-      <h2>${esc(t('home.wie.kop', taal))}</h2>
-      <p class="lood">${esc(t('home.wie.tekst', taal))}</p>
-    </section>
-    <section>
-      <h2>${esc(t('home.firmas.kop', taal))}</h2>
-      <p class="lood">${esc(t('home.firmas.tekst', taal))}</p>
-      <div class="raster raster--3">
+
+  <div class="werelden">
+    <a class="wereld" href="${url(taal, 'winkels')}">
+      <img src="${beeld('buiten', 1200)}" alt="${esc(beeldAlt('buiten', taal))}" loading="lazy" width="3264" height="3264">
+      <div class="op">
+        <span class="wereld__label">${esc(t('wereld.buiten.label', taal))}</span>
+        <h2>${esc(t('wereld.buiten.kop', taal))}</h2>
+        <p>${esc(t('wereld.buiten.tekst', taal))}</p>
+        <span class="wereld__meer">${esc(t('wereld.meer', taal))}</span>
+      </div>
+    </a>
+    <a class="wereld" href="${url(taal, 'winkels')}">
+      <img src="${beeld('binnen', 1200)}" alt="${esc(beeldAlt('binnen', taal))}" loading="lazy" width="2000" height="2000">
+      <div class="op">
+        <span class="wereld__label">${esc(t('wereld.binnen.label', taal))}</span>
+        <h2>${esc(t('wereld.binnen.kop', taal))}</h2>
+        <p>${esc(t('wereld.binnen.tekst', taal))}</p>
+        <span class="wereld__meer">${esc(t('wereld.meer', taal))}</span>
+      </div>
+    </a>
+  </div>
+
+  <section class="nerf">
+    ${jaarringen()}
+    <div class="wrap">
+      <div class="lees op">
+        <p class="opschrift">${esc(t('hout.opschrift', taal))}</p>
+        <h2 class="band__kop">${esc(t('hout.kop', taal))}</h2>
+        <p class="band__lood">${esc(t('hout.tekst', taal))}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--nacht">
+    <div class="wrap">
+      <div class="lees op">
+        <p class="opschrift">${esc(t('home.wie.kop', taal))}</p>
+        <h2 class="band__kop">${esc(t('home.firmas.kop', taal))}</h2>
+        <p class="band__lood">${esc(t('home.wie.tekst', taal))}</p>
+      </div>
+      <div class="raster raster--3 op">
 ${groep.firmas.map((f) => firmaKaart(f, taal)).join('\n')}
       </div>
-    </section>
-    <section>
-      <h2>${esc(t('zakelijk.kop', taal))}</h2>
-      <p class="lood">${esc(t('zakelijk.tekst', taal))}</p>
-      <div class="knoppen">
-        <a class="knop" href="${url(taal, 'zakelijk')}">${esc(t('home.hero.knop_zakelijk', taal))}</a>
+    </div>
+  </section>
+
+  <section class="band band--licht">
+    <div class="wrap">
+      <div class="lees op">
+        <p class="opschrift">${esc(t('nav.zakelijk', taal))}</p>
+        <h2 class="band__kop">${esc(t('zakelijk.kop', taal))}</h2>
+        <p class="band__lood">${esc(t('zakelijk.tekst', taal))}</p>
+        <div class="knoppen">
+          <a class="knop knop--donker" href="${url(taal, 'zakelijk')}">${esc(t('home.hero.knop_zakelijk', taal))}</a>
+        </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 `;
   // Eén organisatie-blok met de drie vennootschappen als afdeling: zo weet Google
   // dat deze pagina over de groep gaat en niet over één webwinkel.
@@ -264,13 +378,15 @@ function winkelsPagina(taal) {
     )
     .join('\n');
 
-  const inhoud = `  <div class="hero">
+  const inhoud = `  <div class="paginakop">
+    <img class="paginakop__beeld" src="${beeld('werk', 1600)}" alt="" aria-hidden="true" loading="eager">
     <div class="wrap">
       <h1>${esc(t('winkels.kop', taal))}</h1>
       <p>${esc(t('winkels.tekst', taal))}</p>
     </div>
   </div>
-  <main class="wrap">
+  <main class="band band--nacht">
+    <div class="wrap">
     <section>
       <div class="landen">
 ${kaarten}
@@ -280,7 +396,7 @@ ${kaarten}
     <section>
       <h2>${esc(t('winkels.overige.kop', taal))}</h2>
       <p class="lood">${esc(t('winkels.overige.tekst', taal))}</p>
-      <ul class="lijst-schoon">
+      <ul class="lijst">
 ${overige}
       </ul>
     </section>
@@ -321,16 +437,18 @@ function zakelijkPagina(taal) {
     .join('\n');
 
   const L = groep.levering.termijn;
-  const inhoud = `  <div class="hero">
+  const inhoud = `  <div class="paginakop">
+    <img class="paginakop__beeld" src="${beeld('werk', 1600)}" alt="" aria-hidden="true" loading="eager">
     <div class="wrap">
       <h1>${esc(t('zakelijk.kop', taal))}</h1>
       <p>${esc(t('zakelijk.tekst', taal))}</p>
     </div>
   </div>
-  <main class="wrap">
+  <main class="band band--licht">
+    <div class="wrap">
     <section>
       <h2>${esc(t('zakelijk.punten.kop', taal))}</h2>
-      <ul class="lijst-schoon">
+      <ul class="lijst">
 ${punten}
       </ul>
     </section>
@@ -438,9 +556,9 @@ ${punten}
             </tr>
           </thead>
           <tbody>
-            <tr><td>${esc(t('levering.hoogseizoen', taal))}</td><td>${esc(L.hoogseizoen_apr_jul.be_nl_lu)}</td><td>${esc(L.hoogseizoen_apr_jul.de_fr)}</td></tr>
-            <tr><td>${esc(t('levering.buitenseizoen', taal))}</td><td>${esc(L.buitenseizoen_aug_mrt.be_nl_lu)}</td><td>${esc(L.buitenseizoen_aug_mrt.de_fr)}</td></tr>
-            <tr><td>${esc(t('levering.pakket', taal))}</td><td colspan="2">${esc(groep.levering.pakket)}</td></tr>
+            <tr><td>${esc(t('levering.hoogseizoen', taal))}</td><td>${esc(L.hoogseizoen_apr_jul.be_nl_lu[taal])}</td><td>${esc(L.hoogseizoen_apr_jul.de_fr[taal])}</td></tr>
+            <tr><td>${esc(t('levering.buitenseizoen', taal))}</td><td>${esc(L.buitenseizoen_aug_mrt.be_nl_lu[taal])}</td><td>${esc(L.buitenseizoen_aug_mrt.de_fr[taal])}</td></tr>
+            <tr><td>${esc(t('levering.pakket', taal))}</td><td colspan="2">${esc(groep.levering.pakket[taal])}</td></tr>
           </tbody>
         </table>
       </div>
@@ -601,13 +719,15 @@ ${body}
     )
     .join('\n');
 
-  const inhoud = `  <div class="hero">
+  const inhoud = `  <div class="paginakop">
+    <img class="paginakop__beeld" src="${beeld('hout', 1600)}" alt="" aria-hidden="true" loading="eager">
     <div class="wrap">
       <h1>${esc(t('doc.kop', taal))}</h1>
       <p>${esc(t('doc.tekst', taal))}</p>
     </div>
   </div>
-  <main class="wrap">
+  <main class="band band--licht">
+    <div class="wrap">
     <section>
 ${tabellen}
       <p class="voetnoot">${esc(t('doc.voetnoot', taal))}</p>

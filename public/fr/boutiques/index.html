@@ -6,16 +6,20 @@
   <title>Nos boutiques — où acheter quoi ?</title>
   <meta name="description" content="Quelle boutique en ligne d’E-Products Europe correspond à votre pays : e-woodproducts.com, picknickbaenke.de ou tablesdepiquenique.fr.">
   <link rel="canonical" href="https://www.e-productseurope.com/fr/boutiques/">
+  <link rel="alternate" hreflang="en" href="https://www.e-productseurope.com/en/shops/">
   <link rel="alternate" hreflang="nl" href="https://www.e-productseurope.com/nl/winkels/">
   <link rel="alternate" hreflang="fr" href="https://www.e-productseurope.com/fr/boutiques/">
   <link rel="alternate" hreflang="de" href="https://www.e-productseurope.com/de/shops/">
-  <link rel="alternate" hreflang="en" href="https://www.e-productseurope.com/en/shops/">
   <link rel="alternate" hreflang="x-default" href="https://www.e-productseurope.com/en/shops/">
   <meta property="og:title" content="Nos boutiques — où acheter quoi ?">
   <meta property="og:description" content="Quelle boutique en ligne d’E-Products Europe correspond à votre pays : e-woodproducts.com, picknickbaenke.de ou tablesdepiquenique.fr.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.e-productseurope.com/fr/boutiques/">
   <meta property="og:locale" content="fr">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.shopify.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="/stijl.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta name="msvalidate.01" content="72A0E590C5D434F652C1E4256F2B418C">
@@ -36,20 +40,22 @@
           <a href="/fr/documents/">Documents</a>
       </nav>
       <div class="talen" role="group" aria-label="Langue">
+          <a href="/en/shops/" hreflang="en" lang="en" title="English">en</a>
           <a href="/nl/winkels/" hreflang="nl" lang="nl" title="Nederlands">nl</a>
           <a href="/fr/boutiques/" hreflang="fr" lang="fr" title="Français" aria-current="true">fr</a>
           <a href="/de/shops/" hreflang="de" lang="de" title="Deutsch">de</a>
-          <a href="/en/shops/" hreflang="en" lang="en" title="English">en</a>
       </div>
     </div>
   </header>
-  <div class="hero">
+  <div class="paginakop">
+    <img class="paginakop__beeld" src="https://cdn.shopify.com/s/files/1/0770/4697/2750/files/bedrijf-K180.jpg?width=1600" alt="" aria-hidden="true" loading="eager">
     <div class="wrap">
       <h1>Choisissez votre pays</h1>
       <p>Chaque pays a sa propre boutique, avec les prix et les conditions de livraison de ce pays.</p>
     </div>
   </div>
-  <main class="wrap">
+  <main class="band band--nacht">
+    <div class="wrap">
     <section>
       <div class="landen">
         <a class="landkaart" href="https://www.e-woodproducts.com/" rel="noopener">
@@ -123,7 +129,7 @@
     <section>
       <h2>Nos autres boutiques</h2>
       <p class="lood">Ces boutiques appartiennent également à notre groupe. Elles sont spécialisées dans un seul type de meuble.</p>
-      <ul class="lijst-schoon">
+      <ul class="lijst">
         <li><a href="https://biertafel-kopen.be/" rel="noopener">biertafel-kopen.be</a> <span class="zacht">· E-Products Europe BV</span></li>
         <li><a href="https://biertafel-kopen.nl/" rel="noopener">biertafel-kopen.nl</a> <span class="zacht">· E-Products Europe BV</span></li>
         <li><a href="https://www.tafel-kopen.be/" rel="noopener">tafel-kopen.be</a> <span class="zacht">· E-Products Europe BV</span></li>
@@ -175,6 +181,28 @@
         </div>
       </div>
     </div>
+      <p class="voet__slot">© 2026 E-Products Europe · E-Products Europe BV · E-Products Deutschland GmbH · E-Products France SARL</p>
+    </div>
   </footer>
+  <script>
+  (function () {
+    // Kop wordt vast zodra je scrolt.
+    var kop = document.querySelector('.kop');
+    var vast = function () { kop.classList.toggle('kop--vast', window.scrollY > 40); };
+    vast(); window.addEventListener('scroll', vast, { passive: true });
+
+    // Blokken komen rustig op. Wie beweging uit heeft staan, ziet ze meteen.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.op').forEach(function (e) { e.classList.add('zichtbaar'); });
+      return;
+    }
+    var kijker = new IntersectionObserver(function (regels) {
+      regels.forEach(function (r) {
+        if (r.isIntersecting) { r.target.classList.add('zichtbaar'); kijker.unobserve(r.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.op').forEach(function (e) { kijker.observe(e); });
+  })();
+  </script>
 </body>
 </html>

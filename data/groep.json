@@ -1,28 +1,47 @@
 {
   "_uitleg": "De harde feiten over de groep. ALLEEN bevestigde gegevens — niets dat Peter nog moet nakijken. Wat nog niet bevestigd is, staat in TE-BEVESTIGEN.md en komt pas hier als het klopt.",
   "_bron": "Gegevens van de live pagina's van e-productsfrance.fr en e-productsdeutschland.de (1 okt 2026), docs/bedrijfsprofiel-lebbeke-2026-09-28.md en Peters bevestiging van de structuur (1 okt 2026).",
-
   "koepel": {
     "naam": "E-Products Europe",
     "domein": "e-productseurope.com",
     "contact": "support@e-woodproducts.com"
   },
-
   "firmas": [
     {
       "id": "bv",
       "naam": "E-Products Europe BV",
       "rol": "holding",
       "land": "BE",
-      "landen_zakelijk": ["BE", "NL", "LU"],
+      "landen_zakelijk": [
+        "BE",
+        "NL",
+        "LU"
+      ],
       "btw_label": "BTW",
       "btw": "BE 0500.621.156",
-      "adres": ["Patijntjestraat 107", "9000 Gent", "België"],
+      "adres": [
+        "Patijntjestraat 107",
+        "9000 Gent",
+        "België"
+      ],
       "magazijn": "Lebbeke",
       "toonzaal": true,
       "email": "support@e-woodproducts.com",
       "winkels": [
-        { "naam": "e-woodproducts.com", "url": "https://www.e-woodproducts.com/", "soort": "hoofdwinkel", "talen": ["nl", "fr", "de", "en", "it", "es", "da"] }
+        {
+          "naam": "e-woodproducts.com",
+          "url": "https://www.e-woodproducts.com/",
+          "soort": "hoofdwinkel",
+          "talen": [
+            "nl",
+            "fr",
+            "de",
+            "en",
+            "it",
+            "es",
+            "da"
+          ]
+        }
       ]
     },
     {
@@ -30,13 +49,27 @@
       "naam": "E-Products Deutschland GmbH",
       "rol": "dochter",
       "land": "DE",
-      "landen_zakelijk": ["DE", "AT"],
+      "landen_zakelijk": [
+        "DE",
+        "AT"
+      ],
       "btw_label": "USt-IdNr.",
       "btw": "DE298706463",
-      "adres": ["Hoffmannallee 41–51", "47533 Kleve", "Deutschland"],
+      "adres": [
+        "Hoffmannallee 41–51",
+        "47533 Kleve",
+        "Deutschland"
+      ],
       "email": "support@e-woodproducts.com",
       "winkels": [
-        { "naam": "picknickbaenke.de", "url": "https://www.picknickbaenke.de/", "soort": "webwinkel", "talen": ["de"] }
+        {
+          "naam": "picknickbaenke.de",
+          "url": "https://www.picknickbaenke.de/",
+          "soort": "webwinkel",
+          "talen": [
+            "de"
+          ]
+        }
       ]
     },
     {
@@ -44,57 +77,173 @@
       "naam": "E-Products France SARL",
       "rol": "dochter",
       "land": "FR",
-      "landen_zakelijk": ["FR", "MC"],
+      "landen_zakelijk": [
+        "FR",
+        "MC"
+      ],
       "btw_label": "TVA",
       "btw": "FR 25 818931396",
       "siret": "818 931 396 00019",
-      "adres": ["7 chemin des Filatiers", "62223 Sainte Catherine", "France"],
+      "adres": [
+        "7 chemin des Filatiers",
+        "62223 Sainte Catherine",
+        "France"
+      ],
       "email": "support@e-woodproducts.com",
       "winkels": [
-        { "naam": "tablesdepiquenique.fr", "url": "https://www.tablesdepiquenique.fr/", "soort": "webwinkel", "talen": ["fr"] },
-        { "naam": "bancsenteck.fr", "url": "https://www.bancsenteck.fr/", "soort": "teakbanken", "talen": ["fr"] },
-        { "naam": "maery.fr", "url": "https://maery.fr/", "soort": "interieur", "talen": ["fr"] }
+        {
+          "naam": "tablesdepiquenique.fr",
+          "url": "https://www.tablesdepiquenique.fr/",
+          "soort": "webwinkel",
+          "talen": [
+            "fr"
+          ]
+        },
+        {
+          "naam": "bancsenteck.fr",
+          "url": "https://www.bancsenteck.fr/",
+          "soort": "teakbanken",
+          "talen": [
+            "fr"
+          ]
+        },
+        {
+          "naam": "maery.fr",
+          "url": "https://maery.fr/",
+          "soort": "interieur",
+          "talen": [
+            "fr"
+          ]
+        }
       ]
     }
   ],
-
   "_routering_uitleg": "Welke firma een zakelijke aanvraag behandelt, op basis van het land van de klant. Bepaalt btw, rekening en Exact-administratie. Landen die hier niet staan → bv, met de vraag hoe de levering loopt.",
   "routering": {
-    "BE": "bv", "NL": "bv", "LU": "bv",
-    "DE": "gmbh", "AT": "gmbh",
-    "FR": "sarl", "MC": "sarl"
+    "BE": "bv",
+    "NL": "bv",
+    "LU": "bv",
+    "DE": "gmbh",
+    "AT": "gmbh",
+    "FR": "sarl",
+    "MC": "sarl"
   },
-
   "_levering_uitleg": "Grote stukken gaan met eigen bestelwagens; die vertrekken pas als een rit naar die regio rendabel is. Termijnen uit reference-levertermijnen (Peter, 27 aug 2026). NOOIT een eigen cijfer verzinnen.",
   "levering": {
-    "eigen_bus": ["BE", "NL", "LU", "DE", "FR"],
+    "eigen_bus": [
+      "BE",
+      "NL",
+      "LU",
+      "DE",
+      "FR"
+    ],
     "termijn": {
-      "hoogseizoen_apr_jul": { "be_nl_lu": "1 tot 9 werkdagen", "de_fr": "1 tot 21 dagen" },
-      "buitenseizoen_aug_mrt": { "be_nl_lu": "gemiddeld 3,5 weken, uiterlijk 8 weken", "de_fr": "uiterlijk 8 weken" }
+      "_uitleg": "Zelfde cijfers als reference-levertermijnen (Peter, 27 aug 2026), alleen de woorden vertaald. NOOIT een cijfer wijzigen zonder Peter.",
+      "hoogseizoen_apr_jul": {
+        "be_nl_lu": {
+          "nl": "1 tot 9 werkdagen",
+          "fr": "1 à 9 jours ouvrables",
+          "de": "1 bis 9 Werktage",
+          "en": "1 to 9 working days"
+        },
+        "de_fr": {
+          "nl": "1 tot 21 dagen",
+          "fr": "1 à 21 jours",
+          "de": "1 bis 21 Tage",
+          "en": "1 to 21 days"
+        }
+      },
+      "buitenseizoen_aug_mrt": {
+        "be_nl_lu": {
+          "nl": "gemiddeld 3,5 weken, uiterlijk 8 weken",
+          "fr": "3,5 semaines en moyenne, 8 semaines au plus tard",
+          "de": "durchschnittlich 3,5 Wochen, spätestens 8 Wochen",
+          "en": "3.5 weeks on average, 8 weeks at the latest"
+        },
+        "de_fr": {
+          "nl": "uiterlijk 8 weken",
+          "fr": "8 semaines au plus tard",
+          "de": "spätestens 8 Wochen",
+          "en": "8 weeks at the latest"
+        }
+      }
     },
-    "pakket": "1 tot 2 werkdagen",
+    "pakket": {
+      "nl": "1 tot 2 werkdagen",
+      "fr": "1 à 2 jours ouvrables",
+      "de": "1 bis 2 Werktage",
+      "en": "1 to 2 working days"
+    },
     "afspraak": "De klant wordt gebeld zodra de rit gepland is, meestal een week vooraf."
   },
-
   "_markten_uitleg": "De landen waar de hoofdwinkel een eigen markt heeft. Alleen opsommen wat echt live staat — 'aantal markten' is een claim die nagekeken moet worden vóór we er een getal op zetten.",
-  "markten_hoofdwinkel": ["BE", "NL", "DE", "FR", "LU", "AT", "IT", "ES", "DK", "SE", "FI", "GB", "MC"],
-
+  "markten_hoofdwinkel": [
+    "BE",
+    "NL",
+    "DE",
+    "FR",
+    "LU",
+    "AT",
+    "IT",
+    "ES",
+    "DK",
+    "SE",
+    "FI",
+    "GB",
+    "MC"
+  ],
   "zustersites_bv": [
-    { "naam": "biertafel-kopen.be", "url": "https://biertafel-kopen.be/" },
-    { "naam": "biertafel-kopen.nl", "url": "https://biertafel-kopen.nl/" },
-    { "naam": "tafel-kopen.be", "url": "https://www.tafel-kopen.be/" },
-    { "naam": "tuinbank-kopen.be", "url": "https://www.tuinbank-kopen.be/" },
-    { "naam": "tuinbank-kopen.nl", "url": "https://www.tuinbank-kopen.nl/" },
-    { "naam": "kingpicknicktafels.nl", "url": "https://www.kingpicknicktafels.nl/" },
-    { "naam": "picknick-tafel-kopen.nl", "url": "https://www.picknick-tafel-kopen.nl/" },
-    { "naam": "tuintafel-kopen.nl", "url": "https://tuintafel-kopen.nl/" },
-    { "naam": "houtolie-kopen.be", "url": "https://houtolie-kopen.be/" },
-    { "naam": "restol-houtolie.be", "url": "https://www.restol-houtolie.be/" }
+    {
+      "naam": "biertafel-kopen.be",
+      "url": "https://biertafel-kopen.be/"
+    },
+    {
+      "naam": "biertafel-kopen.nl",
+      "url": "https://biertafel-kopen.nl/"
+    },
+    {
+      "naam": "tafel-kopen.be",
+      "url": "https://www.tafel-kopen.be/"
+    },
+    {
+      "naam": "tuinbank-kopen.be",
+      "url": "https://www.tuinbank-kopen.be/"
+    },
+    {
+      "naam": "tuinbank-kopen.nl",
+      "url": "https://www.tuinbank-kopen.nl/"
+    },
+    {
+      "naam": "kingpicknicktafels.nl",
+      "url": "https://www.kingpicknicktafels.nl/"
+    },
+    {
+      "naam": "picknick-tafel-kopen.nl",
+      "url": "https://www.picknick-tafel-kopen.nl/"
+    },
+    {
+      "naam": "tuintafel-kopen.nl",
+      "url": "https://tuintafel-kopen.nl/"
+    },
+    {
+      "naam": "houtolie-kopen.be",
+      "url": "https://houtolie-kopen.be/"
+    },
+    {
+      "naam": "restol-houtolie.be",
+      "url": "https://www.restol-houtolie.be/"
+    }
   ],
   "zustersites_gmbh": [
-    { "naam": "picknickbanke.de", "url": "https://picknickbanke.de/" }
+    {
+      "naam": "picknickbanke.de",
+      "url": "https://picknickbanke.de/"
+    }
   ],
   "zustersites_sarl": [
-    { "naam": "tablesdepique-nique.fr", "url": "https://www.tablesdepique-nique.fr/" }
+    {
+      "naam": "tablesdepique-nique.fr",
+      "url": "https://www.tablesdepique-nique.fr/"
+    }
   ]
 }
