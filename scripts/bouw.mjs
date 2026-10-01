@@ -10,7 +10,7 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { TALEN, TAALNAAM, t, land } from '../src/teksten.mjs';
+import { TALEN, TAALNAAM, t, land, houtsoort } from '../src/teksten.mjs';
 
 const HIER = dirname(fileURLToPath(import.meta.url));
 const WORTEL = join(HIER, '..');
@@ -688,12 +688,13 @@ function documentenPagina(taal) {
             ? `ca. ${String(r.gewicht_kg).replace('.', taal === 'en' ? '.' : ',')} kg`
             : `<span class="zacht">${esc(t('doc.onbekend', taal))}</span>`;
           const hout = r.houtsoort
-            ? esc(r.houtsoort)
+            ? esc(houtsoort(r.houtsoort, taal))
             : `<span class="zacht">${esc(t('doc.onbekend', taal))}</span>`;
           const dikte = heeftDikte
             ? `<td>${r.plankdikte_mm ? `${r.plankdikte_mm} mm` : `<span class="zacht">—</span>`}</td>`
             : '';
-          return `            <tr><td>${esc(r.naam)}</td><td><code>${esc(r.sku)}</code></td><td>${maat}</td><td>${gew}</td><td>${hout}</td>${dikte}</tr>`;
+          const naam = (r.namen && r.namen[taal]) || r.naam;
+          return `            <tr><td>${esc(naam)}</td><td><code>${esc(r.sku)}</code></td><td>${maat}</td><td>${gew}</td><td>${hout}</td>${dikte}</tr>`;
         })
         .join('\n');
       return `      <div class="tabelrol">

@@ -425,6 +425,24 @@ export const T = {
   'voet.contact': { nl: 'Contact', fr: 'Contact', de: 'Kontakt', en: 'Contact' },
 };
 
+
+// Houtsoorten. Vuren en grenen zijn NIET uitwisselbaar (feedback-materiaalclaims):
+// vuren = spruce/Fichte/épicéa · grenen = pine/Kiefer/pin.
+export const HOUT = {
+  vurenhout: { nl: 'Vurenhout', fr: 'Épicéa', de: 'Fichte', en: 'Spruce' },
+  grenen: { nl: 'Grenen', fr: 'Pin', de: 'Kiefer', en: 'Pine' },
+  teak: { nl: 'Teak', fr: 'Teck', de: 'Teak', en: 'Teak' },
+  acacia: { nl: 'Acacia', fr: 'Acacia', de: 'Akazie', en: 'Acacia' },
+  douglas: { nl: 'Douglas', fr: 'Douglas', de: 'Douglasie', en: 'Douglas fir' },
+  eiken: { nl: 'Eiken', fr: 'Chêne', de: 'Eiche', en: 'Oak' },
+};
+
+export function houtsoort(waarde, taal) {
+  if (!waarde) return null;
+  const sleutel = String(waarde).toLowerCase().trim();
+  return HOUT[sleutel]?.[taal] || waarde;
+}
+
 export function t(sleutel, taal) {
   const r = T[sleutel];
   if (!r) throw new Error(`Onbekende tekstsleutel: ${sleutel}`);

@@ -1,0 +1,8 @@
+{
+  "_uitleg": "Vertaalde productnamen die in de winkel ontbreken. Alleen invullen waar de reeks een eenduidig patroon heeft en de andere maten het voordoen — nooit een naam verzinnen.",
+  "_let_op": "Elke regel hier betekent dat de WINKEL zelf die vertaling mist. Daar hoort ze eigenlijk thuis; dit is een pleister. Zet ze in Shopify en haal de regel hier weg.",
+  "EP-DORD250": {
+    "_reden": "Shopify heeft wel een Duitse titel maar geen Engelse. De vier andere Dordogne-banken (120/150/180/210) hebben alle vier exact dit patroon.",
+    "en": "Teak garden bench 250 cm · Dordogne · 5 cm leg thickness"
+  }
+}

@@ -8,7 +8,7 @@
 //   node scripts/productdata.mjs
 
 import { execFileSync } from 'node:child_process';
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -56,6 +56,41 @@ function vraag(sql) {
     maxBuffer: 32 * 1024 * 1024,
   }).trim();
   return uit ? JSON.parse(uit) : [];
+}
+
+// De vertaalde productnamen komen uit de winkel zelf: die zijn door het team gemaakt
+// en staan al live voor Duitse en Franse klanten. Dat is een betere bron dan onze
+// eigen vertaaltabel, die maar half gevuld is (EN 27/30, DE 13/30, FR 19/30).
+async function shopifyVertalingen(skus) {
+  const SHOP = process.env.SHOPIFY_STORE_DOMAIN;
+  const TOK = process.env.SHOPIFY_ADMIN_TOKEN;
+  const V = process.env.SHOPIFY_API_VERSION || '2026-04';
+  if (!SHOP || !TOK) {
+    console.log('· Geen Shopify-sleutels — de namen blijven Nederlands. Draai met --env-file=../SEO-WOOD/.env');
+    return {};
+  }
+  const uit = {};
+  for (const sku of skus) {
+    const q = `{ products(first: 5, query: "sku:${sku}") { nodes { title
+      variants(first: 50) { nodes { sku } }
+      en: translations(locale: "en") { key value }
+      fr: translations(locale: "fr") { key value }
+      de: translations(locale: "de") { key value } } } }`;
+    const r = await fetch(`https://${SHOP}/admin/api/${V}/graphql.json`, {
+      method: 'POST',
+      headers: { 'X-Shopify-Access-Token': TOK, 'content-type': 'application/json' },
+      body: JSON.stringify({ query: q }),
+    });
+    const j = await r.json().catch(() => null);
+    // Alleen het product dat deze SKU echt als variant heeft — "sku:" matcht soms ruim.
+    const p = (j?.data?.products?.nodes || []).find((x) =>
+      (x.variants?.nodes || []).some((v) => (v.sku || '').toUpperCase() === sku.toUpperCase())
+    );
+    if (!p) continue;
+    const titel = (lijst) => (lijst || []).find((t) => t.key === 'title')?.value || null;
+    uit[sku] = { nl: p.title, en: titel(p.en), fr: titel(p.fr), de: titel(p.de) };
+  }
+  return uit;
 }
 
 const alleSkus = LIJNEN.flatMap((l) => l.skus);
@@ -112,6 +147,15 @@ for (const r of rijen) {
   if (!vorig || score(r) > score(vorig)) perSku.set(r.sku, r);
 }
 
+const vertalingen = await shopifyVertalingen(alleSkus);
+
+// Gaten die we zelf invullen omdat de winkel ze mist. Elke aanvulling blijft in de
+// nakijklijst staan, zodat ze niet stilletjes eeuwig blijft bestaan.
+let aanvullingen = {};
+try {
+  aanvullingen = JSON.parse(readFileSync(join(WORTEL, 'data/naam-aanvullingen.json'), 'utf8'));
+} catch { /* bestand hoeft niet te bestaan */ }
+
 const nakijken = [];
 const producten = {};
 
@@ -158,9 +202,33 @@ for (const lijn of LIJNEN) {
       });
     }
 
+    const vert = vertalingen[sku] || {};
+    const namen = { nl: schoneNaam(r.naam) };
+    for (const taal of ['en', 'fr', 'de']) {
+      if (vert[taal]) {
+        namen[taal] = schoneNaam(vert[taal]);
+      } else if (aanvullingen[sku]?.[taal]) {
+        namen[taal] = schoneNaam(aanvullingen[sku][taal]);
+        nakijken.push({
+          sku,
+          wat: `geen ${taal.toUpperCase()}-titel in de winkel — door ons aangevuld`,
+          gevolg: `"${namen[taal]}" (zet deze titel in Shopify, dan kan de aanvulling weg)`,
+        });
+      } else {
+        // Liever de Nederlandse naam dan een verzonnen vertaling — maar wel melden.
+        namen[taal] = namen.nl;
+        nakijken.push({
+          sku,
+          wat: `geen ${taal.toUpperCase()}-titel in de winkel`,
+          gevolg: `op de ${taal.toUpperCase()}-pagina staat de Nederlandse naam`,
+        });
+      }
+    }
+
     producten[lijn.id].push({
       sku,
       naam: schoneNaam(r.naam),
+      namen,
       maat,
       gewicht_kg: r.kg ?? null,
       gewicht_zekerheid: r.kg ? gewichtZekerheid(r.gewicht_bron) : null,

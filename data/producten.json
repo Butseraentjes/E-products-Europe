@@ -7,6 +7,12 @@
       {
         "sku": "EP-K140",
         "naam": "Picknicktafel 140 cm KING® / 4cm dikte",
+        "namen": {
+          "nl": "Picknicktafel 140 cm KING® / 4cm dikte",
+          "en": "Picnic table 140 cm KING® / 4 cm thickness",
+          "fr": "Table de pique-nique 140 cm KING® / 4cm d'épaisseur",
+          "de": "Picknicktisch 140 cm KING® / 4 cm Dicke"
+        },
         "maat": {
           "l": 140,
           "bron": "rankforge product_cache",
@@ -20,6 +26,12 @@
       {
         "sku": "EP-K180",
         "naam": "Picknicktafel 180 cm KING® / 4 cm plankdikte",
+        "namen": {
+          "nl": "Picknicktafel 180 cm KING® / 4 cm plankdikte",
+          "en": "Picnic table 180 cm KING® / 4 cm board thickness",
+          "fr": "Table de pique-nique 180 cm KING® / épaisseur de planche 4 cm",
+          "de": "Picknicktisch 180 cm KING® / 4 cm Dicke"
+        },
         "maat": {
           "l": 180,
           "bron": "rankforge product_cache",
@@ -33,6 +45,12 @@
       {
         "sku": "EP-K240",
         "naam": "Picknicktafel 240 cm KING® / 4 cm dikte",
+        "namen": {
+          "nl": "Picknicktafel 240 cm KING® / 4 cm dikte",
+          "en": "Picnic table 240 cm KING® / 4 cm thickness",
+          "fr": "Table de pique-nique 240 cm KING® / 4 cm d'épaisseur",
+          "de": "Picknicktisch 240 cm KING® / 4 cm Dicke"
+        },
         "maat": {
           "l": 240,
           "bron": "rankforge product_cache",
@@ -46,6 +64,12 @@
       {
         "sku": "EP-K300",
         "naam": "Picknicktafel 300 cm KING® / 4 cm dikte",
+        "namen": {
+          "nl": "Picknicktafel 300 cm KING® / 4 cm dikte",
+          "en": "Picnic table 300 cm KING® / 4 cm thickness",
+          "fr": "Table de pique-nique 300 cm KING® / 4 cm d'épaisseur",
+          "de": "Picknicktisch 300 cm KING® / 4 cm Dicke"
+        },
         "maat": {
           "l": 300,
           "bron": "rankforge product_cache",
@@ -59,6 +83,12 @@
       {
         "sku": "EP-K180SMART",
         "naam": "SMART picknicktafel 180 cm KING®",
+        "namen": {
+          "nl": "SMART picknicktafel 180 cm KING®",
+          "en": "SMART picnic table 180 cm KING® (35 mm board thickness)",
+          "fr": "Table de pique-nique SMART 180 cm KING® (épaisseur des planches 35 mm)",
+          "de": "SMART Picknicktisch 180 cm KING®"
+        },
         "maat": {
           "l": 180,
           "bron": "rankforge product_cache",
@@ -72,6 +102,12 @@
       {
         "sku": "EP-KCOM240",
         "naam": "Family Picknicktafel 240 cm comfort KING® / 4 cm dikte",
+        "namen": {
+          "nl": "Family Picknicktafel 240 cm comfort KING® / 4 cm dikte",
+          "en": "Family Picnic Table 240 cm comfort KING® / 4 cm thickness",
+          "fr": "Table de pique-nique familiale 240 cm confort KING® / 4 cm d'épaisseur",
+          "de": "Family Picknicktisch 240 cm comfort KING® / 4 cm Stärke"
+        },
         "maat": {
           "l": 240,
           "bron": "rankforge product_cache",
@@ -87,6 +123,12 @@
       {
         "sku": "EP-RK200",
         "naam": "Picknicktafel 200 cm royal KING® / 4.5 cm dikte",
+        "namen": {
+          "nl": "Picknicktafel 200 cm royal KING® / 4.5 cm dikte",
+          "en": "Picnic table 200 cm royal KING® / 4.5 cm thickness",
+          "fr": "Table de pique-nique 200 cm royal KING® / 4,5 cm d'épaisseur",
+          "de": "Picknicktisch 200 cm Royal KING® / 4,5 cm Stärke"
+        },
         "maat": {
           "l": 200,
           "b": 162,
@@ -102,6 +144,12 @@
       {
         "sku": "EP-RK240",
         "naam": "Picknicktafel 240 cm royal KING® / 4.5 cm dikte",
+        "namen": {
+          "nl": "Picknicktafel 240 cm royal KING® / 4.5 cm dikte",
+          "en": "Picnic table 240 cm royal KING® / 4.5 cm thickness",
+          "fr": "Table de pique-nique 240 cm royal KING® / 4,5 cm d'épaisseur",
+          "de": "Picknicktisch 240 cm Royal KING® / 4,5 cm Dicke"
+        },
         "maat": {
           "l": 240,
           "bron": "rankforge product_cache",
@@ -115,6 +163,12 @@
       {
         "sku": "EP-RK300",
         "naam": "Picknicktafel 300 cm royal KING® / 4.5 cm dikte",
+        "namen": {
+          "nl": "Picknicktafel 300 cm royal KING® / 4.5 cm dikte",
+          "en": "Picnic table 300 cm royal KING® / 4.5 cm thickness",
+          "fr": "Table de pique-nique 300 cm royal KING® / 4,5 cm d'épaisseur",
+          "de": "Picknicktisch 300 cm Royal KING® / 4,5 cm Dicke"
+        },
         "maat": {
           "l": 300,
           "b": 162,
@@ -132,6 +186,12 @@
       {
         "sku": "EP-KVKXXL",
         "naam": "Vierkante picknicktafel XXL KING® - 4 cm dikte (200 x 200cm)",
+        "namen": {
+          "nl": "Vierkante picknicktafel XXL KING® - 4 cm dikte (200 x 200cm)",
+          "en": "Square picnic table XXL KING® - 4 cm thickness (200 x 200 cm)",
+          "fr": "Table de pique-nique carrée XXL KING® - épaisseur 4 cm (200 x 200 cm)",
+          "de": "Quadratischer Picknicktisch xxl KING® - 4 cm Stärke (200 x 200 cm)"
+        },
         "maat": {
           "l": 200,
           "bron": "rankforge product_cache",
@@ -145,6 +205,12 @@
       {
         "sku": "EP-KVK",
         "naam": "Picknicktafel vierkant 200 cm x 200 cm KING® / 4cm dikte",
+        "namen": {
+          "nl": "Picknicktafel vierkant 200 cm x 200 cm KING® / 4cm dikte",
+          "en": "Square picnic table 200 cm x 200 cm KING® / 4 cm thickness",
+          "fr": "Table de pique-nique carrée 200 cm x 200 cm KING® / 4 cm d'épaisseur",
+          "de": "Picknicktisch quadratisch 200 cm x 200 cm KING® / 4 cm Stärke"
+        },
         "maat": {
           "l": 200,
           "bron": "rankforge product_cache",
@@ -160,6 +226,12 @@
       {
         "sku": "EP-KKD140",
         "naam": "Kinderpicknicktafel 140 cm KING®",
+        "namen": {
+          "nl": "Kinderpicknicktafel 140 cm KING®",
+          "en": "Children's picnic table 140 cm KING®",
+          "fr": "Table de pique-nique enfant 140 cm KING®",
+          "de": "Kinder-Picknicktisch 140 cm KING®"
+        },
         "maat": {
           "l": 140,
           "bron": "rankforge product_cache",
@@ -173,6 +245,12 @@
       {
         "sku": "EP-KKD90",
         "naam": "Kinderpicknicktafel Björn KING® (90 cm.) - behandeld vuren hout",
+        "namen": {
+          "nl": "Kinderpicknicktafel Björn KING® (90 cm.) - behandeld vuren hout",
+          "en": "Children's picnic table Björn KING® (90 cm.)",
+          "fr": "Table de pique-nique pour enfants Björn KING® (90 cm.)",
+          "de": "Kinder-Picknicktisch Björn KING® (90 cm.)"
+        },
         "maat": {
           "l": 90,
           "bron": "rankforge product_cache",
@@ -186,6 +264,12 @@
       {
         "sku": "EP-KKVKDECO",
         "naam": "Vierkante kinderpicknicktafel",
+        "namen": {
+          "nl": "Vierkante kinderpicknicktafel",
+          "en": "Toddler picnic table - Square",
+          "fr": "Table de pique-nique tout-petits - Carrée",
+          "de": "Quadratischer Picknicktisch für Kleinkinder KING® (ECO)"
+        },
         "maat": {
           "l": 125,
           "b": 125,
@@ -201,6 +285,12 @@
       {
         "sku": "EP-KRDKD",
         "naam": "Ronde picknicktafel voor kleuters Jimmy (120 x 120 cm) KING®",
+        "namen": {
+          "nl": "Ronde picknicktafel voor kleuters Jimmy (120 x 120 cm) KING®",
+          "en": "Round picnic table for toddlers Jimmy (120 x 120 cm) KING®",
+          "fr": "Table de pique-nique ronde pour tout-petits Jimmy (120 x 120 cm) KING®",
+          "de": "Runder Jimmy-Picknicktisch für Kleinkinder (120 x 120 cm)"
+        },
         "maat": {
           "l": 120,
           "bron": "rankforge product_cache",
@@ -216,6 +306,12 @@
       {
         "sku": "EP-DORD120",
         "naam": "Teak tuinbank 120 cm · Dordogne · 5 cm pootdikte",
+        "namen": {
+          "nl": "Teak tuinbank 120 cm · Dordogne · 5 cm pootdikte",
+          "en": "Teak garden bench 120 cm · Dordogne · 5 cm leg thickness",
+          "fr": "Banc de jardin en teck 120 cm · Dordogne · 5 cm d'épaisseur de jambe",
+          "de": "Gartenbank aus Teakholz (120 x 91 cm) Dordogne - 5 cm Beinstärke"
+        },
         "maat": {
           "l": 120,
           "b": 64,
@@ -231,6 +327,12 @@
       {
         "sku": "EP-DORD150",
         "naam": "Teak tuinbank 150 cm · Dordogne · 5 cm pootdikte",
+        "namen": {
+          "nl": "Teak tuinbank 150 cm · Dordogne · 5 cm pootdikte",
+          "en": "Teak garden bench 150 cm · Dordogne · 5 cm leg thickness",
+          "fr": "Banc de jardin en teck 150 cm · Dordogne · 5 cm d'épaisseur de jambe",
+          "de": "Gartenbank aus Teakholz (150 x 91 cm) Dordogne - 5 cm Beinstärke"
+        },
         "maat": {
           "l": 150,
           "b": 64,
@@ -246,6 +348,12 @@
       {
         "sku": "EP-DORD180",
         "naam": "Teak tuinbank 180 cm · Dordogne · 5 cm pootdikte",
+        "namen": {
+          "nl": "Teak tuinbank 180 cm · Dordogne · 5 cm pootdikte",
+          "en": "Teak garden bench 180 cm · Dordogne · 5 cm leg thickness",
+          "fr": "Banc de jardin en teck 180 cm · Dordogne · 5 cm d'épaisseur de jambe",
+          "de": "Gartenbank aus Teakholz (180 x 91 cm) Dordogne - 5 cm Beinstärke"
+        },
         "maat": {
           "l": 180,
           "b": 64,
@@ -261,6 +369,12 @@
       {
         "sku": "EP-DORD210",
         "naam": "Teak tuinbank 210 cm · Dordogne · 5 cm pootdikte",
+        "namen": {
+          "nl": "Teak tuinbank 210 cm · Dordogne · 5 cm pootdikte",
+          "en": "Teak garden bench 210 cm · Dordogne · 5 cm leg thickness",
+          "fr": "Banc de jardin en teck 210 cm · Dordogne · 5 cm d'épaisseur de jambe",
+          "de": "Gartenbank aus Teakholz, 3 Beine (210 x 91 cm), Dordogne – 5 cm Beinstärke"
+        },
         "maat": {
           "l": 210,
           "b": 64,
@@ -276,6 +390,12 @@
       {
         "sku": "EP-DORD250",
         "naam": "Teak tuinbank 250 cm · Dordogne · 5 cm pootdikte",
+        "namen": {
+          "nl": "Teak tuinbank 250 cm · Dordogne · 5 cm pootdikte",
+          "en": "Teak garden bench 250 cm · Dordogne · 5 cm leg thickness",
+          "fr": "Banc de jardin en teak 250 cm · Dordogne · épaisseur des pieds 5 cm",
+          "de": "Dordogne Teak-Gartenbank 250 cm"
+        },
         "maat": null,
         "gewicht_kg": 35,
         "gewicht_zekerheid": "eigen opgave",
@@ -287,6 +407,12 @@
       {
         "sku": "EP-KBT220S80",
         "naam": "Biertafelset 220 cm x 80 cm tafel en 2 banken KING®",
+        "namen": {
+          "nl": "Biertafelset 220 cm x 80 cm tafel en 2 banken KING®",
+          "en": "Beer table set 220 cm x 80 cm table and 2 benches KING®",
+          "fr": "Set de table à bière table 220 cm x 80 cm et 2 bancs KING®",
+          "de": "Biertischgarnitur 220 cm x 80 cm Tisch und 2 Bänke KING®"
+        },
         "maat": {
           "l": 220,
           "b": 80,
@@ -302,6 +428,12 @@
       {
         "sku": "EP-KBT220S70",
         "naam": "Biertafelset (220 cm x 70 cm) KING®",
+        "namen": {
+          "nl": "Biertafelset (220 cm x 70 cm) KING®",
+          "en": "Beer table set (220 cm x 70 cm) KING®",
+          "fr": "Set de table à bière (220 cm x 70 cm) KING®",
+          "de": "Biertischgarnitur (220 cm x 70 cm) KING®"
+        },
         "maat": {
           "l": 220,
           "b": 70,
@@ -317,6 +449,12 @@
       {
         "sku": "EP-KBT220S60",
         "naam": "Biertafelset (220 cm x 60 cm) KING®",
+        "namen": {
+          "nl": "Biertafelset (220 cm x 60 cm) KING®",
+          "en": "Beer table set (220 cm x 60 cm) KING®",
+          "fr": "Ensemble de table à bière (220 cm x 60 cm) KING®",
+          "de": "Biertischset (220 cm x 60 cm) KING®"
+        },
         "maat": {
           "l": 220,
           "b": 60,
@@ -332,6 +470,12 @@
       {
         "sku": "EP-KBT160S70",
         "naam": "Biertafelset (160 cm x 70 cm) KING®",
+        "namen": {
+          "nl": "Biertafelset (160 cm x 70 cm) KING®",
+          "en": "Beer table set (160 cm x 70 cm) KING®",
+          "fr": "Ensemble de table à bière (160 cm x 70 cm) KING®",
+          "de": "Biertischset (160 cm x 70 cm) KING®"
+        },
         "maat": {
           "l": 160,
           "b": 70,
@@ -347,6 +491,12 @@
       {
         "sku": "EP-KBT110S60",
         "naam": "Biertafelset (110 cm x 60 cm) KING®",
+        "namen": {
+          "nl": "Biertafelset (110 cm x 60 cm) KING®",
+          "en": "Beer table set (110 cm x 60 cm) KING®",
+          "fr": "Ensemble de table à bière (110 cm x 60 cm) KING®",
+          "de": "Biertischset (110 cm x 60 cm) KING®"
+        },
         "maat": {
           "l": 110,
           "b": 60,
@@ -364,6 +514,12 @@
       {
         "sku": "EP-KGTB140",
         "naam": "Tuinbank 140 cm KING® George",
+        "namen": {
+          "nl": "Tuinbank 140 cm KING® George",
+          "en": "Garden bench 140 cm KING® George",
+          "fr": "Banc de jardin 140 cm KING® George",
+          "de": "Gartenbank 140 cm KING® George"
+        },
         "maat": {
           "l": 140,
           "b": 66,
@@ -379,6 +535,12 @@
       {
         "sku": "EP-KGTB200",
         "naam": "Tuinbank 200 cm Luxe KING® George",
+        "namen": {
+          "nl": "Tuinbank 200 cm Luxe KING® George",
+          "en": "Garden bench 200 cm Luxury KING® George",
+          "fr": "Banc de jardin 200 cm Luxury KING® George",
+          "de": "Gartenbank 200 cm Luxus KING® George"
+        },
         "maat": {
           "l": 200,
           "b": 66,
@@ -394,6 +556,12 @@
       {
         "sku": "EP-KHTB",
         "naam": "Tuinbank 154 cm KING® Henry",
+        "namen": {
+          "nl": "Tuinbank 154 cm KING® Henry",
+          "en": "Garden bench 154 cm KING® Henry",
+          "fr": "Banc de jardin 154 cm KING® Henry",
+          "de": "Gartenbank 154 cm KING® Henry"
+        },
         "maat": null,
         "gewicht_kg": 20,
         "gewicht_zekerheid": "eigen opgave",
@@ -403,6 +571,12 @@
       {
         "sku": "EP-B-LUX",
         "naam": "150 cm Tuinbank LUX · 4 cm plankdikte",
+        "namen": {
+          "nl": "150 cm Tuinbank LUX · 4 cm plankdikte",
+          "en": "Garden bench LUX · 150 cm",
+          "fr": "Banc de jardin LUX · 150 cm",
+          "de": "LUX Gartenbank aus Holz dunkelbraun 150 cm (KING® )"
+        },
         "maat": {
           "l": 150,
           "b": 53,
@@ -418,6 +592,12 @@
       {
         "sku": "EP-KTBVW180",
         "naam": "Tuinbank voor volwassenen 180 cm - KING®",
+        "namen": {
+          "nl": "Tuinbank voor volwassenen 180 cm - KING®",
+          "en": "Garden bench for adults 180 cm - KING®",
+          "fr": "Banc de jardin pour adultes 180 cm - KING®",
+          "de": "Gartenbank für Erwachsene 180 cm (KING® )"
+        },
         "maat": {
           "l": 180,
           "b": 30,
