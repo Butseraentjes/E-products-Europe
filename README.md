@@ -6,6 +6,8 @@ dochters eronder: **E-Products Deutschland GmbH** en **E-Products France SARL**.
 Het plan staat in `SEO-WOOD/PLAN-EPRODUCTSEUROPE.md`. Wat Peter nog moet bevestigen,
 staat in `TE-BEVESTIGEN.md`.
 
+**Live sinds 1 oktober 2026.** Het ontwerp staat in `ONTWERPPLAN.md`.
+
 ## Waarvoor deze site dient
 
 1. **Het gezicht van de groep** — wie we zijn, de drie vennootschappen, hun echte gegevens.
@@ -103,7 +105,7 @@ De aparte Worker in `worker/` is er voor wie liever los van Pages uitrolt
 
 | map | wat |
 |---|---|
-| `data/` | `groep.json` (met de hand, bevestigde feiten) · `producten.json` (gegenereerd) |
+| `data/` | `groep.json` (met de hand, bevestigde feiten) · `producten.json` (gegenereerd) · `beelden.json` (welke foto's, en welke bewust niet) |
 | `src/` | `teksten.mjs` (alle vier de talen naast elkaar) · `stijl.css` |
 | `scripts/` | bouwen, productdata, vervangers, aanvragen ophalen |
 | `worker/` | de aanvraagverwerking (ook als losse Worker uit te rollen) |

@@ -206,7 +206,29 @@ eigen `?width=`), lui geladen onder de vouw. Doel: onder 400 KB voor het eerste 
 
 ---
 
-## 8 · Wat ik van jou nodig heb
+## 8 · Stand: gebouwd en live (1 okt 2026)
+
+Alles uit dit plan staat op **www.e-productseurope.com**:
+
+| | |
+|---|---|
+| Hero over het volle scherm | ✓ met de echte foto van de gedekte K300 |
+| "Two worlds, one wood" | ✓ buiten en binnen even groot naast elkaar |
+| Jaarringen-band | ✓ zelf getekende SVG, met logo in de hoek |
+| Drie vennootschappen | ✓ donkere kaarten |
+| Engels als hoofdtaal | ✓ `/` → `/en/`, taalkiezer met EN vooraan |
+| Alleen echte foto's | ✓ `data/beelden.json` houdt de AI-uploads er bewust buiten |
+| Telefoon | ✓ geen overloop op 390 px, geen JS-fouten |
+
+**Twee fouten die ik onderweg vond en herstelde:** de levertabel stond in het
+Nederlands op álle talen, en de vinkjeslijst had zijn opmaak verloren.
+
+**Nog niet gedaan uit dit plan:** de Europakaart met de drie zetels (sectie 3, blok 4)
+en de fototegels per winkel op de Shops-pagina. Die volgen als je het ontwerp goedkeurt.
+
+---
+
+## 9 · Wat ik van jou nodig heb
 
 1. **Ga ik hiermee door?** Of wil je een andere richting (lichter, strakker, drukker)?
 2. **AI-beelden**: akkoord dat ik ze weglaat en alleen echte foto's gebruik?
