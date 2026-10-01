@@ -1,0 +1,6 @@
+node_modules/
+.dev.vars
+.env
+tools/
+# public/ wordt NIET genegeerd: Cloudflare Pages kan kern.db niet lezen,
+# dus de gebouwde site gaat mee in git (zoals bij maery).

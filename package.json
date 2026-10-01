@@ -1,0 +1,14 @@
+{
+  "name": "e-products-europe",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Koepelsite van E-Products Europe (BV, GmbH, SARL) — groep, zakelijke balie, winkelkiezer, documentenkast",
+  "scripts": {
+    "data": "node scripts/productdata.mjs",
+    "bouw": "node scripts/bouw.mjs",
+    "site": "node scripts/productdata.mjs && node scripts/bouw.mjs && node scripts/vervangers.mjs",
+    "kijk": "node scripts/bouw.mjs && cd public && python3 -m http.server 8799",
+    "aanvragen": "node --env-file=../SEO-WOOD/.env scripts/aanvragen-ophalen.mjs"
+  }
+}

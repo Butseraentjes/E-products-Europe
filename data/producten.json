@@ -1,0 +1,435 @@
+{
+  "_bron": "ewood/kern/kern.db (alleen gelezen) via scripts/productdata.mjs",
+  "_gemaakt": "2026-10-01",
+  "_regel": "Alleen wat de kern weet. Geen aangevulde of geraden maten.",
+  "lijnen": {
+    "king-picknick": [
+      {
+        "sku": "EP-K140",
+        "naam": "Picknicktafel 140 cm KING® / 4cm dikte",
+        "maat": {
+          "l": 140,
+          "bron": "rankforge product_cache",
+          "zekerheid": "onvolledig"
+        },
+        "gewicht_kg": 40,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": 40
+      },
+      {
+        "sku": "EP-K180",
+        "naam": "Picknicktafel 180 cm KING® / 4 cm plankdikte",
+        "maat": {
+          "l": 180,
+          "bron": "rankforge product_cache",
+          "zekerheid": "onvolledig"
+        },
+        "gewicht_kg": 55,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": 40
+      },
+      {
+        "sku": "EP-K240",
+        "naam": "Picknicktafel 240 cm KING® / 4 cm dikte",
+        "maat": {
+          "l": 240,
+          "bron": "rankforge product_cache",
+          "zekerheid": "onvolledig"
+        },
+        "gewicht_kg": 65,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": 40
+      },
+      {
+        "sku": "EP-K300",
+        "naam": "Picknicktafel 300 cm KING® / 4 cm dikte",
+        "maat": {
+          "l": 300,
+          "bron": "rankforge product_cache",
+          "zekerheid": "onvolledig"
+        },
+        "gewicht_kg": 90,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": 40
+      },
+      {
+        "sku": "EP-K180SMART",
+        "naam": "SMART picknicktafel 180 cm KING®",
+        "maat": {
+          "l": 180,
+          "bron": "rankforge product_cache",
+          "zekerheid": "onvolledig"
+        },
+        "gewicht_kg": 31,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-KCOM240",
+        "naam": "Family Picknicktafel 240 cm comfort KING® / 4 cm dikte",
+        "maat": {
+          "l": 240,
+          "bron": "rankforge product_cache",
+          "zekerheid": "onvolledig"
+        },
+        "gewicht_kg": 85,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": 40
+      }
+    ],
+    "royal-king": [
+      {
+        "sku": "EP-RK200",
+        "naam": "Picknicktafel 200 cm royal KING® / 4.5 cm dikte",
+        "maat": {
+          "l": 200,
+          "b": 162,
+          "h": 77,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 65,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": 45
+      },
+      {
+        "sku": "EP-RK240",
+        "naam": "Picknicktafel 240 cm royal KING® / 4.5 cm dikte",
+        "maat": {
+          "l": 240,
+          "bron": "rankforge product_cache",
+          "zekerheid": "onvolledig"
+        },
+        "gewicht_kg": 75,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": 45
+      },
+      {
+        "sku": "EP-RK300",
+        "naam": "Picknicktafel 300 cm royal KING® / 4.5 cm dikte",
+        "maat": {
+          "l": 300,
+          "b": 162,
+          "h": 77,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 95,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": 45
+      }
+    ],
+    "vierkant-rond": [
+      {
+        "sku": "EP-KVKXXL",
+        "naam": "Vierkante picknicktafel XXL KING® - 4 cm dikte (200 x 200cm)",
+        "maat": {
+          "l": 200,
+          "bron": "rankforge product_cache",
+          "zekerheid": "onvolledig"
+        },
+        "gewicht_kg": 100,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": null,
+        "plankdikte_mm": 40
+      },
+      {
+        "sku": "EP-KVK",
+        "naam": "Picknicktafel vierkant 200 cm x 200 cm KING® / 4cm dikte",
+        "maat": {
+          "l": 200,
+          "bron": "rankforge product_cache",
+          "zekerheid": "onvolledig"
+        },
+        "gewicht_kg": 90,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": 40
+      }
+    ],
+    "kinder": [
+      {
+        "sku": "EP-KKD140",
+        "naam": "Kinderpicknicktafel 140 cm KING®",
+        "maat": {
+          "l": 140,
+          "bron": "rankforge product_cache",
+          "zekerheid": "onvolledig"
+        },
+        "gewicht_kg": 15,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-KKD90",
+        "naam": "Kinderpicknicktafel Björn KING® (90 cm.) - behandeld vuren hout",
+        "maat": {
+          "l": 90,
+          "bron": "rankforge product_cache",
+          "zekerheid": "onvolledig"
+        },
+        "gewicht_kg": 16,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-KKVKDECO",
+        "naam": "Vierkante kinderpicknicktafel",
+        "maat": {
+          "l": 125,
+          "b": 125,
+          "h": 63,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 15,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-KRDKD",
+        "naam": "Ronde picknicktafel voor kleuters Jimmy (120 x 120 cm) KING®",
+        "maat": {
+          "l": 120,
+          "bron": "rankforge product_cache",
+          "zekerheid": "onvolledig"
+        },
+        "gewicht_kg": 20,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": null
+      }
+    ],
+    "teak": [
+      {
+        "sku": "EP-DORD120",
+        "naam": "Teak tuinbank 120 cm · Dordogne · 5 cm pootdikte",
+        "maat": {
+          "l": 120,
+          "b": 64,
+          "h": 91,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 30.1,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Teak",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-DORD150",
+        "naam": "Teak tuinbank 150 cm · Dordogne · 5 cm pootdikte",
+        "maat": {
+          "l": 150,
+          "b": 64,
+          "h": 91,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 35,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Teak",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-DORD180",
+        "naam": "Teak tuinbank 180 cm · Dordogne · 5 cm pootdikte",
+        "maat": {
+          "l": 180,
+          "b": 64,
+          "h": 91,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 35,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Teak",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-DORD210",
+        "naam": "Teak tuinbank 210 cm · Dordogne · 5 cm pootdikte",
+        "maat": {
+          "l": 210,
+          "b": 64,
+          "h": 91,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 35,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Teak",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-DORD250",
+        "naam": "Teak tuinbank 250 cm · Dordogne · 5 cm pootdikte",
+        "maat": null,
+        "gewicht_kg": 35,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Teak",
+        "plankdikte_mm": null
+      }
+    ],
+    "bier": [
+      {
+        "sku": "EP-KBT220S80",
+        "naam": "Biertafelset 220 cm x 80 cm tafel en 2 banken KING®",
+        "maat": {
+          "l": 220,
+          "b": 80,
+          "h": 74,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 25,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-KBT220S70",
+        "naam": "Biertafelset (220 cm x 70 cm) KING®",
+        "maat": {
+          "l": 220,
+          "b": 70,
+          "h": 74,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 25,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-KBT220S60",
+        "naam": "Biertafelset (220 cm x 60 cm) KING®",
+        "maat": {
+          "l": 220,
+          "b": 60,
+          "h": 74,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 35,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-KBT160S70",
+        "naam": "Biertafelset (160 cm x 70 cm) KING®",
+        "maat": {
+          "l": 160,
+          "b": 70,
+          "h": 74,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 25,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-KBT110S60",
+        "naam": "Biertafelset (110 cm x 60 cm) KING®",
+        "maat": {
+          "l": 110,
+          "b": 60,
+          "h": 74,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 35,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": null
+      }
+    ],
+    "tuinbank": [
+      {
+        "sku": "EP-KGTB140",
+        "naam": "Tuinbank 140 cm KING® George",
+        "maat": {
+          "l": 140,
+          "b": 66,
+          "h": 96,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 32,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-KGTB200",
+        "naam": "Tuinbank 200 cm Luxe KING® George",
+        "maat": {
+          "l": 200,
+          "b": 66,
+          "h": 96,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 40,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-KHTB",
+        "naam": "Tuinbank 154 cm KING® Henry",
+        "maat": null,
+        "gewicht_kg": 20,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": null
+      },
+      {
+        "sku": "EP-B-LUX",
+        "naam": "150 cm Tuinbank LUX · 4 cm plankdikte",
+        "maat": {
+          "l": 150,
+          "b": 53,
+          "h": 90,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 31,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": 40
+      },
+      {
+        "sku": "EP-KTBVW180",
+        "naam": "Tuinbank voor volwassenen 180 cm - KING®",
+        "maat": {
+          "l": 180,
+          "b": 30,
+          "h": 44,
+          "bron": "rankforge product_cache",
+          "zekerheid": "overgenomen"
+        },
+        "gewicht_kg": 18,
+        "gewicht_zekerheid": "eigen opgave",
+        "houtsoort": "Vurenhout",
+        "plankdikte_mm": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>E-Products Europe</title>
+  <meta name="description" content="E-Products Europe is the group behind e-woodproducts.com, picknickbaenke.de and tablesdepiquenique.fr. Wooden picnic tables, garden benches and beer tables, delivered by our own vans.">
+  <link rel="canonical" href="https://www.e-productseurope.com/en/">
+  <link rel="alternate" hreflang="nl" href="https://www.e-productseurope.com/nl/">
+  <link rel="alternate" hreflang="fr" href="https://www.e-productseurope.com/fr/">
+  <link rel="alternate" hreflang="de" href="https://www.e-productseurope.com/de/">
+  <link rel="alternate" hreflang="en" href="https://www.e-productseurope.com/en/">
+  <link rel="alternate" hreflang="x-default" href="https://www.e-productseurope.com/en/">
+  <link rel="stylesheet" href="/stijl.css">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script>
+    // Stuur de bezoeker meteen naar zijn taal. Werkt JavaScript niet, dan blijft
+    // de keuzelijst hieronder gewoon staan — niemand loopt vast.
+    (function () {
+      var talen = ["nl","fr","de","en"];
+      var voorkeur = (navigator.languages || [navigator.language || 'en']);
+      for (var i = 0; i < voorkeur.length; i++) {
+        var code = String(voorkeur[i]).slice(0, 2).toLowerCase();
+        if (talen.indexOf(code) !== -1) { location.replace('/' + code + '/'); return; }
+      }
+      location.replace('/en/');
+    })();
+  </script>
+</head>
+<body>
+  <main class="wrap" style="padding-top:48px;">
+    <h1>E-Products Europe</h1>
+    <p class="lood">Wooden garden furniture across Europe</p>
+    <div class="landen">
+      <a class="landkaart" href="/nl/" hreflang="nl" lang="nl">
+        <span class="landkaart__land">Nederlands</span>
+        <span class="landkaart__winkel">Houten tuinmeubelen, geleverd tot bij u</span>
+      </a>
+      <a class="landkaart" href="/fr/" hreflang="fr" lang="fr">
+        <span class="landkaart__land">Français</span>
+        <span class="landkaart__winkel">Du mobilier de jardin en bois, livré chez vous</span>
+      </a>
+      <a class="landkaart" href="/de/" hreflang="de" lang="de">
+        <span class="landkaart__land">Deutsch</span>
+        <span class="landkaart__winkel">Gartenmöbel aus Holz, zu Ihnen geliefert</span>
+      </a>
+      <a class="landkaart" href="/en/" hreflang="en" lang="en">
+        <span class="landkaart__land">English</span>
+        <span class="landkaart__winkel">Wooden garden furniture, delivered to your door</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

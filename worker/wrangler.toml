@@ -1,0 +1,36 @@
+# Worker voor de zakelijke aanvragen van e-productseurope.com — gratis Cloudflare-plan.
+#
+# Eerst de opslag aanmaken (eenmalig):
+#   npx wrangler kv namespace create AANVRAGEN
+#   → zet de id hieronder bij [[kv_namespaces]]
+#
+# Dan de geheimen:
+#   npx wrangler secret put BEHEER_SLEUTEL     (verzin een lang wachtwoord; ook in SEO-WOOD/.env
+#                                               als EPEUROPE_BEHEER_SLEUTEL voor het ophaalscript)
+#   npx wrangler secret put EMAILJS_PRIVATE    (optioneel — zonder dit geen mailmelding,
+#                                               maar het ophaalscript blijft werken)
+#
+# Uitrollen:
+#   npx wrangler deploy
+#
+# De site praat met /api/aanvraag. Op Cloudflare Pages hangt die route aan de Worker
+# via een Pages Function of een route op het domein — zie README.
+
+name = "aanvragen-eproductseurope"
+main = "worker.mjs"
+compatibility_date = "2025-01-01"
+workers_dev = true
+
+[vars]
+SITE_URL = "https://www.e-productseurope.com"
+# De publieke EmailJS-sleutels van de zustersites; publiek, dus geen geheim.
+# De private sleutel komt via `wrangler secret put EMAILJS_PRIVATE`.
+EMAILJS_PUBLIC = "Tx4r1Fw27_MCyKDR3"
+EMAILJS_SERVICE = "service_abc123"
+EMAILJS_TPL_ADMIN = "template_ngwxei7"
+
+# Elke aanvraag wordt hier bewaard; dit is de waarheid, niet de mail.
+# Gratis KV: 1.000 schrijfacties per dag — ruim voor ±10 aanvragen per week.
+[[kv_namespaces]]
+binding = "AANVRAGEN"
+id = "ZET-HIER-DE-ID-NA-WRANGLER-KV-NAMESPACE-CREATE"

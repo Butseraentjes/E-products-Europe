@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Devis pour communes, écoles, associations et entreprises</title>
+  <meta name="description" content="Demandez un devis au nom de votre organisation : tables de pique-nique, bancs de jardin et tables de brasserie, avec bon de commande, facture et livraison sur rendez-vous.">
+  <link rel="canonical" href="https://www.e-productseurope.com/fr/professionnels/">
+  <link rel="alternate" hreflang="nl" href="https://www.e-productseurope.com/nl/zakelijk/">
+  <link rel="alternate" hreflang="fr" href="https://www.e-productseurope.com/fr/professionnels/">
+  <link rel="alternate" hreflang="de" href="https://www.e-productseurope.com/de/geschaeftskunden/">
+  <link rel="alternate" hreflang="en" href="https://www.e-productseurope.com/en/business/">
+  <link rel="alternate" hreflang="x-default" href="https://www.e-productseurope.com/en/business/">
+  <meta property="og:title" content="Devis pour communes, écoles, associations et entreprises">
+  <meta property="og:description" content="Demandez un devis au nom de votre organisation : tables de pique-nique, bancs de jardin et tables de brasserie, avec bon de commande, facture et livraison sur rendez-vous.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.e-productseurope.com/fr/professionnels/">
+  <meta property="og:locale" content="fr">
+  <link rel="stylesheet" href="/stijl.css">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <header class="kop">
+    <div class="kop__in">
+      <a class="merk" href="/fr/">
+        <span class="merk__teken" aria-hidden="true">EP</span>
+        <span>
+          <span class="merk__naam">E-Products Europe</span><br>
+          <span class="merk__sub">Mobilier de jardin en bois en Europe</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Le groupe">
+          <a href="/fr/boutiques/">Nos boutiques</a>
+          <a href="/fr/professionnels/" aria-current="page">Professionnels</a>
+          <a href="/fr/documents/">Documents</a>
+      </nav>
+      <div class="talen" role="group" aria-label="Langue">
+          <a href="/nl/zakelijk/" hreflang="nl" lang="nl" title="Nederlands">nl</a>
+          <a href="/fr/professionnels/" hreflang="fr" lang="fr" title="Français" aria-current="true">fr</a>
+          <a href="/de/geschaeftskunden/" hreflang="de" lang="de" title="Deutsch">de</a>
+          <a href="/en/business/" hreflang="en" lang="en" title="English">en</a>
+      </div>
+    </div>
+  </header>
+  <div class="hero">
+    <div class="wrap">
+      <h1>Vous achetez pour une organisation ?</h1>
+      <p>Communes, écoles, associations, campings, cafés-restaurants et entreprises commandent chez nous plusieurs pièces à la fois. Vous avez alors souvent besoin de documents qu’une boutique en ligne ne fournit pas : un devis à votre nom, un bon de commande, une facture avec votre numéro de TVA ou une date de livraison qui vous convient. Demandez-le ici ; vous recevrez une réponse de la société de votre pays.</p>
+    </div>
+  </div>
+  <main class="wrap">
+    <section>
+      <h2>Ce que vous pouvez nous demander</h2>
+      <ul class="lijst-schoon">
+        <li>Un devis au nom de votre organisation, avec une date de validité.</li>
+        <li>Un bon de commande ou une facture avec votre numéro de TVA et votre référence interne.</li>
+        <li>Une date de livraison convenue : nous vous appelons dès que la tournée est planifiée.</li>
+        <li>Les pièces pour un cahier des charges ou un marché public : dimensions, poids, essence de bois et garantie.</li>
+        <li>Pour plusieurs pièces, notre remise sur quantité habituelle s’applique. Pour un prix différent, nous établissons un devis.</li>
+      </ul>
+    </section>
+
+    <section id="aanvraag">
+      <h2>Votre demande</h2>
+      <p class="lood">Plus vous remplissez, plus notre réponse sera précise. Les champs avec * sont obligatoires.</p>
+
+      <form class="formulier" id="aanvraagFormulier" novalidate>
+        <div class="melding" id="firmaMelding" hidden></div>
+
+        <div class="veldrij">
+          <div class="veld">
+            <label for="land">Pays de livraison *</label>
+            <select id="land" name="land" required>
+              <option value="">Choisissez votre pays</option>
+              <option value="BE">Belgique</option>
+              <option value="NL">Pays-Bas</option>
+              <option value="LU">Luxembourg</option>
+              <option value="DE">Allemagne</option>
+              <option value="AT">Autriche</option>
+              <option value="FR">France</option>
+              <option value="MC">Monaco</option>
+              <option value="XX">Un autre pays</option>
+            </select>
+          </div>
+          <div class="veld">
+            <label for="soort">Type d’organisation</label>
+            <select id="soort" name="soort">
+              <option value="">Choisissez</option>
+              <option value="gemeente">Commune ou administration</option>
+              <option value="school">École ou crèche</option>
+              <option value="vereniging">Association</option>
+              <option value="camping">Camping ou domaine de loisirs</option>
+              <option value="horeca">Café, hôtel ou restaurant</option>
+              <option value="bedrijf">Entreprise</option>
+              <option value="andere">Autre</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="veldrij">
+          <div class="veld">
+            <label for="organisatie">Organisation *</label>
+            <input id="organisatie" name="organisatie" required autocomplete="organization">
+          </div>
+          <div class="veld">
+            <label for="btw">Numéro de TVA ou SIRET</label>
+            <input id="btw" name="btw" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="veldrij">
+          <div class="veld">
+            <label for="naam">Votre nom *</label>
+            <input id="naam" name="naam" required autocomplete="name">
+          </div>
+          <div class="veld">
+            <label for="email">Adresse e-mail *</label>
+            <input id="email" name="email" type="email" required autocomplete="email">
+          </div>
+          <div class="veld">
+            <label for="telefoon">Téléphone</label>
+            <input id="telefoon" name="telefoon" type="tel" autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="veldrij">
+          <div class="veld">
+            <label for="producten">De quoi avez-vous besoin ? *</label>
+            <input id="producten" name="producten" required placeholder="Tables de pique-nique KING®…">
+          </div>
+          <div class="veld">
+            <label for="aantal">Combien de pièces (environ)</label>
+            <input id="aantal" name="aantal" inputmode="numeric">
+          </div>
+          <div class="veld">
+            <label for="wanneer">Quand souhaitez-vous la livraison ?</label>
+            <select id="wanneer" name="wanneer">
+              <option value="zodra">Dès que possible</option>
+              <option value="datum">Autour d’une date précise (indiquez-la dans votre message)</option>
+              <option value="voorjaar">Au printemps</option>
+              <option value="weetniet">Je ne sais pas encore</option>
+            </select>
+          </div>
+        </div>
+
+        <fieldset>
+          <legend>De quoi avez-vous besoin de notre part ?</legend>
+          <div class="vinkjes">
+            <label class="vinkje"><input type="checkbox" name="nodig" value="offerte"> <span>Un devis</span></label>
+            <label class="vinkje"><input type="checkbox" name="nodig" value="bestelbon"> <span>Un bon de commande ou une facture</span></label>
+            <label class="vinkje"><input type="checkbox" name="nodig" value="fiche"> <span>Des fiches techniques</span></label>
+            <label class="vinkje"><input type="checkbox" name="nodig" value="bestek"> <span>Des pièces pour un cahier des charges</span></label>
+            <label class="vinkje"><input type="checkbox" name="nodig" value="bezoek"> <span>Une visite de la salle d’exposition</span></label>
+          </div>
+        </fieldset>
+
+        <div class="veld">
+          <label for="bericht">Votre message</label>
+          <textarea id="bericht" name="bericht"></textarea>
+        </div>
+
+        <div class="melding melding--fout" id="foutMelding" hidden></div>
+        <button class="knop" type="submit" id="verstuurKnop">Envoyer la demande</button>
+      </form>
+
+      <div class="gelukt" id="geluktBlok" hidden>
+        <h3>Votre demande est bien arrivée</h3>
+        <p id="geluktTekst"></p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Comment nous livrons</h2>
+      <p class="lood">Nous livrons les grandes pièces nous-mêmes, avec nos propres camionnettes, en Belgique, aux Pays-Bas, au Luxembourg, en Allemagne et en France. Une tournée part dès qu’elle est rentable pour la région ; le délai dépend donc de la saison. Les petites pièces partent par colis. Nous vous appelons dès que la tournée est planifiée, en général une semaine à l’avance.</p>
+      <div class="tabelrol">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Belgique · Pays-Bas · Luxembourg</th>
+              <th>Allemagne · France</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>D’avril à juillet</td><td>1 tot 9 werkdagen</td><td>1 tot 21 dagen</td></tr>
+            <tr><td>D’août à mars</td><td>gemiddeld 3,5 weken, uiterlijk 8 weken</td><td>uiterlijk 8 weken</td></tr>
+            <tr><td>Petites pièces, par colis</td><td colspan="2">1 tot 2 werkdagen</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script>
+  (function () {
+    var ROUTERING = {"BE":"bv","NL":"bv","LU":"bv","DE":"gmbh","AT":"gmbh","FR":"sarl","MC":"sarl"};
+    var FIRMAS = {"bv":"E-Products Europe BV","gmbh":"E-Products Deutschland GmbH","sarl":"E-Products France SARL"};
+    var TEKST = {
+      firma: "Votre demande sera traitée par {firma}, la société qui dessert votre pays.",
+      anders: "Pour les pays en dehors de la Belgique, des Pays-Bas, du Luxembourg, de l’Allemagne, de l’Autriche, de la France et de Monaco, nous examinons d’abord ensemble comment organiser la livraison.",
+      bezig: "Envoi en cours…",
+      verstuur: "Envoyer la demande",
+      gelukt: "Vous recevrez une confirmation par e-mail. Un collaborateur de {firma} vous contactera.",
+      mislukt: "L’envoi a échoué. Écrivez-nous directement à {email} et nous nous en occupons."
+    };
+    var EMAIL = "support@e-woodproducts.com";
+    var form = document.getElementById('aanvraagFormulier');
+    var landVeld = document.getElementById('land');
+    var firmaMelding = document.getElementById('firmaMelding');
+    var foutMelding = document.getElementById('foutMelding');
+    var knop = document.getElementById('verstuurKnop');
+
+    function firmaVoorLand(code) { return ROUTERING[code] || null; }
+
+    landVeld.addEventListener('change', function () {
+      var id = firmaVoorLand(landVeld.value);
+      if (!landVeld.value) { firmaMelding.hidden = true; return; }
+      firmaMelding.hidden = false;
+      firmaMelding.textContent = id
+        ? TEKST.firma.replace('{firma}', FIRMAS[id])
+        : TEKST.anders;
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      foutMelding.hidden = true;
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+
+      var fd = new FormData(form);
+      var gegevens = {
+        taal: "fr",
+        land: fd.get('land'),
+        soort: fd.get('soort'),
+        organisatie: fd.get('organisatie'),
+        btw: fd.get('btw'),
+        naam: fd.get('naam'),
+        email: fd.get('email'),
+        telefoon: fd.get('telefoon'),
+        producten: fd.get('producten'),
+        aantal: fd.get('aantal'),
+        wanneer: fd.get('wanneer'),
+        nodig: fd.getAll('nodig'),
+        bericht: fd.get('bericht')
+      };
+
+      knop.disabled = true;
+      knop.textContent = TEKST.bezig;
+
+      fetch('/api/aanvraag', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(gegevens)
+      })
+        .then(function (r) {
+          if (!r.ok) throw new Error('status ' + r.status);
+          return r.json();
+        })
+        .then(function (uitslag) {
+          if (!uitslag || !uitslag.ok) throw new Error('geweigerd');
+          form.hidden = true;
+          var blok = document.getElementById('geluktBlok');
+          document.getElementById('geluktTekst').textContent =
+            TEKST.gelukt.replace('{firma}', uitslag.firma || FIRMAS.bv);
+          blok.hidden = false;
+          blok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        })
+        .catch(function () {
+          // Geen valse bevestiging: als het misging, zeggen we dat en geven we het e-mailadres.
+          foutMelding.hidden = false;
+          foutMelding.innerHTML = TEKST.mislukt.replace(
+            '{email}',
+            '<a href="mailto:' + EMAIL + '">' + EMAIL + '</a>'
+          );
+          knop.disabled = false;
+          knop.textContent = TEKST.verstuur;
+        });
+    });
+  })();
+  </script>
+
+  <footer class="voet">
+    <div class="wrap">
+      <div class="voet__raster">
+        <div>
+          <h3>E-Products Europe</h3>
+          <p class="zacht">E-Products Europe est le groupe derrière nos boutiques en Belgique, en Allemagne et en France.</p>
+        </div>
+        <div>
+          <h3>Nos boutiques</h3>
+          <p class="zacht">Vous achetez en tant que particulier ? Rendez-vous sur la boutique de votre pays.</p>
+          <ul>
+            <li><a href="https://www.e-woodproducts.com/" rel="noopener">e-woodproducts.com</a></li>
+            <li><a href="https://www.picknickbaenke.de/" rel="noopener">picknickbaenke.de</a></li>
+            <li><a href="https://www.tablesdepiquenique.fr/" rel="noopener">tablesdepiquenique.fr</a></li>
+            <li><a href="https://www.bancsenteck.fr/" rel="noopener">bancsenteck.fr</a></li>
+            <li><a href="https://maery.fr/" rel="noopener">maery.fr</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Données d’entreprise</h3>
+          <ul class="zacht">
+            <li>E-Products Europe BV <span class="zacht">· BTW BE 0500.621.156</span></li>
+            <li>E-Products Deutschland GmbH <span class="zacht">· USt-IdNr. DE298706463</span></li>
+            <li>E-Products France SARL <span class="zacht">· TVA FR 25 818931396</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <ul>
+            <li><a href="mailto:support@e-woodproducts.com">support@e-woodproducts.com</a></li>
+            <li><a href="/fr/professionnels/">Professionnels</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
