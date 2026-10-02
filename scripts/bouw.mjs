@@ -164,6 +164,10 @@ ${inhoud}
     // Blokken komen rustig op. Wie beweging uit heeft staan, ziet ze meteen.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.querySelectorAll('.op').forEach(function (e) { e.classList.add('zichtbaar'); });
+      // De reislichtjes op de Europakaart (SMIL) luisteren niet naar CSS — apart pauzeren.
+      document.querySelectorAll('.ekaart__svg').forEach(function (svg) {
+        if (svg.pauseAnimations) svg.pauseAnimations();
+      });
       return;
     }
     var kijker = new IntersectionObserver(function (regels) {
@@ -282,12 +286,54 @@ function europakaart(taal) {
 
   const hubVoorFirma = Object.fromEntries(groep.kaart.vestigingen.map((v) => [v.firma, v]));
 
-  const routes = groep.kaart.markten
-    .map((m, i) => {
-      const firmaId = groep.routering[m.land] || 'bv';
-      const hub = hubVoorFirma[firmaId];
-      if (!hub) return '';
-      return `<path class="ekaart__route" d="${boogpad(hub.x, hub.y, m.x, m.y)}" style="--vertraging:${i * 85}ms"/>`;
+  // Een deterministisch "willekeurig" getal tussen 0 en 1 uit een tekst — zelfde
+  // techniek als houtTint, zodat elke bouw hetzelfde beeld geeft maar de reislichtjes
+  // niet allemaal in de pas lopen.
+  const zaadGetal = (tekst) => {
+    let h = 0;
+    for (const c of tekst) h = (h * 31 + c.charCodeAt(0)) % 9973;
+    return h / 9973;
+  };
+
+  // Elke leverroute krijgt een eigen ID (voor de <mpath>-koppeling) en twee
+  // reislichtjes: een heldere kop en een dovere staart erachter — als een pakketje
+  // dat over de route naar de markt rijdt. De snelheid is overal gelijk (niet de
+  // duur): een lange route krijgt een langere animatie, zodat niets onnatuurlijk
+  // snel over de kaart schiet.
+  const SNELHEID = 95; // SVG-eenheden per seconde
+  const routeData = groep.kaart.markten.map((m, i) => {
+    const firmaId = groep.routering[m.land] || 'bv';
+    const hub = hubVoorFirma[firmaId];
+    if (!hub) return null;
+    const afstand = Math.hypot(m.x - hub.x, m.y - hub.y) * 1.12; // ruwe booglengte
+    const duur = Math.max(3.2, afstand / SNELHEID);
+    const vertraging = zaadGetal(`${m.land}-${i}`) * duur;
+    return { id: `eroute-${i}`, d: boogpad(hub.x, hub.y, m.x, m.y), i, duur, vertraging };
+  });
+
+  const routes = routeData
+    .map((r) => (r ? `<path id="${r.id}" class="ekaart__route" d="${r.d}" style="--vertraging:${r.i * 85}ms"/>` : ''))
+    .join('');
+
+  const boten = routeData
+    .map((r) => {
+      if (!r) return '';
+      const d = r.duur.toFixed(2);
+      const begin = r.vertraging.toFixed(2);
+      // "Kop" = het heldere pakketje zelf, begint eerst. "Spoor" = een dovere stip
+      // die 0,35 s later vertrekt en zo altijd een stukje achter de kop aan rijdt.
+      return `<g>
+          <circle class="ekaart__boot ekaart__boot--kop" r="2.8">
+            <animateMotion dur="${d}s" begin="${begin}s" repeatCount="indefinite" rotate="auto">
+              <mpath href="#${r.id}"/>
+            </animateMotion>
+          </circle>
+          <circle class="ekaart__boot ekaart__boot--spoor" r="2">
+            <animateMotion dur="${d}s" begin="${(r.vertraging + 0.35).toFixed(2)}s" repeatCount="indefinite" rotate="auto">
+              <mpath href="#${r.id}"/>
+            </animateMotion>
+          </circle>
+        </g>`;
     })
     .join('');
 
@@ -321,11 +367,16 @@ function europakaart(taal) {
           <radialGradient id="ekaartGloed" cx="27%" cy="54%" r="65%">
             <stop offset="0%" stop-color="#4a3826"/>
             <stop offset="100%" stop-color="#1f1810"/>
+            <!-- Het licht drijft heel traag over het continent, zoals een lamp
+                 boven een echte werkbank nooit helemaal stilstaat. -->
+            <animate attributeName="cx" values="27%;34%;24%;27%" dur="52s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="54%;48%;58%;54%" dur="52s" repeatCount="indefinite"/>
           </radialGradient>
         </defs>
         <rect class="ekaart__achtergrond" width="${VW}" height="${VH}" fill="url(#ekaartGloed)"/>
         <g class="ekaart__landen">${landen}</g>
         <g class="ekaart__routes">${routes}</g>
+        <g class="ekaart__boten">${boten}</g>
         <g class="ekaart__markten">${marktpunten}</g>
         <g class="ekaart__hubs">${hubs}</g>
       </svg>

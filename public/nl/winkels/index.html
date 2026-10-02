@@ -194,6 +194,10 @@
     // Blokken komen rustig op. Wie beweging uit heeft staan, ziet ze meteen.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.querySelectorAll('.op').forEach(function (e) { e.classList.add('zichtbaar'); });
+      // De reislichtjes op de Europakaart (SMIL) luisteren niet naar CSS — apart pauzeren.
+      document.querySelectorAll('.ekaart__svg').forEach(function (svg) {
+        if (svg.pauseAnimations) svg.pauseAnimations();
+      });
       return;
     }
     var kijker = new IntersectionObserver(function (regels) {

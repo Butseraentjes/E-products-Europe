@@ -334,6 +334,26 @@ button.knop[disabled] { opacity: .6; cursor: default; transform: none; }
 }
 .ekaart__landen:hover .ekaart__land { filter: saturate(.7); }
 .ekaart__land:hover { filter: saturate(1.3) brightness(1.08); }
+/* Het continent ademt heel licht — geen vaste tekening, levend hout. */
+.ekaart__landen {
+  transform-box: fill-box; transform-origin: 50% 50%;
+  animation: ekaartAdem 46s ease-in-out infinite;
+}
+@keyframes ekaartAdem {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.009); }
+}
+
+/* De reislichtjes: een pakketje dat van vestiging naar markt rijdt, met een
+   dovere stip erachter als spoor. SMIL (animateMotion) i.p.v. CSS offset-path,
+   want dat is de meest stabiele manier om iets langs een gebogen pad te laten
+   reizen in elke browser. */
+.ekaart__boot { pointer-events: none; }
+.ekaart__boot--kop {
+  fill: #fff4e6;
+  filter: drop-shadow(0 0 4px rgba(224,168,120,.95)) drop-shadow(0 0 1px #fff);
+}
+.ekaart__boot--spoor { fill: var(--brons-licht); opacity: .45; }
 
 .ekaart__route {
   fill: none; stroke: var(--brons-licht); stroke-width: 1.3; stroke-linecap: round;
