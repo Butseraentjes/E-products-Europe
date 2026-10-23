@@ -58,6 +58,8 @@ node tools/foto.mjs http://localhost:8799/nl/ /tmp/x.jpg --breed 390   # meldt o
         │
         ▼
   node scripts/aanvragen-ophalen.mjs --confirm   (op Peters Mac, met het Zendesk-token)
+        │                     draait elke 5 min via launchd (launchd/be.e-productseurope.aanvragen.plist,
+        │                     sinds 23 okt 2026; log in logs/aanvragen.log)
         └── maakt een Zendesk-ticket met tag epeurope-aanvraag + epeurope-<firma>
             en vinkt de aanvraag af in KV
 ```
