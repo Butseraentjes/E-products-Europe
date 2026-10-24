@@ -1204,6 +1204,9 @@ schrijf(
 // Eigendomsbewijs voor Google Search Console. NIET verwijderen: zonder dit bestand
 // verliezen we de toegang tot de meetgegevens van dit domein.
 schrijf('googleb0cdacf373743028.html', 'google-site-verification: googleb0cdacf373743028.html\n');
+// Idem voor Bing Webmaster Tools (24 okt 2026): Bing toetst de startpagina /, en die taalkiezer
+// draagt de msvalidate-tag niet. Zelfde code als op alle andere sites van Peter.
+schrijf('BingSiteAuth.xml', '<?xml version="1.0"?>\n<users>\n\t<user>72A0E590C5D434F652C1E4256F2B418C</user>\n</users>\n');
 
 schrijf('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
 
