@@ -1,0 +1,248 @@
+{
+  "_uitleg": "Alle webwinkels van de groep, voor de winkelpagina en de winkelmuur op de start. Eén regel per winkel. 'beeld' = voorvoegsel van de schermafdrukken in src/winkels/ (<beeld>-desk.webp 960 px, -muur.webp 480 px, -gsm.webp 300 px). Nieuwe winkel: regel toevoegen + drie beelden maken (zie README, 'Schermafdrukken vernieuwen').",
+  "_stand": "2026-10-24 — elke winkel live nagekeken (http 200) en gefotografeerd op computer (1440 px) en gsm (390 px).",
+  "_regels": "Geen maakclaims, geen keurmerken, geen prijzen. 'wat' beschrijft wat de winkel verkoopt, niet hoe goed hij is.",
+  "soorten": ["buiten", "binnen", "olie", "zakelijk"],
+  "winkels": [
+    {
+      "naam": "e-woodproducts.com", "url": "https://www.e-woodproducts.com/", "beeld": "e-woodproducts-com",
+      "firma": "bv", "landen": ["BE", "NL", "LU", "DE", "FR", "EU"], "soort": ["buiten", "binnen"], "talen": "NL FR DE EN IT ES DA", "hoofd": true,
+      "wat": {
+        "nl": "De hoofdwinkel: buiten én binnen, in zeven talen.",
+        "fr": "La boutique principale : extérieur et intérieur, en sept langues.",
+        "de": "Der Hauptshop: drinnen und draußen, in sieben Sprachen.",
+        "en": "The main shop: outdoor and indoor, in seven languages."
+      }
+    },
+    {
+      "naam": "e-woodproducts.be", "url": "https://www.e-woodproducts.be/", "beeld": "e-woodproducts-be",
+      "firma": "bv", "landen": ["BE"], "soort": ["buiten"], "talen": "NL",
+      "wat": {
+        "nl": "Picknicktafels in hout, geleverd in heel België.",
+        "fr": "Tables de pique-nique en bois, livrées dans toute la Belgique.",
+        "de": "Picknicktische aus Holz, geliefert in ganz Belgien.",
+        "en": "Wooden picnic tables, delivered across Belgium."
+      }
+    },
+    {
+      "naam": "tablesdepiquenique.be", "url": "https://www.tablesdepiquenique.be/", "beeld": "tablesdepiquenique-be",
+      "firma": "bv", "landen": ["BE"], "soort": ["buiten"], "talen": "FR",
+      "wat": {
+        "nl": "Franstalige picknickwinkel voor België.",
+        "fr": "Tables de pique-nique en bois, livrées en Belgique.",
+        "de": "Französischsprachiger Picknick-Shop für Belgien.",
+        "en": "French-language picnic table shop for Belgium."
+      }
+    },
+    {
+      "naam": "picknicktafel-kopen.be", "url": "https://www.picknicktafel-kopen.be/", "beeld": "picknicktafel-kopen-be",
+      "firma": "bv", "landen": ["BE"], "soort": ["buiten"], "talen": "NL",
+      "wat": {
+        "nl": "Kies uw tafel op het aantal gasten en test of hij op uw terras past.",
+        "fr": "Choisissez votre table selon le nombre d’invités et vérifiez qu’elle tient sur votre terrasse.",
+        "de": "Tisch nach Gästezahl wählen und prüfen, ob er auf Ihre Terrasse passt.",
+        "en": "Pick your table by the number of guests and check it fits your patio."
+      }
+    },
+    {
+      "naam": "restol-houtolie.be", "url": "https://www.restol-houtolie.be/", "beeld": "restol-houtolie-be",
+      "firma": "bv", "landen": ["BE", "NL"], "soort": ["olie"], "talen": "NL FR",
+      "wat": {
+        "nl": "Restol-houtolie: alle kleuren, rekenhulp en advies.",
+        "fr": "Huile Restol : toutes les teintes, un calculateur et des conseils.",
+        "de": "Restol-Holzöl: alle Farben, ein Rechner und Beratung.",
+        "en": "Restol wood oil: every colour, a calculator and advice."
+      }
+    },
+    {
+      "naam": "houtolie-kopen.be", "url": "https://houtolie-kopen.be/", "beeld": "houtolie-kopen-be",
+      "firma": "bv", "landen": ["BE", "NL"], "soort": ["olie"], "talen": "NL",
+      "wat": {
+        "nl": "Houtolie voor buitenhout, per houtsoort en per project.",
+        "fr": "Huile pour bois extérieur, par essence et par projet.",
+        "de": "Holzöl für Außenholz, nach Holzart und Projekt.",
+        "en": "Wood oil for outdoor timber, by wood type and project."
+      }
+    },
+    {
+      "naam": "biertafel-kopen.be", "url": "https://biertafel-kopen.be/", "beeld": "biertafel-kopen-be",
+      "firma": "bv", "landen": ["BE"], "soort": ["buiten"], "talen": "NL",
+      "wat": {
+        "nl": "Biertafels en biertafelsets voor feesten en verenigingen.",
+        "fr": "Tables et ensembles de brasserie pour fêtes et associations.",
+        "de": "Biertische und Garnituren für Feste und Vereine.",
+        "en": "Beer tables and sets for parties and clubs."
+      }
+    },
+    {
+      "naam": "tafel-kopen.be", "url": "https://www.tafel-kopen.be/", "beeld": "tafel-kopen-be",
+      "firma": "bv", "landen": ["BE"], "soort": ["buiten"], "talen": "NL",
+      "wat": {
+        "nl": "Houten tuintafels en picknicktafels.",
+        "fr": "Tables de jardin et tables de pique-nique en bois.",
+        "de": "Gartentische und Picknicktische aus Holz.",
+        "en": "Wooden garden tables and picnic tables."
+      }
+    },
+    {
+      "naam": "tuinbank-kopen.be", "url": "https://www.tuinbank-kopen.be/", "beeld": "tuinbank-kopen-be",
+      "firma": "bv", "landen": ["BE"], "soort": ["buiten"], "talen": "NL",
+      "wat": {
+        "nl": "Tuinbanken in teak, hardhout en vurenhout.",
+        "fr": "Bancs de jardin en teck, bois dur et épicéa.",
+        "de": "Gartenbänke aus Teak, Hartholz und Fichte.",
+        "en": "Garden benches in teak, hardwood and spruce."
+      }
+    },
+    {
+      "naam": "we-kopen.be", "url": "https://www.we-kopen.be/", "beeld": "we-kopen-be",
+      "firma": "bv", "landen": ["BE"], "soort": ["zakelijk", "buiten"], "talen": "NL",
+      "wat": {
+        "nl": "Het offerteloket voor scholen, gemeenten en verenigingen.",
+        "fr": "Le guichet de devis pour écoles, communes et associations.",
+        "de": "Der Angebotsschalter für Schulen, Gemeinden und Vereine.",
+        "en": "The quote desk for schools, councils and associations."
+      }
+    },
+    {
+      "naam": "e-woodproducts.nl", "url": "https://www.e-woodproducts.nl/", "beeld": "e-woodproducts-nl",
+      "firma": "bv", "landen": ["NL"], "soort": ["buiten"], "talen": "NL",
+      "wat": {
+        "nl": "Picknicktafels, bezorgd in heel Nederland.",
+        "fr": "Tables de pique-nique, livrées dans tous les Pays-Bas.",
+        "de": "Picknicktische, geliefert in die ganzen Niederlande.",
+        "en": "Picnic tables, delivered across the Netherlands."
+      }
+    },
+    {
+      "naam": "picknick-tafel-kopen.nl", "url": "https://www.picknick-tafel-kopen.nl/", "beeld": "picknick-tafel-kopen-nl",
+      "firma": "bv", "landen": ["NL"], "soort": ["buiten"], "talen": "NL",
+      "wat": {
+        "nl": "Stevige picknicktafels, op voorraad.",
+        "fr": "Tables de pique-nique robustes, en stock.",
+        "de": "Robuste Picknicktische, auf Lager.",
+        "en": "Sturdy picnic tables, in stock."
+      }
+    },
+    {
+      "naam": "biertafel-kopen.nl", "url": "https://biertafel-kopen.nl/", "beeld": "biertafel-kopen-nl",
+      "firma": "bv", "landen": ["NL"], "soort": ["buiten"], "talen": "NL",
+      "wat": {
+        "nl": "Biertafelsets met bankjes, voor Nederland.",
+        "fr": "Ensembles de brasserie avec bancs, pour les Pays-Bas.",
+        "de": "Biertisch-Garnituren mit Bänken, für die Niederlande.",
+        "en": "Beer table sets with benches, for the Netherlands."
+      }
+    },
+    {
+      "naam": "tuinbank-kopen.nl", "url": "https://www.tuinbank-kopen.nl/", "beeld": "tuinbank-kopen-nl",
+      "firma": "bv", "landen": ["NL"], "soort": ["buiten"], "talen": "NL",
+      "wat": {
+        "nl": "Tuinbanken van massief hout.",
+        "fr": "Bancs de jardin en bois massif.",
+        "de": "Gartenbänke aus Massivholz.",
+        "en": "Solid wood garden benches."
+      }
+    },
+    {
+      "naam": "kingpicknicktafels.nl", "url": "https://www.kingpicknicktafels.nl/", "beeld": "kingpicknicktafels-nl",
+      "firma": "bv", "landen": ["NL"], "soort": ["buiten"], "talen": "NL",
+      "wat": {
+        "nl": "KING-picknicktafels met planken van 40 en 45 mm.",
+        "fr": "Tables de pique-nique KING, planches de 40 et 45 mm.",
+        "de": "KING-Picknicktische mit 40 und 45 mm Bohlen.",
+        "en": "KING picnic tables with 40 and 45 mm planks."
+      }
+    },
+    {
+      "naam": "tuintafel-kopen.nl", "url": "https://tuintafel-kopen.nl/", "beeld": "tuintafel-kopen-nl",
+      "firma": "bv", "landen": ["NL"], "soort": ["buiten"], "talen": "NL",
+      "wat": {
+        "nl": "KING-picknicktafels voor Nederland.",
+        "fr": "Tables de pique-nique KING pour les Pays-Bas.",
+        "de": "KING-Picknicktische für die Niederlande.",
+        "en": "KING picnic tables for the Netherlands."
+      }
+    },
+    {
+      "naam": "picknickbaenke.de", "url": "https://www.picknickbaenke.de/", "beeld": "picknickbaenke-de",
+      "firma": "gmbh", "landen": ["DE", "AT"], "soort": ["buiten"], "talen": "DE", "hoofd": true,
+      "wat": {
+        "nl": "De Duitse hoofdwinkel: picknicktafels en tuinbanken.",
+        "fr": "La boutique principale en Allemagne : tables de pique-nique et bancs.",
+        "de": "Unser Hauptshop in Deutschland: Picknicktische und Gartenbänke.",
+        "en": "The German main shop: picnic tables and garden benches."
+      }
+    },
+    {
+      "naam": "picknickbanke.de", "url": "https://picknickbanke.de/", "beeld": "picknickbanke-de",
+      "firma": "gmbh", "landen": ["DE"], "soort": ["buiten"], "talen": "DE",
+      "wat": {
+        "nl": "KING-picknicktafels voor Duitsland.",
+        "fr": "Tables de pique-nique KING pour l’Allemagne.",
+        "de": "KING-Picknicktische für Deutschland.",
+        "en": "KING picnic tables for Germany."
+      }
+    },
+    {
+      "naam": "tablesdepiquenique.fr", "url": "https://www.tablesdepiquenique.fr/", "beeld": "tablesdepiquenique-fr",
+      "firma": "sarl", "landen": ["FR", "MC"], "soort": ["buiten"], "talen": "FR", "hoofd": true,
+      "wat": {
+        "nl": "De Franse hoofdwinkel: picknicktafels en banken.",
+        "fr": "Notre boutique principale en France : tables de pique-nique et bancs.",
+        "de": "Der Hauptshop in Frankreich: Picknicktische und Bänke.",
+        "en": "The French main shop: picnic tables and benches."
+      }
+    },
+    {
+      "naam": "tablesdepique-nique.fr", "url": "https://www.tablesdepique-nique.fr/", "beeld": "tablesdepique-nique-fr",
+      "firma": "sarl", "landen": ["FR"], "soort": ["buiten"], "talen": "FR",
+      "wat": {
+        "nl": "KING- en ROYAL KING-picknicktafels.",
+        "fr": "Tables de pique-nique KING et ROYAL KING.",
+        "de": "KING- und ROYAL KING-Picknicktische.",
+        "en": "KING and ROYAL KING picnic tables."
+      }
+    },
+    {
+      "naam": "bancsenteck.fr", "url": "https://www.bancsenteck.fr/", "beeld": "bancsenteck-fr",
+      "firma": "sarl", "landen": ["FR"], "soort": ["buiten"], "talen": "FR",
+      "wat": {
+        "nl": "Teakbanken Dordogne in vijf lengtes.",
+        "fr": "Bancs en teck Dordogne en cinq longueurs.",
+        "de": "Teakbänke Dordogne in fünf Längen.",
+        "en": "Dordogne teak benches in five lengths."
+      }
+    },
+    {
+      "naam": "maery.fr", "url": "https://maery.fr/", "beeld": "maery-fr",
+      "firma": "sarl", "landen": ["FR"], "soort": ["binnen"], "talen": "FR",
+      "wat": {
+        "nl": "Kleine designmeubels voor binnen.",
+        "fr": "Petits meubles design pour l’intérieur.",
+        "de": "Kleine Designmöbel für drinnen.",
+        "en": "Small design furniture for indoors."
+      }
+    }
+  ],
+  "binnenkort": [
+    {
+      "naam": "e-woodproducts.fr", "beeld": "e-woodproducts-fr", "firma": "sarl", "landen": ["FR"],
+      "wat": {
+        "nl": "Voor professionals en collectiviteiten in Frankrijk: offerte en bestelbon op naam.",
+        "fr": "Pour les professionnels et les collectivités : devis et bon de commande à votre nom.",
+        "de": "Für Gewerbe und öffentliche Einrichtungen in Frankreich: Angebot und Bestellschein.",
+        "en": "For professionals and public bodies in France: quotes and purchase orders."
+      }
+    },
+    {
+      "naam": "meubles-de-jardin.be", "beeld": null, "firma": "bv", "landen": ["BE"],
+      "wat": {
+        "nl": "Een Franstalige tuinmeubelwinkel voor België.",
+        "fr": "Une boutique de mobilier de jardin pour la Belgique francophone.",
+        "de": "Ein französischsprachiger Gartenmöbel-Shop für Belgien.",
+        "en": "A French-language garden furniture shop for Belgium."
+      }
+    }
+  ]
+}

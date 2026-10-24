@@ -4,7 +4,15 @@
   "koepel": {
     "naam": "E-Products Europe",
     "domein": "e-productseurope.com",
-    "contact": "support@e-woodproducts.com"
+    "contact": "support@e-woodproducts.com",
+    "magazijn": {
+      "adres": [
+        "Hannaerden 1A",
+        "9280 Lebbeke",
+        "België"
+      ],
+      "afhalen": "in de winter op afspraak"
+    }
   },
   "firmas": [
     {
@@ -25,7 +33,6 @@
         "België"
       ],
       "magazijn": "Lebbeke",
-      "toonzaal": true,
       "email": "support@e-woodproducts.com",
       "winkels": [
         {
@@ -282,7 +289,7 @@
       {
         "land": "LU",
         "x": 323.2,
-        "y": 435.0
+        "y": 435
       },
       {
         "land": "DE",
@@ -335,5 +342,13 @@
         "y": 320.8
       }
     ]
+  },
+  "_feiten_uitleg": "Door Peter bevestigd op 2 okt 2026 (bedrijfsfeiten voor de contactpagina; geheugen project-bedrijfsfeiten-okt2026). 40.000 = schatting sinds 2011 (Exact telt vanaf 2017), altijd als ‘ruim’/‘+’ tonen. Magazijnen: ±3.000 m² BE + 5.000 m² buitenland — de buitenlandse plaats NOOIT noemen. Geen toonzaal meer. Adres Lebbeke = Peter 22 okt 2026.",
+  "feiten": {
+    "actief_sinds": 2011,
+    "bestellingen_sinds_2011": 40000,
+    "magazijn_m2": 8000,
+    "antwoord_uren": 24,
+    "eigen_bus_landen": 5
   }
 }

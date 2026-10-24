@@ -1,13 +1,14 @@
 #!/usr/bin/env node
-// Bouwt de koepelsite: data/ + src/teksten.mjs → public/
+// Bouwt de koepelsite: data/ + src/ → public/
 //
 //   node scripts/bouw.mjs
 //
-// Per taal drie pagina's (start · winkels · zakelijk · documenten), plus robots.txt,
+// Ontwerp okt 2026 ("Eén houtgroep", Claude Design-canvas "E-Products Europe herontwerp").
+// Per taal vijf pagina's (start · winkels · zakelijk · groep · documenten), plus robots.txt,
 // sitemap.xml en een taalkiezer op /. Alles statisch; het formulier praat met de
 // Cloudflare Worker uit worker/.
 
-import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { TALEN, TAALNAAM, t, land, houtsoort } from '../src/teksten.mjs';
@@ -20,29 +21,45 @@ const SITE = 'https://www.e-productseurope.com';
 // Waar het formulier zijn aanvraag naartoe stuurt.
 // Op Cloudflare Pages draait de Worker op hetzelfde domein en volstaat '/api/aanvraag'.
 // Zolang het domein nog op Render staat (statisch, geen /api), moet dat de volledige
-// Worker-URL zijn. Overschakelen zodra de nameservers bij Spinternet verhuisd zijn:
-//   API_BASIS = ''  →  de site praat dan met zijn eigen domein.
+// Worker-URL zijn. De Worker aanvaardt alleen aanvragen van het echte domein (CORS),
+// dus een voorbeeldsite op pages.dev kan geen echte aanvragen maken.
 const API_BASIS =
   process.env.EPEUROPE_API_BASIS ?? 'https://aanvragen-eproductseurope.peterbutseraen.workers.dev';
 
-const groep = JSON.parse(readFileSync(join(WORTEL, 'data/groep.json'), 'utf8'));
-const producten = JSON.parse(readFileSync(join(WORTEL, 'data/producten.json'), 'utf8'));
-const beelden = JSON.parse(readFileSync(join(WORTEL, 'data/beelden.json'), 'utf8'));
-const europa = JSON.parse(readFileSync(join(WORTEL, 'data/europa-paden.json'), 'utf8'));
+const lees = (pad) => JSON.parse(readFileSync(join(WORTEL, pad), 'utf8'));
+const groep = lees('data/groep.json');
+const producten = lees('data/producten.json');
+const beelden = lees('data/beelden.json');
+const W = lees('data/winkels.json');
+const WINKELS = W.winkels;
+const BINNENKORT = W.binnenkort;
+const STAND = W._stand.slice(0, 10);
+const N = WINKELS.length;
 
 // Shopify levert zelf een modern formaat als je ?width= meegeeft.
 const beeld = (sleutel, breedte) => `${beelden._basis}${beelden[sleutel].bestand}?width=${breedte}`;
 const beeldAlt = (sleutel, taal) => beelden[sleutel].alt[taal] || beelden[sleutel].alt.en;
+const schot = (w, soort) => `/winkels/${w.beeld}-${soort}.webp`;
+const MATEN = { desk: [960, 600], muur: [480, 300], gsm: [300, 560] };
 
 const firma = (id) => groep.firmas.find((f) => f.id === id);
+const winkel = (naam) => WINKELS.find((w) => w.naam === naam);
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const stadVan = (f) => f.adres[1].replace(/^\S+\s+/, '');
+
+const LOCALE = { nl: 'nl-BE', fr: 'fr-BE', de: 'de-DE', en: 'en-GB' };
+const getal = (n, taal) => new Intl.NumberFormat(LOCALE[taal]).format(n);
+const datum = (iso, taal) =>
+  new Intl.DateTimeFormat(LOCALE[taal], { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(`${iso}T12:00:00`));
+const F = groep.feiten;
 
 // De pagina's, met per taal hun eigen pad (zodat de URL leesbaar is in elke taal).
 const PAGINAS = [
   { id: 'start', pad: { nl: '', fr: '', de: '', en: '' } },
   { id: 'winkels', pad: { nl: 'winkels', fr: 'boutiques', de: 'shops', en: 'shops' } },
   { id: 'zakelijk', pad: { nl: 'zakelijk', fr: 'professionnels', de: 'geschaeftskunden', en: 'business' } },
+  { id: 'groep', pad: { nl: 'groep', fr: 'groupe', de: 'gruppe', en: 'group' } },
   { id: 'documenten', pad: { nl: 'documenten', fr: 'documents', de: 'unterlagen', en: 'documents' } },
 ];
 
@@ -51,32 +68,65 @@ const url = (taal, paginaId) => {
   return p ? `/${taal}/${p}/` : `/${taal}/`;
 };
 
-// ── bouwstenen ──────────────────────────────────────────────────────────────
+// ── kleine bouwstenen ───────────────────────────────────────────────────────
+
+// Het merkteken: jaarringen die net niet in het midden zitten, met een amberkleurig hart.
+const logo = (maat = 36, achter = '#1E4A38') =>
+  `<svg width="${maat}" height="${maat}" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><circle cx="18" cy="18" r="17" fill="${achter}"/><circle cx="16.5" cy="19" r="11.5" fill="none" stroke="#F0A43A" stroke-width="1.8"/><circle cx="15.5" cy="19.5" r="6.8" fill="none" stroke="#F3F4F0" stroke-width="1.6" opacity=".85"/><circle cx="15" cy="20" r="2.5" fill="#F0A43A"/></svg>`;
+
+const ICOON = {
+  pijl: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  extern: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="flex:none;opacity:.6"><path d="M7 17L17 7M9 7h8v8"/></svg>',
+  vink: (kleur) => `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="${kleur}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12l5 5L20 7"/></svg>`,
+  bus: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2E6B3E" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 7h11v9H2zM13 10h5l3 3v3h-8"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>',
+  zoek: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#56625C" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
+  menu: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F3F4F0" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h10"/></svg>',
+  print: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z"/></svg>',
+  voorraad: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2E6B3E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 9l9-5 9 5v10H3z"/><path d="M7 19v-6h10v6M7 16h10"/></svg>',
+  bus40: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2E6B3E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 7h11v9H2zM13 10h5l3 3v3h-8"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>',
+  taal: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2E6B3E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 10h8M8 13h5"/></svg>',
+};
+
+const balk = (w, groot = false) =>
+  `<div class="balk"><span class="stip"></span><span class="stip"></span><span class="stip"></span><span class="${groot ? 'balk__url' : 'balk__dom'}">${esc(w.naam)}</span></div>`;
+
+const img = (src, [b, h], alt, extra = '') =>
+  `<img src="${src}" width="${b}" height="${h}" alt="${esc(alt)}" decoding="async"${extra}>`;
+
+function landTekst(w, taal) {
+  return w.landen.includes('EU') ? land('EU', taal) : w.landen.join(' · ');
+}
+const soortTekst = (w, taal) => w.soort.map((s) => t(`soort.${s}`, taal)).join(' · ');
+// "BE" naast "NL" las als twee landen; daarom staat de taal er voortaan met naam bij.
+function taalTekst(w, taal) {
+  const lijst = w.talen.split(' ');
+  return lijst.length > 2 ? t('tag.talen', taal, { n: lijst.length }) : t('tag.taal', taal, { x: lijst.join(' · ') });
+}
+
+// ── de pagina-omhulling ─────────────────────────────────────────────────────
 
 function pagina({ taal, paginaId, titel, meta, inhoud, extraHoofd = '' }) {
   const hreflang = TALEN.map(
     (l) => `  <link rel="alternate" hreflang="${l}" href="${SITE}${url(l, paginaId)}">`
   ).join('\n');
 
-  const nav = ['winkels', 'zakelijk', 'documenten']
-    .map((p) => {
-      const huidig = p === paginaId ? ' aria-current="page"' : '';
-      return `<a href="${url(taal, p)}"${huidig}>${esc(t(`nav.${p}`, taal))}</a>`;
-    })
-    .join('\n          ');
+  const menu = ['winkels', 'zakelijk', 'groep', 'documenten'];
+  const navLinks = menu
+    .map((p) => `<a href="${url(taal, p)}"${p === paginaId ? ' aria-current="page"' : ''}>${esc(t(`nav.${p === 'groep' ? 'groep' : p}`, taal))}</a>`)
+    .join('\n        ');
 
   const talen = TALEN.map((l) => {
     const huidig = l === taal ? ' aria-current="true"' : '';
     return `<a href="${url(l, paginaId)}" hreflang="${l}" lang="${l}" title="${esc(TAALNAAM[l])}"${huidig}>${l}</a>`;
-  }).join('\n          ');
+  }).join('');
 
-  const voetWinkels = groep.firmas
-    .flatMap((f) => f.winkels.map((w) => `<li><a href="${w.url}" rel="noopener">${esc(w.naam)}</a></li>`))
-    .join('\n            ');
+  const hoofdwinkels = WINKELS.filter((w) => w.hoofd)
+    .map((w) => `<li><a href="${w.url}" rel="noopener">${esc(w.naam)}</a></li>`)
+    .join('\n          ');
 
-  const voetFirmas = groep.firmas
-    .map((f) => `<li>${esc(f.naam)} <span class="zacht">· ${esc(f.btw_label)} ${esc(f.btw)}</span></li>`)
-    .join('\n            ');
+  const firmas = groep.firmas
+    .map((f) => `<li>${esc(f.naam)}<span class="voet__klein">${esc(f.btw_label)} ${esc(f.btw)}</span></li>`)
+    .join('\n          ');
 
   return `<!doctype html>
 <html lang="${taal}">
@@ -92,90 +142,97 @@ ${hreflang}
   <meta property="og:description" content="${esc(meta)}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="${SITE}${url(taal, paginaId)}">
+  <meta property="og:image" content="${beeld('hero', 1200)}">
   <meta property="og:locale" content="${taal}">
+  <meta name="theme-color" content="#F3F4F0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn.shopify.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="/stijl.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta name="msvalidate.01" content="72A0E590C5D434F652C1E4256F2B418C">
+  <script>document.documentElement.className += ' js';</script>
 ${extraHoofd}</head>
 <body>
   <header class="kop">
     <div class="kop__in">
       <a class="merk" href="${url(taal, 'start')}">
-        <span class="merk__teken" aria-hidden="true">EP</span>
-        <span>
-          <span class="merk__naam">${esc(t('site.naam', taal))}</span><br>
-          <span class="merk__sub">${esc(t('site.ondertitel', taal))}</span>
-        </span>
+        ${logo()}
+        <span><span class="merk__naam">${esc(t('site.naam', taal))}</span><span class="merk__sub">${esc(t('site.kenmerk', taal))}</span></span>
       </a>
-      <nav class="nav" aria-label="${esc(t('nav.groep', taal))}">
-          ${nav}
+      <nav class="nav" aria-label="${esc(t('nav.hoofd', taal))}">
+        ${navLinks}
       </nav>
-      <div class="talen" role="group" aria-label="${esc(t('nav.taal', taal))}">
-          ${talen}
+      <div class="kop__rechts">
+        <div class="talen" role="group" aria-label="${esc(t('nav.taal', taal))}">${talen}</div>
+        <a class="knop knop--groen knop--klein kop__cta" href="${url(taal, 'zakelijk')}#aanvraag">${esc(t('nav.cta', taal))}</a>
+        <details class="gsmmenu">
+          <summary aria-label="${esc(t('nav.menu', taal))}">${ICOON.menu}</summary>
+          <nav class="gsmmenu__paneel" aria-label="${esc(t('nav.hoofd', taal))}">
+            ${navLinks}
+            <a class="knop knop--groen" href="${url(taal, 'zakelijk')}#aanvraag">${esc(t('nav.cta', taal))}</a>
+            <div class="talen gsmmenu__talen" role="group" aria-label="${esc(t('nav.taal', taal))}">${talen}</div>
+          </nav>
+        </details>
       </div>
     </div>
   </header>
+  <main>
 ${inhoud}
+  </main>
   <footer class="voet">
-    <div class="wrap">
-      <div class="voet__raster">
-        <div>
-          <h3>${esc(t('site.naam', taal))}</h3>
-          <p class="zacht">${esc(t('voet.groep', taal))}</p>
-        </div>
-        <div>
-          <h3>${esc(t('nav.winkels', taal))}</h3>
-          <p class="zacht">${esc(t('voet.particulier', taal))}</p>
-          <ul>
-            ${voetWinkels}
-          </ul>
-        </div>
-        <div>
-          <h3>${esc(t('doc.firma.kop', taal))}</h3>
-          <ul class="zacht">
-            ${voetFirmas}
-          </ul>
-        </div>
-        <div>
-          <h3>${esc(t('voet.contact', taal))}</h3>
-          <ul>
-            <li><a href="mailto:${groep.koepel.contact}">${esc(groep.koepel.contact)}</a></li>
-            <li><a href="${url(taal, 'zakelijk')}">${esc(t('nav.zakelijk', taal))}</a></li>
-          </ul>
-        </div>
+    <div class="voet__raster">
+      <div>
+        <div class="voet__merk">${logo(36, '#2E6B3E')}<span>${esc(t('site.naam', taal))}</span></div>
+        <p>${esc(t('voet.groep', taal))}</p>
+      </div>
+      <div>
+        <h2>${esc(t('nav.winkels', taal))}</h2>
+        <ul>
+          ${hoofdwinkels}
+          <li><a href="${url(taal, 'winkels')}" style="color:#F0A43A">${esc(t('voet.alle', taal))}</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>${esc(t('voet.firmas', taal))}</h2>
+        <ul>
+          ${firmas}
+        </ul>
+      </div>
+      <div>
+        <h2>${esc(t('voet.contact', taal))}</h2>
+        <ul>
+          <li><a href="mailto:${groep.koepel.contact}">${esc(groep.koepel.contact)}</a></li>
+          <li>${esc(t('voet.afhalen', taal))}</li>
+          <li><a href="${url(taal, 'zakelijk')}#aanvraag">${esc(t('nav.cta', taal))}</a></li>
+          <li><a href="${url(taal, 'documenten')}">${esc(t('voet.gegevens', taal))}</a></li>
+        </ul>
       </div>
     </div>
-      <p class="voet__slot">© ${new Date().getFullYear()} ${esc(t('site.naam', taal))} · ${groep.firmas
-        .map((f) => esc(f.naam))
-        .join(' · ')}</p>
+    <div class="voet__slot">
+      <span>© ${new Date().getFullYear()} ${esc(t('site.naam', taal))} · BV · GmbH · SARL</span>
+      <span class="mono">e-productseurope.com</span>
     </div>
   </footer>
   <script>
   (function () {
-    // Kop wordt vast zodra je scrolt.
+    // De vaste kop is niet overal even hoog; de filterbalk van de winkelpagina hangt eronder.
     var kop = document.querySelector('.kop');
-    var vast = function () { kop.classList.toggle('kop--vast', window.scrollY > 40); };
-    vast(); window.addEventListener('scroll', vast, { passive: true });
-
+    var zetKop = function () { document.documentElement.style.setProperty('--kop-h', kop.offsetHeight + 'px'); };
+    zetKop(); window.addEventListener('resize', zetKop);
     // Blokken komen rustig op. Wie beweging uit heeft staan, ziet ze meteen.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.querySelectorAll('.op').forEach(function (e) { e.classList.add('zichtbaar'); });
-      // De reislichtjes op de Europakaart (SMIL) luisteren niet naar CSS — apart pauzeren.
-      document.querySelectorAll('.ekaart__svg').forEach(function (svg) {
-        if (svg.pauseAnimations) svg.pauseAnimations();
-      });
+    var op = document.querySelectorAll('.op');
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      op.forEach(function (e) { e.classList.add('zichtbaar'); });
       return;
     }
     var kijker = new IntersectionObserver(function (regels) {
       regels.forEach(function (r) {
         if (r.isIntersecting) { r.target.classList.add('zichtbaar'); kijker.unobserve(r.target); }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-    document.querySelectorAll('.op').forEach(function (e) { kijker.observe(e); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    op.forEach(function (e) { kijker.observe(e); });
   })();
   </script>
 </body>
@@ -183,300 +240,264 @@ ${inhoud}
 `;
 }
 
+// ── gedeelde blokken ────────────────────────────────────────────────────────
+
+function leveringBlok(taal) {
+  const L = groep.levering.termijn;
+  const bus = groep.levering.eigen_bus.map((c) => `<span>${ICOON.bus}${esc(land(c, taal))}</span>`).join('\n        ');
+  return `  <section class="levering">
+    <div class="op">
+      <p class="opschrift">${esc(t('lev.opschrift', taal))}</p>
+      <h2 class="kop-l">${esc(t('lev.kop', taal))}</h2>
+      <p class="levering__tekst">${esc(t('levering.tekst', taal))}</p>
+      <div class="buslanden">
+        ${bus}
+      </div>
+    </div>
+    <div class="tabelkaart op">
+      <div class="tabelrol">
+        <table>
+          <thead><tr>
+            <th scope="col">${esc(t('lev.periode', taal))}</th>
+            <th scope="col">BE · NL · LU</th>
+            <th scope="col">DE · FR</th>
+          </tr></thead>
+          <tbody>
+            <tr><th scope="row">${esc(t('levering.hoogseizoen', taal))}</th><td>${esc(L.hoogseizoen_apr_jul.be_nl_lu[taal])}</td><td>${esc(L.hoogseizoen_apr_jul.de_fr[taal])}</td></tr>
+            <tr><th scope="row">${esc(t('levering.buitenseizoen', taal))}</th><td>${esc(L.buitenseizoen_aug_mrt.be_nl_lu[taal])}</td><td>${esc(L.buitenseizoen_aug_mrt.de_fr[taal])}</td></tr>
+            <tr><th scope="row">${esc(t('levering.pakket', taal))}</th><td colspan="2">${esc(groep.levering.pakket[taal])}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>`;
+}
+
+function winkelkaart(w, taal, { donker = false } = {}) {
+  const f = firma(w.firma);
+  const kortFirma = `${f.id.toUpperCase()} · ${land(f.land, taal)}`;
+  const lazy = ' loading="lazy"';
+  return `<a class="winkelkaart${donker ? ' winkelkaart--donker' : ''}" href="${w.url}" rel="noopener" data-landen="${w.landen.join(' ')}" data-soort="${w.soort.join(' ')}">
+          <div class="scherm">
+            <div class="browser">${balk(w)}${img(schot(w, 'desk'), MATEN.desk, t('winkels.schot', taal, { naam: w.naam }), lazy)}</div>
+            ${img(schot(w, 'gsm'), MATEN.gsm, t('winkels.schot.gsm', taal, { naam: w.naam }), ` class="scherm__gsm"${lazy}`)}
+          </div>
+          <div class="winkelkaart__body">
+            ${donker ? `<span class="winkelkaart__firma">${esc(kortFirma)}</span>` : ''}
+            <div class="winkelkaart__rij"><span class="winkelkaart__dom">${esc(w.naam)}</span>${donker ? '' : ICOON.extern}</div>
+            <p class="winkelkaart__wat">${esc(w.wat[taal])}</p>
+            <div class="tags"><span class="tag tag--mono">${esc(landTekst(w, taal))}</span><span class="tag">${esc(taalTekst(w, taal))}</span>${donker ? '' : `<span class="tag">${esc(soortTekst(w, taal))}</span>`}</div>
+          </div>
+        </a>`;
+}
+
+const ringen = `<svg class="zakband__ringen" viewBox="0 0 520 520" aria-hidden="true" focusable="false"><g fill="none" stroke="#F3F4F0" stroke-width="2"><circle cx="260" cy="260" r="250"/><circle cx="245" cy="270" r="200"/><circle cx="235" cy="278" r="150"/><circle cx="228" cy="284" r="100"/><circle cx="222" cy="290" r="52"/></g></svg>`;
+
+function routekaarten(taal) {
+  return groep.firmas
+    .map(
+      (f) => `<div class="routekaart">
+          <span class="routekaart__landen">${f.landen_zakelijk.join(' ')}</span>
+          <span><span class="routekaart__naam">${esc(f.naam)}</span><span class="routekaart__btw">${esc(f.btw_label)} ${esc(f.btw)} · ${esc(stadVan(f))}</span></span>
+        </div>`
+    )
+    .join('\n        ');
+}
+
 // ── startpagina ─────────────────────────────────────────────────────────────
 
-function firmaKaart(f, taal) {
-  const rol = f.rol === 'holding' ? t('firma.rol.holding', taal) : t('firma.rol.dochter', taal);
-  const landnaam = land(f.land, taal);
-  const winkels = f.winkels
-    .map((w) => `<li><a href="${w.url}" rel="noopener">${esc(w.naam)}</a></li>`)
-    .join('\n          ');
-  const magazijn = f.magazijn
-    ? `<dt>${esc(t('firma.magazijn', taal))}</dt><dd>${esc(f.magazijn)}</dd>`
-    : '';
-  const siret = f.siret ? `<dt>SIRET</dt><dd>${esc(f.siret)}</dd>` : '';
-  return `        <article class="kaart" id="firma-${f.id}">
-          <p class="kaart__rol">${esc(f.rol === 'holding' ? rol : `${rol} · ${landnaam}`)}</p>
-          <h3>${esc(f.naam)}</h3>
-          <address>${f.adres.map(esc).join('<br>')}</address>
-          <dl>
-            <dt>${esc(f.btw_label)}</dt><dd>${esc(f.btw)}</dd>
-            ${siret}
-            ${magazijn}
-          </dl>
-          <h4 style="font-size:14px;margin:14px 0 4px;">${esc(t('firma.winkels', taal))}</h4>
-          <ul>
-          ${winkels}
-          </ul>
-        </article>`;
-}
-
-// De jaarringen-band. Zelf getekend uit de kleuren van onze eigen plankfoto —
-// geen AI-beeld, geen bestand om te laden. Met het logo in de hoek, zoals afgesproken
-// voor elke visual die we zelf maken.
-function jaarringen() {
-  const ringen = [];
-  // Onregelmatige afstanden: echte jaarringen staan nooit even ver uit elkaar.
-  let straal = 40;
-  const zaad = [37, 23, 51, 19, 44, 28, 61, 33, 25, 47, 21, 55, 31, 42, 26, 58, 35, 49, 23, 40];
-  for (let i = 0; i < zaad.length; i++) {
-    straal += zaad[i];
-    const dikte = 1 + (i % 3) * 0.6;
-    const doorzicht = (0.34 - i * 0.012).toFixed(3);
-    ringen.push(
-      `<circle cx="210" cy="640" r="${straal}" fill="none" stroke="#CE9766" stroke-width="${dikte}" opacity="${doorzicht}"/>`
-    );
-  }
-  return `<svg class="nerf__svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
-      <defs>
-        <radialGradient id="gloed" cx="15%" cy="72%" r="70%">
-          <stop offset="0%" stop-color="#3a2a1d"/>
-          <stop offset="100%" stop-color="#1a1410"/>
-        </radialGradient>
-      </defs>
-      <rect width="1440" height="900" fill="url(#gloed)"/>
-      <g>${ringen.join('')}</g>
-      <g opacity=".5" fill="none" stroke="#CE9766" stroke-width="1.1">
-        ${Array.from({ length: 7 }, (_, i) => {
-          const y = 120 + i * 118;
-          return `<path d="M760 ${y} C 940 ${y - 26}, 1120 ${y + 30}, 1440 ${y - 10}" opacity="${(0.3 - i * 0.03).toFixed(2)}"/>`;
-        }).join('')}
-      </g>
-      <g transform="translate(1290 810)" opacity=".55">
-        <rect width="34" height="34" rx="9" fill="#CE9766"/>
-        <text x="17" y="23" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#241c16" text-anchor="middle">EP</text>
-      </g>
-    </svg>`;
-}
-
-// De Europakaart: het continent als aaneengelegde houtstalen, met drie gloeiende
-// werkplaatsen en leverroutes die er als takken uitgroeien. De landvormen komen uit
-// open geodata (zie scripts/europakaart.mjs); de houttinten, de gloed, de gloeiende
-// vestigingen en de groeiende routes zijn zelf getekend — geen foto, geen kant-en-klare
-// kaartendienst, geen tracking.
-function stadVan(f) {
-  return f.adres[1].replace(/^\S+\s+/, '');
-}
-
-// Een lichtjes andere houttint per land, zoals planken in een vloer nooit precies
-// dezelfde kleur hebben. Vast per landcode (geen Math.random): herbouwen geeft
-// steeds hetzelfde beeld.
-function houtTint(iso) {
-  let h = 0;
-  for (const c of iso) h = (h * 31 + c.charCodeAt(0)) % 997;
-  const lichtheid = 55 + (h % 10); // 55–64 %
-  return `hsl(30 44% ${lichtheid}%)`;
-}
-
-function boogpad(x1, y1, x2, y2) {
-  const dx = x2 - x1, dy = y2 - y1;
-  const afstand = Math.hypot(dx, dy) || 1;
-  const buig = Math.min(afstand * 0.16, 60);
-  const cx = (x1 + x2) / 2 + (-dy / afstand) * buig;
-  const cy = (y1 + y2) / 2 + (dx / afstand) * buig;
-  return `M${x1} ${y1} Q${cx} ${cy} ${x2} ${y2}`;
-}
-
-function europakaart(taal) {
-  const [VW, VH] = europa._view;
-
-  const landen = Object.entries(europa.landen)
-    .map(([iso, l]) => `<path class="ekaart__land" d="${l.pad}" fill="${houtTint(iso)}"><title>${esc(l.naam)}</title></path>`)
-    .join('');
-
-  const hubVoorFirma = Object.fromEntries(groep.kaart.vestigingen.map((v) => [v.firma, v]));
-
-  // Een deterministisch "willekeurig" getal tussen 0 en 1 uit een tekst — zelfde
-  // techniek als houtTint, zodat elke bouw hetzelfde beeld geeft maar de reislichtjes
-  // niet allemaal in de pas lopen.
-  const zaadGetal = (tekst) => {
-    let h = 0;
-    for (const c of tekst) h = (h * 31 + c.charCodeAt(0)) % 9973;
-    return h / 9973;
-  };
-
-  // Elke leverroute krijgt een eigen ID (voor de <mpath>-koppeling) en twee
-  // reislichtjes: een heldere kop en een dovere staart erachter — als een pakketje
-  // dat over de route naar de markt rijdt. De snelheid is overal gelijk (niet de
-  // duur): een lange route krijgt een langere animatie, zodat niets onnatuurlijk
-  // snel over de kaart schiet.
-  const SNELHEID = 95; // SVG-eenheden per seconde
-  const routeData = groep.kaart.markten.map((m, i) => {
-    const firmaId = groep.routering[m.land] || 'bv';
-    const hub = hubVoorFirma[firmaId];
-    if (!hub) return null;
-    const afstand = Math.hypot(m.x - hub.x, m.y - hub.y) * 1.12; // ruwe booglengte
-    const duur = Math.max(3.2, afstand / SNELHEID);
-    const vertraging = zaadGetal(`${m.land}-${i}`) * duur;
-    return { id: `eroute-${i}`, d: boogpad(hub.x, hub.y, m.x, m.y), i, duur, vertraging };
-  });
-
-  const routes = routeData
-    .map((r) => (r ? `<path id="${r.id}" class="ekaart__route" d="${r.d}" style="--vertraging:${r.i * 85}ms"/>` : ''))
-    .join('');
-
-  const boten = routeData
-    .map((r) => {
-      if (!r) return '';
-      const d = r.duur.toFixed(2);
-      const begin = r.vertraging.toFixed(2);
-      // "Kop" = het heldere pakketje zelf, begint eerst. "Spoor" = een dovere stip
-      // die 0,35 s later vertrekt en zo altijd een stukje achter de kop aan rijdt.
-      return `<g>
-          <circle class="ekaart__boot ekaart__boot--kop" r="2.8">
-            <animateMotion dur="${d}s" begin="${begin}s" repeatCount="indefinite" rotate="auto">
-              <mpath href="#${r.id}"/>
-            </animateMotion>
-          </circle>
-          <circle class="ekaart__boot ekaart__boot--spoor" r="2">
-            <animateMotion dur="${d}s" begin="${(r.vertraging + 0.35).toFixed(2)}s" repeatCount="indefinite" rotate="auto">
-              <mpath href="#${r.id}"/>
-            </animateMotion>
-          </circle>
-        </g>`;
-    })
-    .join('');
-
-  const marktpunten = groep.kaart.markten
-    .map(
-      (m) => `<g class="ekaart__markt" transform="translate(${m.x} ${m.y})">
-        <circle r="4"/>
-        <title>${esc(land(m.land, taal))}</title>
-        <text x="7" y="4">${esc(m.land)}</text>
-      </g>`
-    )
-    .join('');
-
-  const hubs = groep.kaart.vestigingen
-    .map((v) => {
-      const f = firma(v.firma);
-      const stad = stadVan(f);
-      return `<a class="ekaart__hub" href="#firma-${v.firma}" aria-label="${esc(f.naam)} — ${esc(stad)}">
-        <g transform="translate(${v.x} ${v.y})">
-          <circle class="ekaart__puls" r="7"/>
-          <circle class="ekaart__punt" r="4.5"/>
-          <text class="ekaart__stad" x="0" y="-13">${esc(stad)}</text>
-        </g>
-      </a>`;
-    })
-    .join('');
-
-  return `    <figure class="ekaart__wrap op">
-      <svg class="ekaart__svg" viewBox="0 0 ${VW} ${VH}" role="img" aria-label="${esc(t('kaart.kop', taal))}">
-        <defs>
-          <radialGradient id="ekaartGloed" cx="27%" cy="54%" r="65%">
-            <stop offset="0%" stop-color="#4a3826"/>
-            <stop offset="100%" stop-color="#1f1810"/>
-            <!-- Het licht drijft heel traag over het continent, zoals een lamp
-                 boven een echte werkbank nooit helemaal stilstaat. -->
-            <animate attributeName="cx" values="27%;34%;24%;27%" dur="52s" repeatCount="indefinite"/>
-            <animate attributeName="cy" values="54%;48%;58%;54%" dur="52s" repeatCount="indefinite"/>
-          </radialGradient>
-        </defs>
-        <rect class="ekaart__achtergrond" width="${VW}" height="${VH}" fill="url(#ekaartGloed)"/>
-        <g class="ekaart__landen">${landen}</g>
-        <g class="ekaart__routes">${routes}</g>
-        <g class="ekaart__boten">${boten}</g>
-        <g class="ekaart__markten">${marktpunten}</g>
-        <g class="ekaart__hubs">${hubs}</g>
-      </svg>
-      <figcaption class="ekaart__legende">
-        <span><i class="ekaart__chip ekaart__chip--hub"></i>${esc(t('kaart.legende.vestiging', taal))}</span>
-        <span><i class="ekaart__chip ekaart__chip--markt"></i>${esc(t('kaart.legende.markt', taal))}</span>
-        <span class="ekaart__hint">${esc(t('kaart.legende.hint', taal))}</span>
-      </figcaption>
-    </figure>`;
-}
-
 function startPagina(taal) {
-  const inhoud = `  <div class="hero">
-    <img class="hero__beeld" src="${beeld('hero', 2000)}" alt="${esc(beeldAlt('hero', taal))}" fetchpriority="high" width="2048" height="2048">
-    <div class="hero__in">
-      <h1>${esc(t('hero.kop1', taal))}<br><em>${esc(t('hero.kop2', taal))}</em></h1>
-      <p class="hero__lood">${esc(t('hero.lood', taal))}</p>
+  // De winkelmuur: alle winkels over drie kolommen, elke kolom twee keer na elkaar
+  // zodat de beweging naadloos rondloopt.
+  const kolommen = [[], [], []];
+  WINKELS.forEach((w, i) => kolommen[i % 3].push(w));
+  const muur = kolommen
+    .map((kol) => {
+      const tegels = kol.concat(kol)
+        .map((w, i) => `<div class="tegel">${balk(w)}${img(schot(w, 'muur'), MATEN.muur, '', i >= kol.length ? ' loading="lazy"' : '')}</div>`)
+        .join('');
+      return `<div class="muur__kol"><div class="muur__band">${tegels}</div></div>`;
+    })
+    .join('\n        ');
+
+  const band = WINKELS.concat(WINKELS)
+    .map((w, i) => `<a class="lopend__item" href="${w.url}" rel="noopener"${i >= N ? ' aria-hidden="true" tabindex="-1"' : ''}>${esc(w.naam)}</a>`)
+    .join('');
+
+  // Winkelkiezer: per land de winkel waar we naartoe sturen, plus hoeveel gespecialiseerde winkels er nog zijn.
+  const com = winkel('e-woodproducts.com');
+  const ookVoor = (code, hoofd) => WINKELS.filter((w) => w !== hoofd && w.landen.includes(code));
+  const ook = (code, hoofd) => {
+    const rest = ookVoor(code, hoofd);
+    if (!rest.length) return '';
+    return rest.length === 1 ? t('kiezer.meer1', taal, { naam: rest[0].naam }) : t('kiezer.meer', taal, { n: rest.length });
+  };
+  const de = winkel('picknickbaenke.de');
+  const fr = winkel('tablesdepiquenique.fr');
+  const landen = [
+    { code: 'BE', naam: land('BE', taal), w: com, ook: ook('BE', com) },
+    { code: 'NL', naam: land('NL', taal), w: com, ook: ook('NL', com) },
+    { code: 'LU', naam: land('LU', taal), w: com, ook: t('kiezer.lu', taal) },
+    { code: 'DE', naam: land('DE', taal), w: de, ook: ook('DE', de) },
+    { code: 'AT', naam: land('AT', taal), w: de, ook: t('kiezer.at', taal) },
+    { code: 'FR', naam: `${land('FR', taal)} · ${land('MC', taal)}`, w: fr, ook: ook('FR', fr) },
+    { code: 'EU', naam: t('kiezer.eu', taal), w: com, ook: 'IT · ES · DK · SE · FI · GB' },
+  ]
+    .map(
+      (l) => `<a class="landtegel" href="${l.w.url}" rel="noopener">
+          <span class="landtegel__boven"><span class="landtegel__code">${l.code}</span>${ICOON.extern}</span>
+          <span class="landtegel__onder">
+            <span class="landtegel__naam">${esc(l.naam)}</span>
+            <span class="landtegel__winkel">${esc(l.w.naam)}</span>
+            ${l.ook ? `<span class="landtegel__ook">${esc(l.ook)}</span>` : ''}
+          </span>
+        </a>`
+    )
+    .join('\n        ');
+
+  const chips = (sleutels) => sleutels.map((s) => `<span class="chip-glas">${esc(t(`chip.${s}`, taal))}</span>`).join('');
+
+  const uitgelicht = ['picknicktafel-kopen.be', 'restol-houtolie.be', 'bancsenteck.fr', 'maery.fr']
+    .map(winkel)
+    .map(
+      (w) => `<a class="minikaart" href="${w.url}" rel="noopener">
+            ${img(schot(w, 'desk'), MATEN.desk, t('winkels.schot', taal, { naam: w.naam }), ' loading="lazy"')}
+            <span class="minikaart__dom">${esc(w.naam)}</span>
+            <span class="minikaart__wat">${esc(w.wat[taal])}</span>
+          </a>`
+    )
+    .join('\n          ');
+
+  const punten = ['offerte', 'bestelbon', 'levering', 'aanbesteding']
+    .map((p) => `<li>${ICOON.vink('#F0A43A')}<span>${esc(t(`zakelijk.punt.${p}`, taal))}</span></li>`)
+    .join('\n          ');
+
+  const inhoud = `  <section class="held">
+    <div>
+      <p class="live"><span class="puls"></span>${esc(t('home.live', taal, { n: N }))}</p>
+      <h1>${esc(t('home.kop1', taal))}<br><span class="markeer">${esc(t('home.kop2', taal, { n: N }))}</span></h1>
+      <p class="lood">${esc(t('home.lood', taal))}</p>
       <div class="knoppen">
-        <a class="knop" href="${url(taal, 'winkels')}">${esc(t('home.hero.knop_winkels', taal))}</a>
-        <a class="knop knop--glas" href="${url(taal, 'zakelijk')}">${esc(t('home.hero.knop_zakelijk', taal))}</a>
+        <a class="knop knop--inkt" href="${url(taal, 'winkels')}">${esc(t('home.knop.winkel', taal))} ${ICOON.pijl}</a>
+        <a class="knop knop--rand" href="${url(taal, 'zakelijk')}">${esc(t('home.knop.zakelijk', taal))}</a>
       </div>
-      <p class="hero__merken">
-        <span>${esc(t('hero.merken', taal))}</span>
-        ${groep.firmas.map((f) => `<span><b>${esc(land(f.land, taal))}</b></span>`).join('\n        ')}
-      </p>
+      <dl class="cijfers">
+        <div><dt>${N}</dt><dd>${esc(t('cijfer.winkels', taal))}</dd></div>
+        <div><dt>${F.actief_sinds}</dt><dd>${esc(t('cijfer.sinds', taal))}</dd></div>
+        <div><dt>${getal(F.bestellingen_sinds_2011, taal)}+</dt><dd>${esc(t('cijfer.bestellingen', taal))}</dd></div>
+        <div><dt>${getal(F.magazijn_m2, taal)}&nbsp;m²</dt><dd>${esc(t('cijfer.magazijn', taal))}</dd></div>
+      </dl>
     </div>
-  </div>
-
-  <div class="werelden">
-    <a class="wereld" href="${url(taal, 'winkels')}">
-      <img src="${beeld('buiten', 1200)}" alt="${esc(beeldAlt('buiten', taal))}" loading="lazy" width="3264" height="3264">
-      <div class="op">
-        <span class="wereld__label">${esc(t('wereld.buiten.label', taal))}</span>
-        <h2>${esc(t('wereld.buiten.kop', taal))}</h2>
-        <p>${esc(t('wereld.buiten.tekst', taal))}</p>
-        <span class="wereld__meer">${esc(t('wereld.meer', taal))}</span>
+    <div class="muur" role="img" aria-label="${esc(t('home.muur.label', taal))}">
+      <div class="muur__rek" aria-hidden="true">
+        ${muur}
       </div>
-    </a>
-    <a class="wereld" href="${url(taal, 'winkels')}">
-      <img src="${beeld('binnen', 1200)}" alt="${esc(beeldAlt('binnen', taal))}" loading="lazy" width="2000" height="2000">
-      <div class="op">
-        <span class="wereld__label">${esc(t('wereld.binnen.label', taal))}</span>
-        <h2>${esc(t('wereld.binnen.kop', taal))}</h2>
-        <p>${esc(t('wereld.binnen.tekst', taal))}</p>
-        <span class="wereld__meer">${esc(t('wereld.meer', taal))}</span>
-      </div>
-    </a>
-  </div>
-
-  <section class="nerf">
-    ${jaarringen()}
-    <div class="wrap">
-      <div class="lees op">
-        <p class="opschrift">${esc(t('hout.opschrift', taal))}</p>
-        <h2 class="band__kop">${esc(t('hout.kop', taal))}</h2>
-        <p class="band__lood">${esc(t('hout.tekst', taal))}</p>
-      </div>
+      <p class="muur__label" aria-hidden="true"><span class="puls"></span>${esc(t('home.muur.stand', taal, { datum: datum(STAND, taal) }))}</p>
     </div>
   </section>
 
-  <section class="band band--nacht">
-    <div class="wrap">
-      <div class="lees op">
-        <p class="opschrift">${esc(t('home.wie.kop', taal))}</p>
-        <h2 class="band__kop">${esc(t('home.firmas.kop', taal))}</h2>
-        <p class="band__lood">${esc(t('home.wie.tekst', taal))}</p>
+  <div class="lopend"><div class="lopend__rij">${band}</div></div>
+
+  <section class="sectie">
+    <div class="sectiekop op">
+      <div>
+        <p class="opschrift">${esc(t('kiezer.opschrift', taal))}</p>
+        <h2 class="kop-l">${esc(t('kiezer.kop', taal))}</h2>
+        <p class="lood">${esc(t('kiezer.tekst', taal))}</p>
       </div>
-      <div class="lees op">
-        <p class="opschrift">${esc(t('kaart.opschrift', taal))}</p>
-        <h2 class="band__kop">${esc(t('kaart.kop', taal))}</h2>
-        <p class="band__lood">${esc(t('kaart.tekst', taal))}</p>
-      </div>
-${europakaart(taal)}
-      <div class="raster raster--3 op">
-${groep.firmas.map((f) => firmaKaart(f, taal)).join('\n')}
-      </div>
+      <a class="onderlijnd" href="${url(taal, 'winkels')}">${esc(t('kiezer.alle', taal, { n: N }))}</a>
+    </div>
+    <div class="landen op">
+        ${landen}
     </div>
   </section>
 
-  <section class="band band--licht">
-    <div class="wrap">
-      <div class="lees op">
-        <p class="opschrift">${esc(t('nav.zakelijk', taal))}</p>
-        <h2 class="band__kop">${esc(t('zakelijk.kop', taal))}</h2>
-        <p class="band__lood">${esc(t('zakelijk.tekst', taal))}</p>
-        <div class="knoppen">
-          <a class="knop knop--donker" href="${url(taal, 'zakelijk')}">${esc(t('home.hero.knop_zakelijk', taal))}</a>
+  <section class="werelden">
+    <a class="wereld op" href="${com.url}" rel="noopener">
+      <img src="${beeld('hero', 1600)}" width="2048" height="2048" alt="${esc(beeldAlt('hero', taal))}" loading="lazy" decoding="async">
+      <div class="wereld__in">
+        <span class="label">${esc(t('wereld.buiten.label', taal))}</span>
+        <h3>${esc(t('wereld.buiten.kop', taal))}</h3>
+        <div class="chips">${chips(['picknick', 'bier', 'teak', 'tuinbank', 'olie'])}</div>
+      </div>
+    </a>
+    <a class="wereld op" href="${winkel('maery.fr').url}" rel="noopener">
+      <img src="${beeld('binnen', 1200)}" width="2000" height="2000" alt="${esc(beeldAlt('binnen', taal))}" loading="lazy" decoding="async">
+      <div class="wereld__in">
+        <span class="label label--licht">${esc(t('wereld.binnen.label', taal))}</span>
+        <h3>${esc(t('wereld.binnen.kop', taal))}</h3>
+        <div class="chips">${chips(['salon', 'kast'])}<span class="chip-glas mono">maery.fr</span></div>
+      </div>
+    </a>
+  </section>
+
+  <section class="sectie">
+    <div class="op">
+      <p class="opschrift">${esc(t('netwerk.opschrift', taal))}</p>
+      <h2 class="kop-l" style="max-width:900px">${esc(t('netwerk.kop', taal))}</h2>
+    </div>
+    <div class="netwerk op">
+      <a class="hoofdkaart" href="${com.url}" rel="noopener">
+        <div class="hoofdkaart__boven">
+          <div>
+            <p class="opschrift" style="color:#F0A43A">${esc(t('netwerk.hoofd', taal))}</p>
+            <p class="hoofdkaart__naam">${esc(com.naam)}</p>
+            <p class="hoofdkaart__wat">${esc(com.wat[taal])}</p>
+          </div>
+          <span class="knop knop--amber knop--klein">${esc(t('netwerk.naar', taal))}</span>
         </div>
+        <div class="hoofdkaart__scherm">
+          <div class="browser">${balk({ naam: 'www.e-woodproducts.com' }, true)}${img(schot(com, 'desk'), MATEN.desk, t('winkels.schot', taal, { naam: com.naam }), ' loading="lazy"')}</div>
+          ${img(schot(com, 'gsm'), MATEN.gsm, t('winkels.schot.gsm', taal, { naam: com.naam }), ' class="gsmschot" loading="lazy"')}
+        </div>
+      </a>
+      <div class="minikaarten">
+          ${uitgelicht}
+      </div>
+    </div>
+    <div class="midden"><a class="knop knop--inkt" href="${url(taal, 'winkels')}">${esc(t('netwerk.alle', taal, { n: N }))}</a></div>
+  </section>
+
+  <section class="zakband">
+    <div class="zakband__in op">
+      ${ringen}
+      <div>
+        <p class="opschrift">${esc(t('zakband.opschrift', taal))}</p>
+        <h2 class="kop-l">${esc(t('zakband.kop', taal))}</h2>
+        <ul class="vinklijst">
+          ${punten}
+        </ul>
+        <div class="knoppen"><a class="knop knop--amber" href="${url(taal, 'zakelijk')}#aanvraag">${esc(t('nav.cta', taal))} ${ICOON.pijl}</a></div>
+      </div>
+      <div class="routes">
+        <p class="routes__titel">${esc(t('zakband.route', taal))}</p>
+        ${routekaarten(taal)}
       </div>
     </div>
   </section>
+
+${leveringBlok(taal)}
 `;
-  // Eén organisatie-blok met de drie vennootschappen als afdeling: zo weet Google
-  // dat deze pagina over de groep gaat en niet over één webwinkel.
+  return pagina({
+    taal,
+    paginaId: 'start',
+    titel: t('home.titel', taal),
+    meta: t('home.meta', taal, { n: N }),
+    inhoud,
+    extraHoofd: organisatieLd(taal),
+  });
+}
+
+// Eén organisatie-blok met de drie vennootschappen als afdeling: zo weet Google
+// dat deze site over de groep gaat en niet over één webwinkel.
+function organisatieLd(taal) {
   const jsonld = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: groep.koepel.naam,
     url: `${SITE}${url(taal, 'start')}`,
     email: groep.koepel.contact,
+    foundingDate: String(F.actief_sinds),
     subOrganization: groep.firmas.map((f) => ({
       '@type': 'Organization',
       name: f.naam,
@@ -489,74 +510,150 @@ ${groep.firmas.map((f) => firmaKaart(f, taal)).join('\n')}
       },
     })),
   };
-  const extraHoofd = `  <script type="application/ld+json">${JSON.stringify(jsonld)}</script>\n`;
-  return pagina({
-    taal,
-    paginaId: 'start',
-    titel: t('home.titel', taal),
-    meta: t('home.meta', taal),
-    inhoud,
-    extraHoofd,
-  });
+  return `  <script type="application/ld+json">${JSON.stringify(jsonld)}</script>\n`;
 }
 
-// ── winkelkiezer ────────────────────────────────────────────────────────────
+// ── winkels ─────────────────────────────────────────────────────────────────
 
 function winkelsPagina(taal) {
-  const hoofdwinkel = firma('bv').winkels[0];
-  const kaarten = groep.markten_hoofdwinkel
-    .map((code) => {
-      const fid = groep.routering[code] || 'bv';
-      const f = firma(fid);
-      // De eigen winkel van de dochter krijgt voorrang; anders de hoofdwinkel.
-      const w = fid === 'bv' ? hoofdwinkel : f.winkels[0];
-      return `        <a class="landkaart" href="${w.url}" rel="noopener">
-          <span class="landkaart__land">${esc(land(code, taal))}</span>
-          <span class="landkaart__winkel">${esc(w.naam)}</span>
-          <span class="landkaart__firma">${esc(f.naam)}</span>
-        </a>`;
+  const hoofd = WINKELS.filter((w) => w.hoofd).map((w) => winkelkaart(w, taal, { donker: true })).join('\n        ');
+
+  const groepen = groep.firmas
+    .map((f) => {
+      const ws = WINKELS.filter((w) => w.firma === f.id);
+      return `<div class="firmagroep" data-firma="${f.id}">
+        <div class="firmagroep__kop">
+          <span class="landcodes">${f.landen_zakelijk.join(' ')}</span>
+          <h2 class="kop-m">${esc(f.naam)}</h2>
+          <span class="mono zacht" style="font-size:13px">${esc(f.btw_label)} ${esc(f.btw)}</span>
+          <span class="firmagroep__aantal" data-aantal>${esc(t('winkels.aantal', taal, { n: ws.length }))}</span>
+        </div>
+        <div class="winkelraster">
+        ${ws.map((w) => winkelkaart(w, taal)).join('\n        ')}
+        </div>
+      </div>`;
     })
-    .join('\n');
+    .join('\n      ');
 
-  const overige = [
-    ...groep.zustersites_bv.map((z) => ({ ...z, f: firma('bv') })),
-    ...groep.zustersites_gmbh.map((z) => ({ ...z, f: firma('gmbh') })),
-    ...groep.zustersites_sarl.map((z) => ({ ...z, f: firma('sarl') })),
-  ]
-    .map(
-      (z) => `        <li><a href="${z.url}" rel="noopener">${esc(z.naam)}</a> <span class="zacht">· ${esc(z.f.naam)}</span></li>`
-    )
-    .join('\n');
+  const straks = BINNENKORT.map((b) => {
+    const f = firma(b.firma);
+    const beeldBlok = b.beeld
+      ? `<div class="browser">${balk(b)}${img(`/winkels/${b.beeld}-desk.webp`, MATEN.desk, t('winkels.schot', taal, { naam: b.naam }), ' loading="lazy"')}</div>`
+      : `<div class="geenbeeld">[${esc(t('winkels.geenbeeld', taal))}]</div>`;
+    return `<div class="winkelkaart winkelkaart--straks">
+          <div class="scherm" style="padding-bottom:0">${beeldBlok}</div>
+          <div class="winkelkaart__body">
+            <div class="winkelkaart__rij"><span class="winkelkaart__dom">${esc(b.naam)}</span><span class="badge${b.beeld ? '' : ' badge--zacht'}">${esc(t(b.beeld ? 'winkels.inopbouw' : 'winkels.gepland', taal))}</span></div>
+            <p class="winkelkaart__wat">${esc(b.wat[taal])}</p>
+            <div class="tags"><span class="tag tag--mono">${b.landen.join(' · ')}</span><span class="tag">${esc(f.naam)}</span></div>
+          </div>
+        </div>`;
+  }).join('\n        ');
 
-  const inhoud = `  <div class="paginakop">
-    <img class="paginakop__beeld" src="${beeld('werk', 1600)}" alt="" aria-hidden="true" loading="eager">
-    <div class="wrap">
-      <h1>${esc(t('winkels.kop', taal))}</h1>
-      <p>${esc(t('winkels.tekst', taal))}</p>
+  const landChips = ['alle', 'BE', 'NL', 'DE', 'FR', 'EU']
+    .map((c, i) => `<button class="chip" type="button" data-land="${c}" aria-pressed="${i === 0}">${esc(c === 'alle' ? t('filter.alle_landen', taal) : land(c, taal))}</button>`)
+    .join('');
+  const soortChips = ['alles', ...W.soorten]
+    .map((s, i) => `<button class="chip" type="button" data-soort="${s}" aria-pressed="${i === 0}">${esc(s === 'alles' ? t('filter.alles', taal) : t(`soort.${s}`, taal))}</button>`)
+    .join('');
+
+  const inhoud = `  <section class="paginakop">
+    <div class="paginakop__tekst">
+      <p class="opschrift">${esc(t('nav.winkels', taal))}</p>
+      <h1 class="kop-xl">${esc(t('winkels.kop', taal))}</h1>
+      <p class="lood">${esc(t('winkels.lood', taal))}</p>
+    </div>
+    <dl class="tellers">
+      <div class="teller"><dt>${N}</dt><dd>${esc(t('winkels.online', taal))}</dd></div>
+      <div class="teller"><dt>4</dt><dd>${esc(t('winkels.landen', taal))}</dd></div>
+      <div class="teller"><dt>${BINNENKORT.length}</dt><dd>${esc(t('winkels.binnenkort', taal))}</dd></div>
+    </dl>
+  </section>
+
+  <section class="wrap" style="padding-top:40px">
+    <h2 class="kop-m" style="font-size:28px">${esc(t('winkels.hoofd.kop', taal))}</h2>
+    <div class="hoofdwinkels">
+        ${hoofd}
+    </div>
+  </section>
+
+  <div class="filterbalk" id="filter" hidden>
+    <div class="filterbalk__in">
+      <div class="chipgroep" role="group" aria-label="${esc(t('filter.land', taal))}">${landChips}</div>
+      <div class="chipgroep" role="group" aria-label="${esc(t('filter.soort', taal))}">${soortChips}</div>
+      <span class="teltekst" aria-live="polite" id="teller">${esc(t('filter.teller', taal, { z: N, n: N }))}</span>
     </div>
   </div>
-  <main class="band band--nacht">
-    <div class="wrap">
-    <section>
-      <div class="landen">
-${kaarten}
+
+  <section class="wrap" style="padding-bottom:40px">
+      ${groepen}
+      <div class="leegmelding" id="leeg" hidden>${esc(t('filter.leeg', taal))} <button class="chip" type="button" id="wis" style="margin-left:10px">${esc(t('filter.wis', taal))}</button></div>
+  </section>
+
+  <section class="wrap" style="padding-top:16px;padding-bottom:96px">
+    <div class="firmagroep" style="margin-top:40px">
+      <div class="firmagroep__kop gestippeld">
+        <h2 class="kop-m">${esc(t('winkels.binnenkort', taal))}</h2>
+        <span class="zacht">${esc(t('winkels.binnenkort.tekst', taal))}</span>
       </div>
-      <p class="voetnoot">${esc(hoofdwinkel.naam)} — ${esc(t('winkels.hoofdwinkel', taal))}</p>
-    </section>
-    <section>
-      <h2>${esc(t('winkels.overige.kop', taal))}</h2>
-      <p class="lood">${esc(t('winkels.overige.tekst', taal))}</p>
-      <ul class="lijst">
-${overige}
-      </ul>
-    </section>
-  </main>
+      <div class="winkelraster">
+        ${straks}
+      </div>
+    </div>
+    <p class="mono zacht" style="font-size:12.5px;margin-top:28px">${esc(t('winkels.stand', taal, { datum: datum(STAND, taal) }))}</p>
+  </section>
+
+  <section class="donkerband">
+    <div class="donkerband__in">
+      <div>
+        <h2 class="kop-m">${esc(t('winkels.zakband.kop', taal))}</h2>
+        <p>${esc(t('winkels.zakband.tekst', taal))}</p>
+      </div>
+      <a class="knop knop--amber" href="${url(taal, 'zakelijk')}#aanvraag">${esc(t('nav.cta', taal))} ${ICOON.pijl}</a>
+    </div>
+  </section>
+  <script>
+  (function () {
+    var TEKST = { teller: ${JSON.stringify(t('filter.teller', taal))}, aantal: ${JSON.stringify(t('winkels.aantal', taal))}, aantal1: ${JSON.stringify(t('winkels.aantal1', taal))} };
+    var N = ${N};
+    var staat = { land: 'alle', soort: 'alles' };
+    var balk = document.getElementById('filter');
+    balk.hidden = false;
+    var groepen = document.querySelectorAll('.firmagroep[data-firma]');
+    function vul(s, o) { for (var k in o) s = s.split('{' + k + '}').join(o[k]); return s; }
+    function toepassen() {
+      var totaal = 0;
+      groepen.forEach(function (g) {
+        var n = 0;
+        g.querySelectorAll('.winkelkaart').forEach(function (k) {
+          var l = k.getAttribute('data-landen').split(' '), s = k.getAttribute('data-soort').split(' ');
+          var ok = (staat.land === 'alle' || l.indexOf(staat.land) !== -1) && (staat.soort === 'alles' || s.indexOf(staat.soort) !== -1);
+          k.hidden = !ok; if (ok) n++;
+        });
+        g.hidden = n === 0;
+        g.querySelector('[data-aantal]').textContent = n === 1 ? TEKST.aantal1 : vul(TEKST.aantal, { n: n });
+        totaal += n;
+      });
+      document.getElementById('teller').textContent = vul(TEKST.teller, { z: totaal, n: N });
+      document.getElementById('leeg').hidden = totaal > 0;
+      balk.querySelectorAll('[data-land]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-land') === staat.land)); });
+      balk.querySelectorAll('[data-soort]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-soort') === staat.soort)); });
+    }
+    balk.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      if (b.hasAttribute('data-land')) staat.land = b.getAttribute('data-land');
+      if (b.hasAttribute('data-soort')) staat.soort = b.getAttribute('data-soort');
+      toepassen();
+    });
+    document.getElementById('wis').addEventListener('click', function () { staat = { land: 'alle', soort: 'alles' }; toepassen(); });
+  })();
+  </script>
 `;
   return pagina({
     taal,
     paginaId: 'winkels',
     titel: t('winkels.titel', taal),
-    meta: t('winkels.meta', taal),
+    meta: t('winkels.meta', taal, { n: N }),
     inhoud,
   });
 }
@@ -564,111 +661,89 @@ ${overige}
 // ── zakelijke balie ─────────────────────────────────────────────────────────
 
 function zakelijkPagina(taal) {
-  const landOpties = Object.keys(groep.routering)
-    .map((c) => `<option value="${c}">${esc(land(c, taal))}</option>`)
-    .join('\n              ');
+  const landen = Object.keys(groep.routering)
+    .map((c) => `<label class="vinkje landkeuze"><input type="radio" name="land" value="${c}" required><span class="landknop" title="${esc(land(c, taal))}"><span class="sr">${esc(land(c, taal))} </span>${c}</span></label>`)
+    .join('\n            ');
 
   const soorten = ['gemeente', 'school', 'vereniging', 'camping', 'horeca', 'bedrijf', 'andere']
     .map((s) => `<option value="${s}">${esc(t(`form.soort.${s}`, taal))}</option>`)
-    .join('\n              ');
-
+    .join('');
   const wanneer = ['zodra', 'datum', 'voorjaar', 'weetniet']
     .map((s) => `<option value="${s}">${esc(t(`form.wanneer.${s}`, taal))}</option>`)
-    .join('\n              ');
-
-  const nodig = ['offerte', 'bestelbon', 'fiche', 'bestek', 'bezoek']
-    .map(
-      (s) => `<label class="vinkje"><input type="checkbox" name="nodig" value="${s}"> <span>${esc(t(`form.nodig.${s}`, taal))}</span></label>`
-    )
+    .join('');
+  const nodig = ['offerte', 'bestelbon', 'fiche', 'bestek']
+    .map((s) => `<label class="vinkje"><input type="checkbox" name="nodig" value="${s}"${s === 'offerte' ? ' checked' : ''}><span>${esc(t(`form.nodig.${s}`, taal))}</span></label>`)
     .join('\n            ');
+  const punten = ['offerte', 'bestelbon', 'levering', 'aanbesteding']
+    .map((p) => `<li>${ICOON.vink('#2E6B3E')}<span>${esc(t(`zakelijk.punt.${p}`, taal))}</span></li>`)
+    .join('\n          ');
+  const wie = ['gemeenten', 'scholen', 'verenigingen', 'campings', 'horeca', 'bedrijven']
+    .map((w) => `<span>${esc(t(`wie.${w}`, taal))}</span>`)
+    .join('');
+  const stappen = [1, 2, 3, 4]
+    .map((n) => `<li class="op"><span class="stappen__nr">0${n}</span><span class="stappen__kop">${esc(t(`stap.${n}.kop`, taal))}</span><span class="stappen__tekst">${esc(t(`stap.${n}.tekst`, taal))}</span></li>`)
+    .join('\n        ');
 
-  const punten = ['offerte', 'bestelbon', 'levering', 'aanbesteding', 'staffel']
-    .map((p) => `        <li>${esc(t(`zakelijk.punt.${p}`, taal))}</li>`)
-    .join('\n');
+  const mail = `<a href="mailto:${groep.koepel.contact}">${esc(groep.koepel.contact)}</a>`;
+  const FIRMAS = Object.fromEntries(
+    groep.firmas.map((f) => [f.id, { naam: f.naam, detail: `${f.btw_label} ${f.btw} · ${stadVan(f)}` }])
+  );
 
-  const L = groep.levering.termijn;
-  const inhoud = `  <div class="paginakop">
-    <img class="paginakop__beeld" src="${beeld('werk', 1600)}" alt="" aria-hidden="true" loading="eager">
-    <div class="wrap">
-      <h1>${esc(t('zakelijk.kop', taal))}</h1>
-      <p>${esc(t('zakelijk.tekst', taal))}</p>
+  const inhoud = `  <section class="zakgrid">
+    <div>
+      <p class="opschrift">${esc(t('zakelijk.opschrift', taal))}</p>
+      <h1 class="kop-xl">${esc(t('zakelijk.kop', taal))}</h1>
+      <p class="lood">${esc(t('zakelijk.tekst', taal))}</p>
+      <div class="kaartvak">
+        <h2>${esc(t('zakelijk.punten.kop', taal))}</h2>
+        <ul class="vinklijst">
+          ${punten}
+        </ul>
+        <p class="kaartvak__voet">${esc(t('zakelijk.punt.staffel', taal))}</p>
+      </div>
+      <div class="fotovak">
+        <img src="${beeld('buiten', 1200)}" width="3264" height="3264" alt="${esc(beeldAlt('buiten', taal))}" loading="lazy" decoding="async">
+        <div class="fotovak__chips">${wie}</div>
+      </div>
     </div>
-  </div>
-  <main class="band band--licht">
-    <div class="wrap">
-    <section>
-      <h2>${esc(t('zakelijk.punten.kop', taal))}</h2>
-      <ul class="lijst">
-${punten}
-      </ul>
-    </section>
 
-    <section id="aanvraag">
-      <h2>${esc(t('form.kop', taal))}</h2>
-      <p class="lood">${esc(t('form.uitleg', taal))}</p>
-
-      <form class="formulier" id="aanvraagFormulier" novalidate>
-        <div class="melding" id="firmaMelding" hidden></div>
-
-        <div class="veldrij">
-          <div class="veld">
-            <label for="land">${esc(t('form.land', taal))} *</label>
-            <select id="land" name="land" required>
-              <option value="">${esc(t('form.land.kies', taal))}</option>
-              ${landOpties}
-              <option value="XX">${esc(t('form.land.anders', taal))}</option>
-            </select>
+    <div class="aanvraag" id="aanvraag">
+      <div class="aanvraag__kop">
+        <h2>${esc(t('form.kop', taal))}</h2>
+        <p>${esc(t('form.uitleg', taal))}</p>
+      </div>
+      <form id="aanvraagFormulier" novalidate>
+        <fieldset>
+          <legend>${esc(t('form.land', taal))} *</legend>
+          <div class="landknoppen">
+            ${landen}
+            <label class="vinkje landkeuze"><input type="radio" name="land" value="XX" required><span class="landknop" title="${esc(t('form.land.anders', taal))}"><span class="sr">${esc(t('form.land.anders', taal))} </span>…</span></label>
           </div>
-          <div class="veld">
-            <label for="soort">${esc(t('form.soort', taal))}</label>
-            <select id="soort" name="soort">
-              <option value="">${esc(t('form.soort.kies', taal))}</option>
-              ${soorten}
-            </select>
-          </div>
+        </fieldset>
+
+        <div class="route route--leeg" id="route" aria-live="polite">
+          <span class="route__code" id="routeCode">…</span>
+          <span>
+            <span class="route__klein">${esc(t('route.naar', taal))}</span>
+            <span class="route__naam" id="routeNaam">${esc(t('route.leeg', taal))}</span>
+            <span class="route__detail" id="routeDetail"></span>
+          </span>
         </div>
 
-        <div class="veldrij">
-          <div class="veld">
-            <label for="organisatie">${esc(t('form.organisatie', taal))} *</label>
-            <input id="organisatie" name="organisatie" required autocomplete="organization">
-          </div>
-          <div class="veld">
-            <label for="btw">${esc(t('form.btw', taal))}</label>
-            <input id="btw" name="btw" autocomplete="off">
-          </div>
+        <div class="velden">
+          <div class="veld"><label for="organisatie">${esc(t('form.organisatie', taal))} *</label><input id="organisatie" name="organisatie" required autocomplete="organization"></div>
+          <div class="veld"><label for="soort">${esc(t('form.soort', taal))}</label><select id="soort" name="soort"><option value="">${esc(t('form.soort.kies', taal))}</option>${soorten}</select></div>
+          <div class="veld"><label for="naam">${esc(t('form.naam', taal))} *</label><input id="naam" name="naam" required autocomplete="name"></div>
+          <div class="veld"><label for="btw">${esc(t('form.btw', taal))}</label><input id="btw" name="btw" autocomplete="off"></div>
+          <div class="veld"><label for="email">${esc(t('form.email', taal))} *</label><input id="email" name="email" type="email" required autocomplete="email"></div>
+          <div class="veld"><label for="telefoon">${esc(t('form.telefoon', taal))}</label><input id="telefoon" name="telefoon" type="tel" autocomplete="tel"></div>
         </div>
 
-        <div class="veldrij">
-          <div class="veld">
-            <label for="naam">${esc(t('form.naam', taal))} *</label>
-            <input id="naam" name="naam" required autocomplete="name">
-          </div>
-          <div class="veld">
-            <label for="email">${esc(t('form.email', taal))} *</label>
-            <input id="email" name="email" type="email" required autocomplete="email">
-          </div>
-          <div class="veld">
-            <label for="telefoon">${esc(t('form.telefoon', taal))}</label>
-            <input id="telefoon" name="telefoon" type="tel" autocomplete="tel">
-          </div>
-        </div>
+        <div class="veld"><label for="producten">${esc(t('form.producten', taal))} *</label><input id="producten" name="producten" required placeholder="${esc(t('form.producten.vb', taal))}"></div>
 
-        <div class="veldrij">
-          <div class="veld">
-            <label for="producten">${esc(t('form.producten', taal))} *</label>
-            <input id="producten" name="producten" required placeholder="${esc(t('doc.lijn.king-picknick', taal))}…">
-          </div>
-          <div class="veld">
-            <label for="aantal">${esc(t('form.aantal', taal))}</label>
-            <input id="aantal" name="aantal" inputmode="numeric">
-          </div>
-          <div class="veld">
-            <label for="wanneer">${esc(t('form.wanneer', taal))}</label>
-            <select id="wanneer" name="wanneer">
-              ${wanneer}
-            </select>
-          </div>
+        <div class="velden">
+          <div class="veld"><label for="aantal">${esc(t('form.aantal', taal))}</label><input id="aantal" name="aantal" inputmode="numeric"></div>
+          <div class="veld"><label for="wanneer">${esc(t('form.wanneer', taal))}</label><select id="wanneer" name="wanneer">${wanneer}</select></div>
         </div>
 
         <fieldset>
@@ -678,51 +753,37 @@ ${punten}
           </div>
         </fieldset>
 
-        <div class="veld">
-          <label for="bericht">${esc(t('form.bericht', taal))}</label>
-          <textarea id="bericht" name="bericht"></textarea>
-        </div>
+        <div class="veld"><label for="bericht">${esc(t('form.bericht', taal))}</label><textarea id="bericht" name="bericht"></textarea></div>
 
-        <div class="melding melding--fout" id="foutMelding" hidden></div>
-        <button class="knop" type="submit" id="verstuurKnop">${esc(t('form.verstuur', taal))}</button>
+        <div class="melding--fout" id="foutMelding" role="alert" hidden></div>
+        <button class="knop knop--groen knop--breed" type="submit" id="verstuurKnop">${esc(t('form.verstuur', taal))}</button>
+        <p class="aanvraag__onder">${t('form.onder', taal, { email: mail })}</p>
       </form>
-
-      <div class="gelukt" id="geluktBlok" hidden>
+      <div class="gelukt" id="geluktBlok" hidden tabindex="-1">
         <h3>${esc(t('form.gelukt.kop', taal))}</h3>
         <p id="geluktTekst"></p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section>
-      <h2>${esc(t('levering.kop', taal))}</h2>
-      <p class="lood">${esc(t('levering.tekst', taal))}</p>
-      <div class="tabelrol">
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>${esc(land('BE', taal))} · ${esc(land('NL', taal))} · ${esc(land('LU', taal))}</th>
-              <th>${esc(land('DE', taal))} · ${esc(land('FR', taal))}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>${esc(t('levering.hoogseizoen', taal))}</td><td>${esc(L.hoogseizoen_apr_jul.be_nl_lu[taal])}</td><td>${esc(L.hoogseizoen_apr_jul.de_fr[taal])}</td></tr>
-            <tr><td>${esc(t('levering.buitenseizoen', taal))}</td><td>${esc(L.buitenseizoen_aug_mrt.be_nl_lu[taal])}</td><td>${esc(L.buitenseizoen_aug_mrt.de_fr[taal])}</td></tr>
-            <tr><td>${esc(t('levering.pakket', taal))}</td><td colspan="2">${esc(groep.levering.pakket[taal])}</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </main>
+  <section class="stappenband">
+    <div class="wrap">
+      <p class="opschrift">${esc(t('stap.opschrift', taal))}</p>
+      <h2 class="kop-l">${esc(t('stap.kop', taal))}</h2>
+      <ol class="stappen">
+        ${stappen}
+      </ol>
+    </div>
+  </section>
+
+${leveringBlok(taal)}
   <script>
   (function () {
     var ROUTERING = ${JSON.stringify(groep.routering)};
-    var FIRMAS = ${JSON.stringify(
-      Object.fromEntries(groep.firmas.map((f) => [f.id, f.naam]))
-    )};
+    var FIRMAS = ${JSON.stringify(FIRMAS)};
     var TEKST = {
-      firma: ${JSON.stringify(t('form.firma_melding', taal))},
-      anders: ${JSON.stringify(t('form.firma_anders', taal))},
+      leeg: ${JSON.stringify(t('route.leeg', taal))},
+      anders: ${JSON.stringify(t('route.anders', taal))},
       bezig: ${JSON.stringify(t('form.bezig', taal))},
       verstuur: ${JSON.stringify(t('form.verstuur', taal))},
       gelukt: ${JSON.stringify(t('form.gelukt.tekst', taal))},
@@ -730,21 +791,21 @@ ${punten}
     };
     var EMAIL = ${JSON.stringify(groep.koepel.contact)};
     var form = document.getElementById('aanvraagFormulier');
-    var landVeld = document.getElementById('land');
-    var firmaMelding = document.getElementById('firmaMelding');
     var foutMelding = document.getElementById('foutMelding');
     var knop = document.getElementById('verstuurKnop');
+    var route = document.getElementById('route');
 
-    function firmaVoorLand(code) { return ROUTERING[code] || null; }
-
-    landVeld.addEventListener('change', function () {
-      var id = firmaVoorLand(landVeld.value);
-      if (!landVeld.value) { firmaMelding.hidden = true; return; }
-      firmaMelding.hidden = false;
-      firmaMelding.textContent = id
-        ? TEKST.firma.replace('{firma}', FIRMAS[id])
-        : TEKST.anders;
-    });
+    // Het gekozen land toont meteen welke vennootschap de aanvraag behandelt.
+    function toonRoute() {
+      var gekozen = form.querySelector('input[name="land"]:checked');
+      var code = gekozen ? gekozen.value : '';
+      var id = ROUTERING[code];
+      route.classList.toggle('route--leeg', !id);
+      document.getElementById('routeCode').textContent = id ? code : '…';
+      document.getElementById('routeNaam').textContent = id ? FIRMAS[id].naam : (code ? TEKST.anders : TEKST.leeg);
+      document.getElementById('routeDetail').textContent = id ? FIRMAS[id].detail : '';
+    }
+    form.querySelectorAll('input[name="land"]').forEach(function (r) { r.addEventListener('change', toonRoute); });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -785,8 +846,9 @@ ${punten}
           form.hidden = true;
           var blok = document.getElementById('geluktBlok');
           document.getElementById('geluktTekst').textContent =
-            TEKST.gelukt.replace('{firma}', uitslag.firma || FIRMAS.bv);
+            TEKST.gelukt.replace('{firma}', uitslag.firma || FIRMAS.bv.naam);
           blok.hidden = false;
+          blok.focus();
           blok.scrollIntoView({ behavior: 'smooth', block: 'center' });
         })
         .catch(function () {
@@ -812,102 +874,221 @@ ${punten}
   });
 }
 
+// ── de groep ────────────────────────────────────────────────────────────────
+
+function groepPagina(taal) {
+  const domeinen = (f) =>
+    WINKELS.filter((w) => w.firma === f.id)
+      .map((w) => `<a href="${w.url}" rel="noopener">${esc(w.naam)}</a>`)
+      .join('');
+  const bv = firma('bv');
+  const dochters = groep.firmas
+    .filter((f) => f.rol !== 'holding')
+    .map(
+      (f) => `<div class="boom__dochter">
+        <div class="firmablok firmablok--licht">
+          <div class="firmablok__rij"><span class="firmablok__landen">${f.landen_zakelijk.join(' · ')}</span><span class="firmablok__rol">${esc(t('groep.dochter', taal))}</span></div>
+          <h2>${esc(f.naam)}</h2>
+          <p class="firmablok__gegevens">${esc(f.btw_label)} ${esc(f.btw)}${f.siret ? ` · SIRET ${esc(f.siret)}` : ''}<br>${esc(f.adres.slice(0, 2).join(', '))}</p>
+          <div class="domeinen">${domeinen(f)}</div>
+        </div>
+      </div>`
+    )
+    .join('\n      ');
+
+  const cijfers = [
+    { getal: String(F.actief_sinds), wat: t('c.sinds', taal), bron: t('c.sinds.bron', taal) },
+    { getal: `${getal(F.bestellingen_sinds_2011, taal)}+`, wat: t('c.best', taal), bron: t('c.best.bron', taal) },
+    { getal: `${getal(F.magazijn_m2, taal)} m²`, wat: t('c.mag', taal), bron: t('c.mag.bron', taal) },
+    { getal: String(N), wat: t('c.winkels', taal), bron: t('c.winkels.bron', taal) },
+    { getal: String(F.eigen_bus_landen), wat: t('c.bus', taal), bron: groep.levering.eigen_bus.join(' · ') },
+    { getal: t('c.antw.getal', taal), wat: t('c.antw', taal), bron: t('c.antw.bron', taal) },
+  ]
+    .map((c) => `<div><dt>${esc(c.getal)}</dt><dd class="cijferrooster__wat">${esc(c.wat)}</dd><dd class="cijferrooster__bron">${esc(c.bron)}</dd></div>`)
+    .join('\n        ');
+
+  const mag = groep.koepel.magazijn;
+  const adressen = [
+    { land: 'BE', wat: `${t('adres.zetel', taal)} — ${bv.naam}`, adres: bv.adres.slice(0, 2).join(', ') },
+    { land: 'BE', wat: t('adres.magazijn', taal), adres: `${mag.adres.slice(0, 2).join(', ')} · ${t('adres.afspraak', taal)}` },
+    ...groep.firmas.filter((f) => f.rol !== 'holding').map((f) => ({ land: f.land, wat: f.naam, adres: f.adres.slice(0, 2).join(', ') })),
+  ]
+    .map((a) => `<div class="adres"><span class="adres__land">${a.land}</span><span><strong>${esc(a.wat)}</strong><span>${esc(a.adres)}</span></span></div>`)
+    .join('\n      ');
+
+  const principes = [
+    ['voorraad', ICOON.voorraad],
+    ['zelf', ICOON.bus40],
+    ['taal', ICOON.taal],
+  ]
+    .map(([k, ic]) => `<div class="principe op">${ic}<h3>${esc(t(`werken.${k}.kop`, taal))}</h3><p>${esc(t(`werken.${k}.tekst`, taal))}</p></div>`)
+    .join('\n      ');
+
+  const inhoud = `  <section class="paginakop">
+    <div class="paginakop__tekst">
+      <p class="opschrift">${esc(t('nav.groep', taal))}</p>
+      <h1 class="kop-xl" style="max-width:1100px">${esc(t('groep.kop', taal))}</h1>
+      <p class="lood" style="max-width:760px">${esc(t('groep.lood', taal))}</p>
+    </div>
+  </section>
+
+  <section class="boom" aria-label="${esc(t('groep.structuur', taal))}">
+    <div class="boom__top">
+      <div class="firmablok op">
+        <div class="firmablok__rij"><span class="firmablok__landen">${bv.landen_zakelijk.join(' · ')}</span><span class="firmablok__rol">${esc(t('groep.holding', taal))}</span></div>
+        <h2>${esc(bv.naam)}</h2>
+        <p class="firmablok__gegevens">${esc(bv.btw_label)} ${esc(bv.btw)} · ${esc(bv.adres.slice(0, 2).join(', '))}</p>
+        <div class="domeinen">${domeinen(bv)}</div>
+      </div>
+    </div>
+    <div class="boom__stam" aria-hidden="true"></div>
+    <div class="boom__tak" aria-hidden="true"></div>
+    <div class="boom__dochters">
+      ${dochters}
+    </div>
+  </section>
+
+  <section class="cijferband">
+    <div class="wrap">
+      <p class="opschrift">${esc(t('cijfers.opschrift', taal))}</p>
+      <dl class="cijferrooster op">
+        ${cijfers}
+      </dl>
+    </div>
+  </section>
+
+  <section class="sectie" style="padding-bottom:24px">
+    <h2 class="kop-l">${esc(t('werken.kop', taal))}</h2>
+    <div class="principes">
+      ${principes}
+    </div>
+  </section>
+
+  <section class="beeldadres">
+    <div class="beeldvak op">
+      <img src="${beeld('hout', 1400)}" width="3264" height="3264" alt="${esc(beeldAlt('hout', taal))}" loading="lazy" decoding="async">
+      <p>${esc(t('groep.beeldzin', taal))}</p>
+    </div>
+    <div class="adressen op">
+      <h2>${esc(t('adres.kop', taal))}</h2>
+      ${adressen}
+      <p class="adressen__mail">${esc(t('adres.mail', taal))} <a href="mailto:${groep.koepel.contact}">${esc(groep.koepel.contact)}</a></p>
+    </div>
+  </section>
+`;
+  return pagina({
+    taal,
+    paginaId: 'groep',
+    titel: t('groep.titel', taal),
+    meta: t('groep.meta', taal),
+    inhoud,
+    extraHoofd: organisatieLd(taal),
+  });
+}
+
 // ── documentenkast ──────────────────────────────────────────────────────────
 
 function documentenPagina(taal) {
-  const tabellen = Object.entries(producten.lijnen)
-    .filter(([, rijen]) => rijen.length)
-    .map(([lijnId, rijen]) => {
-      const heeftDikte = rijen.some((r) => r.plankdikte_mm);
-      const koppen = [
-        t('doc.tabel.artikel', taal),
-        t('doc.tabel.code', taal),
-        t('doc.tabel.maat', taal),
-        t('doc.tabel.gewicht', taal),
-        t('doc.tabel.hout', taal),
-        ...(heeftDikte ? [t('doc.tabel.dikte', taal)] : []),
-      ];
-      const body = rijen
-        .map((r) => {
-          const maat = !r.maat
-            ? `<span class="zacht">${esc(t('doc.onbekend', taal))}</span>`
-            : r.maat.b && r.maat.h
-            ? `${r.maat.l} × ${r.maat.b} × ${r.maat.h} cm`
-            : `${r.maat.l} cm`;
-          const gew = r.gewicht_kg
-            ? `ca. ${String(r.gewicht_kg).replace('.', taal === 'en' ? '.' : ',')} kg`
-            : `<span class="zacht">${esc(t('doc.onbekend', taal))}</span>`;
-          const hout = r.houtsoort
-            ? esc(houtsoort(r.houtsoort, taal))
-            : `<span class="zacht">${esc(t('doc.onbekend', taal))}</span>`;
-          const dikte = heeftDikte
-            ? `<td>${r.plankdikte_mm ? `${r.plankdikte_mm} mm` : `<span class="zacht">—</span>`}</td>`
-            : '';
-          const naam = (r.namen && r.namen[taal]) || r.naam;
-          return `            <tr><td>${esc(naam)}</td><td><code>${esc(r.sku)}</code></td><td>${maat}</td><td>${gew}</td><td>${hout}</td>${dikte}</tr>`;
-        })
-        .join('\n');
-      return `      <div class="tabelrol">
-        <table>
-          <caption>${esc(t(`doc.lijn.${lijnId}`, taal))}</caption>
-          <thead><tr>${koppen.map((k) => `<th>${esc(k)}</th>`).join('')}</tr></thead>
-          <tbody>
-${body}
-          </tbody>
-        </table>
-      </div>`;
-    })
-    .join('\n');
+  const komma = (x) => String(x).replace('.', taal === 'en' ? '.' : ',');
+  const rijen = Object.entries(producten.lijnen)
+    .flatMap(([lijnId, rs]) => rs.map((r) => ({ ...r, lijnId })))
+    .map((r) => {
+      const onbekend = `<span class="zacht">${esc(t('doc.onbekend', taal))}</span>`;
+      const maat = !r.maat ? onbekend : r.maat.b && r.maat.h ? `${r.maat.l} × ${r.maat.b} × ${r.maat.h} cm` : esc(t('doc.lang', taal, { l: r.maat.l }));
+      const gew = r.gewicht_kg ? `${esc(t('doc.ca', taal))} ${komma(r.gewicht_kg)} kg` : onbekend;
+      const hout = r.houtsoort ? esc(houtsoort(r.houtsoort, taal)) : onbekend;
+      const dikte = r.plankdikte_mm ? `${komma(r.plankdikte_mm / 10)} cm` : '<span class="zacht">—</span>';
+      const naam = (r.namen && r.namen[taal]) || r.naam;
+      const lijn = t(`doc.lijn.${r.lijnId}`, taal);
+      return `<tr data-lijn="${r.lijnId}" data-zoek="${esc(`${r.sku} ${naam} ${lijn}`.toLowerCase())}"><td class="doctabel__code">${esc(r.sku)}</td><td><span class="doctabel__naam">${esc(naam)}</span><span class="doctabel__lijn">${esc(lijn)}</span></td><td class="nowrap">${maat}</td><td class="nowrap">${gew}</td><td>${hout}</td><td class="nowrap">${dikte}</td></tr>`;
+    });
 
-  const firmaRijen = groep.firmas
-    .map(
-      (f) => `            <tr>
-              <td>${esc(f.naam)}</td>
-              <td>${esc(f.adres.join(', '))}</td>
-              <td>${esc(f.btw_label)} ${esc(f.btw)}${f.siret ? `<br><span class="zacht">SIRET ${esc(f.siret)}</span>` : ''}</td>
-              <td>${f.landen_zakelijk.map((c) => esc(land(c, taal))).join(', ')}</td>
-            </tr>`
-    )
-    .join('\n');
+  const lijnChips = ['alle', ...Object.keys(producten.lijnen).filter((k) => producten.lijnen[k].length)]
+    .map((k, i) => `<button class="chip" type="button" data-lijn="${k}" aria-pressed="${i === 0}">${esc(k === 'alle' ? t('doc.alles', taal) : t(`doc.lijn.${k}`, taal))}</button>`)
+    .join('');
 
-  const inhoud = `  <div class="paginakop">
-    <img class="paginakop__beeld" src="${beeld('hout', 1600)}" alt="" aria-hidden="true" loading="eager">
-    <div class="wrap">
-      <h1>${esc(t('doc.kop', taal))}</h1>
-      <p>${esc(t('doc.tekst', taal))}</p>
+  const inhoud = `  <section class="paginakop">
+    <div class="paginakop__tekst">
+      <p class="opschrift">${esc(t('doc.opschrift', taal))}</p>
+      <h1 class="kop-xl">${esc(t('doc.kop', taal))}</h1>
+      <p class="lood">${esc(t('doc.tekst', taal))}</p>
     </div>
+    <div class="uitleg"><strong>${esc(t('doc.ca.kop', taal))}</strong>${esc(t('doc.voetnoot', taal))}</div>
+  </section>
+
+  <div class="docbalk" id="docbalk" hidden>
+    <div class="zoekveld">
+      ${ICOON.zoek}
+      <label class="sr" for="doczoek">${esc(t('doc.zoek', taal))}</label>
+      <input id="doczoek" type="search" placeholder="${esc(t('doc.zoek', taal))} (${esc(t('doc.zoek.vb', taal))})" autocomplete="off">
+    </div>
+    <div class="chipgroep" role="group" aria-label="${esc(t('doc.lijnen', taal))}">${lijnChips}</div>
   </div>
-  <main class="band band--licht">
-    <div class="wrap">
-    <section>
-${tabellen}
-      <p class="voetnoot">${esc(t('doc.voetnoot', taal))}</p>
-    </section>
-    <section>
-      <h2>${esc(t('doc.hout.kop', taal))}</h2>
-      <p class="lood">${esc(t('doc.hout.tekst', taal))}</p>
-    </section>
-    <section>
-      <h2>${esc(t('doc.firma.kop', taal))}</h2>
-      <p class="lood">${esc(t('doc.firma.tekst', taal))}</p>
+
+  <section class="doctabel-wrap">
+    <div class="doctabel-kaart">
+      <div class="doctabel-kaart__kop">
+        <span id="docteller" aria-live="polite">${esc(t('doc.aantal', taal, { n: rijen.length }))}</span>
+        <button class="chip" type="button" onclick="window.print()" style="display:inline-flex;align-items:center;gap:8px">${ICOON.print}${esc(t('doc.print', taal))}</button>
+      </div>
       <div class="tabelrol">
-        <table>
+        <table class="doctabel">
           <thead><tr>
-            <th>${esc(t('doc.firma.kop', taal))}</th>
-            <th>${esc(t('firma.magazijn', taal))}</th>
-            <th>${esc(t('form.btw', taal))}</th>
-            <th>${esc(t('form.land', taal))}</th>
+            <th scope="col">${esc(t('doc.tabel.code', taal))}</th>
+            <th scope="col">${esc(t('doc.tabel.artikel', taal))}</th>
+            <th scope="col">${esc(t('doc.tabel.maat', taal))}</th>
+            <th scope="col">${esc(t('doc.tabel.gewicht', taal))}</th>
+            <th scope="col">${esc(t('doc.tabel.hout', taal))}</th>
+            <th scope="col">${esc(t('doc.tabel.dikte', taal))}</th>
           </tr></thead>
           <tbody>
-${firmaRijen}
+            ${rijen.join('\n            ')}
           </tbody>
         </table>
       </div>
-      <div class="knoppen">
-        <a class="knop" href="${url(taal, 'zakelijk')}#aanvraag">${esc(t('home.hero.knop_zakelijk', taal))}</a>
+      <div class="docniets" id="docniets" hidden>${esc(t('doc.niets', taal))} <a href="${url(taal, 'zakelijk')}#aanvraag">${esc(t('doc.vraag', taal))}</a>.</div>
+    </div>
+  </section>
+
+  <section class="doctwee">
+    <div class="principe"><h2>${esc(t('doc.hout.kop', taal))}</h2><p>${esc(t('doc.hout.tekst', taal))}</p></div>
+    <div class="principe"><h2>${esc(t('doc.firma.kop', taal))}</h2><p>${esc(t('doc.firma.tekst', taal))} <a href="${url(taal, 'groep')}">${esc(t('nav.groep', taal))} →</a></p></div>
+  </section>
+
+  <section class="donkerband donkerband--bos">
+    <div class="donkerband__in">
+      <div>
+        <h2 class="kop-m">${esc(t('doc.band.kop', taal))}</h2>
+        <p>${esc(t('doc.band.tekst', taal))}</p>
       </div>
-    </section>
-  </main>
+      <a class="knop knop--amber" href="${url(taal, 'zakelijk')}#aanvraag">${esc(t('nav.cta', taal))} ${ICOON.pijl}</a>
+    </div>
+  </section>
+  <script>
+  (function () {
+    var TEKST = ${JSON.stringify(t('doc.aantal', taal))};
+    var balk = document.getElementById('docbalk');
+    balk.hidden = false;
+    var zoek = document.getElementById('doczoek');
+    var lijn = 'alle';
+    var rijen = document.querySelectorAll('.doctabel tbody tr');
+    function toepassen() {
+      var q = zoek.value.trim().toLowerCase(), n = 0;
+      rijen.forEach(function (r) {
+        var ok = (lijn === 'alle' || r.getAttribute('data-lijn') === lijn) && (!q || r.getAttribute('data-zoek').indexOf(q) !== -1);
+        r.hidden = !ok; if (ok) n++;
+      });
+      document.getElementById('docteller').textContent = TEKST.replace('{n}', n);
+      document.getElementById('docniets').hidden = n > 0;
+      balk.querySelectorAll('[data-lijn]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lijn') === lijn)); });
+    }
+    zoek.addEventListener('input', toepassen);
+    balk.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-lijn]'); if (!b) return;
+      lijn = b.getAttribute('data-lijn'); toepassen();
+    });
+  })();
+  </script>
 `;
   return pagina({
     taal,
@@ -922,10 +1103,9 @@ ${firmaRijen}
 
 function taalkiezer() {
   const rijen = TALEN.map(
-    (l) =>
-      `      <a class="landkaart" href="${url(l, 'start')}" hreflang="${l}" lang="${l}">
-        <span class="landkaart__land">${esc(TAALNAAM[l])}</span>
-        <span class="landkaart__winkel">${esc(t('home.hero.kop', l))}</span>
+    (l) => `      <a class="landtegel" href="${url(l, 'start')}" hreflang="${l}" lang="${l}">
+        <span class="landtegel__code">${l.toUpperCase()}</span>
+        <span class="landtegel__onder"><span class="landtegel__naam">${esc(TAALNAAM[l])}</span><span class="landtegel__ook">${esc(t('home.kop1', l))} ${esc(t('home.kop2', l, { n: N }))}</span></span>
       </a>`
   ).join('\n');
   const hreflang = TALEN.map(
@@ -937,10 +1117,11 @@ function taalkiezer() {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>E-Products Europe</title>
-  <meta name="description" content="${esc(t('home.meta', 'en'))}">
+  <meta name="description" content="${esc(t('home.meta', 'en', { n: N }))}">
   <link rel="canonical" href="${SITE}/en/">
 ${hreflang}
   <link rel="alternate" hreflang="x-default" href="${SITE}/en/">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="/stijl.css">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <script>
@@ -958,9 +1139,8 @@ ${hreflang}
   </script>
 </head>
 <body>
-  <main class="wrap" style="padding-top:48px;">
-    <h1>E-Products Europe</h1>
-    <p class="lood">${esc(t('site.ondertitel', 'en'))}</p>
+  <main class="kiezerpagina">
+    <div style="display:flex;align-items:center;gap:14px">${logo(44)}<h1 class="kop-m">E-Products Europe</h1></div>
     <div class="landen">
 ${rijen}
     </div>
@@ -978,6 +1158,17 @@ function schrijf(pad, inhoud) {
   writeFileSync(vol, inhoud);
 }
 
+// Elke winkel moet zijn drie schermafdrukken hebben, anders bouwen we niet.
+const BEELDMAP = join(WORTEL, 'src/winkels');
+const aanwezig = new Set(readdirSync(BEELDMAP));
+const ontbreekt = [...WINKELS, ...BINNENKORT.filter((b) => b.beeld)]
+  .flatMap((w) => (w.firma && WINKELS.includes(w) ? ['desk', 'muur', 'gsm'] : ['desk']).map((s) => `${w.beeld}-${s}.webp`))
+  .filter((f) => !aanwezig.has(f));
+if (ontbreekt.length) {
+  console.error(`✗ Schermafdrukken ontbreken in src/winkels/: ${ontbreekt.join(', ')}`);
+  process.exit(1);
+}
+
 rmSync(UIT, { recursive: true, force: true });
 mkdirSync(UIT, { recursive: true });
 
@@ -985,6 +1176,7 @@ const bouwers = {
   start: startPagina,
   winkels: winkelsPagina,
   zakelijk: zakelijkPagina,
+  groep: groepPagina,
   documenten: documentenPagina,
 };
 
@@ -994,18 +1186,19 @@ for (const taal of TALEN) {
   for (const p of PAGINAS) {
     const u = url(taal, p.id);
     schrijf(join(u.slice(1), 'index.html'), bouwers[p.id](taal));
-    urls.push(u);
+    urls.push({ u, id: p.id });
     aantal++;
   }
 }
 
 schrijf('index.html', taalkiezer());
 cpSync(join(WORTEL, 'src/stijl.css'), join(UIT, 'stijl.css'));
+cpSync(BEELDMAP, join(UIT, 'winkels'), { recursive: true });
 
-// Een eenvoudig merkteken; geen fotobestand nodig en schaalt overal mee.
+// Het merkteken als icoon: dezelfde jaarringen als in de kop.
 schrijf(
   'favicon.svg',
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#CE9766"/><text x="32" y="43" font-family="Helvetica,Arial,sans-serif" font-size="30" font-weight="700" fill="#fff" text-anchor="middle">EP</text></svg>\n`
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><circle cx="18" cy="18" r="17" fill="#1E4A38"/><circle cx="16.5" cy="19" r="11.5" fill="none" stroke="#F0A43A" stroke-width="1.8"/><circle cx="15.5" cy="19.5" r="6.8" fill="none" stroke="#F3F4F0" stroke-width="1.6" opacity=".85"/><circle cx="15" cy="20" r="2.5" fill="#F0A43A"/></svg>\n`
 );
 
 // Eigendomsbewijs voor Google Search Console. NIET verwijderen: zonder dit bestand
@@ -1020,16 +1213,15 @@ schrijf(
   `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls
-  .map((u) => {
-    const paginaId = PAGINAS.find((p) => TALEN.some((l) => url(l, p.id) === u)).id;
+  .map(({ u, id }) => {
     const alts = TALEN.map(
-      (l) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${SITE}${url(l, paginaId)}"/>`
+      (l) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${SITE}${url(l, id)}"/>`
     ).join('\n');
-    return `  <url>\n    <loc>${SITE}${u}</loc>\n    <lastmod>${vandaag}</lastmod>\n${alts}\n  </url>`;
+    return `  <url>\n    <loc>${SITE}${u}</loc>\n    <lastmod>${vandaag}</lastmod>\n${alts}\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${url('en', id)}"/>\n  </url>`;
   })
   .join('\n')}
 </urlset>
 `
 );
 
-console.log(`✓ public/ — ${aantal} pagina's in ${TALEN.length} talen, plus taalkiezer, robots.txt en sitemap.xml`);
+console.log(`✓ public/ — ${aantal} pagina's in ${TALEN.length} talen (${N} winkels), plus taalkiezer, robots.txt en sitemap.xml`);
